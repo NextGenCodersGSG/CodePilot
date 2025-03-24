@@ -1,1 +1,253 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    /* Dark theme by default using the navy palette */
+    --background: 201 100% 6%; /* #00111C (darkest navy) */
+    --foreground: 0 0% 95%; /* #F2F2F2 (off-white for text) */
+
+    --card: 201 100% 8%; /* #001523 (dark navy for cards) */
+    --card-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text) */
+
+    --popover: 201 100% 8%; /* #001523 (dark navy for popovers) */
+    --popover-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text) */
+
+    --primary: 204 100% 21%; /* #00406C (lighter navy blue for primary elements) */
+    --primary-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on primary) */
+
+    --secondary: 205 100% 19%; /* #003A61 (medium-light blue for secondary elements) */
+    --secondary-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on secondary) */
+
+    --muted: 201 100% 10%; /* #001A2C (dark navy blue for muted areas) */
+    --muted-foreground: 0 0% 70%; /* #B3B3B3 (light gray for muted text) */
+
+    --accent: 206 100% 17%; /* #003356 (medium blue for accents) */
+    --accent-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on accent) */
+
+    --destructive: 0 84% 60%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on destructive) */
+
+    --border: 205 100% 15%; /* #002945 (medium navy for borders) */
+    --input: 205 100% 15%; /* #002945 (medium navy for input borders) */
+    --ring: 204 100% 21%; /* #00406C (lighter navy blue for focus rings) */
+
+    --radius: 0.5rem;
+  }
+
+  .light {
+    /* Light theme - we'll keep this for completeness but focus on dark theme */
+    --background: 0 0% 98%; /* #FAFAFA (very light gray) */
+    --foreground: 201 100% 6%; /* #00111C (darkest navy for text) */
+
+    --card: 0 0% 100%; /* #FFFFFF (white for cards) */
+    --card-foreground: 201 100% 6%; /* #00111C (darkest navy for text) */
+
+    --popover: 0 0% 100%; /* #FFFFFF (white for popovers) */
+    --popover-foreground: 201 100% 6%; /* #00111C (darkest navy for text) */
+
+    --primary: 204 100% 21%; /* #00406C (lighter navy blue for primary elements) */
+    --primary-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on primary) */
+
+    --secondary: 205 100% 19%; /* #003A61 (medium-light blue for secondary elements) */
+    --secondary-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on secondary) */
+
+    --muted: 210 40% 96%; /* Light gray-blue for muted areas */
+    --muted-foreground: 201 100% 15%; /* #002945 (medium navy for muted text) */
+
+    --accent: 206 100% 17%; /* #003356 (medium blue for accents) */
+    --accent-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on accent) */
+
+    --destructive: 0 84% 60%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 95%; /* #F2F2F2 (off-white for text on destructive) */
+
+    --border: 214 32% 91%; /* Light gray for borders */
+    --input: 214 32% 91%; /* Light gray for input borders */
+    --ring: 204 100% 21%; /* #00406C (lighter navy blue for focus rings) */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Background and Foreground */
+  --background: #00111C; /* Dark navy background */
+  --foreground: #F2F2F2; /* Off-white text */
+
+  /* Card and Popover */
+  --card: #001523; /* Dark navy for cards */
+  --card-foreground: #F2F2F2; /* Off-white text */
+  --popover: #001523; /* Dark navy for popovers */
+  --popover-foreground: #F2F2F2; /* Off-white text */
+
+  /* Primary and Secondary Colors */
+  --primary: #00406C; /* Lighter navy blue */
+  --primary-foreground: #F2F2F2; /* Off-white text */
+  --secondary: #003A61; /* Medium-light blue */
+  --secondary-foreground: #F2F2F2; /* Off-white text */
+
+  /* Muted and Accent Colors */
+  --muted: #001A2C; /* Dark navy blue */
+  --muted-foreground: #B3B3B3; /* Light gray text */
+  --accent: #002945; /* Medium blue */
+  --accent-foreground: #F2F2F2; /* Off-white text */
+
+  /* Destructive Color */
+  --destructive: #B32E2E; /* Red for destructive actions */
+  --destructive-foreground: #F2F2F2; /* Off-white text */
+
+  /* Border and Input Colors */
+  --border: #002945; /* Medium navy for borders */
+  --input: #002945; /* Medium navy for input borders */
+  --ring: #00406C; /* Lighter navy blue for focus rings */
+
+  /* Chart Colors */
+  --chart-1: #00406C; /* Blue */
+  --chart-2: #00B3B3; /* Teal */
+  --chart-3: #008000; /* Green */
+  --chart-4: #FFFF00; /* Yellow */
+  --chart-5: #FFA500; /* Orange */
+
+  /* Sidebar Specific Colors */
+  --sidebar: #001523; /* Dark navy */
+  --sidebar-foreground: #F2F2F2; /* Off-white */
+  --sidebar-primary: #00406C; /* Lighter navy blue */
+  --sidebar-primary-foreground: #F2F2F2; /* Off-white */
+  --sidebar-accent: #001A2C; /* Dark navy blue */
+  --sidebar-accent-foreground: #F2F2F2; /* Off-white */
+  --sidebar-border: #002945; /* Medium navy for borders */
+  --sidebar-ring: #00406C; /* Lighter navy blue */
+
+}
+
+.light {
+  /* Light theme - keeping this for completeness but focusing on dark theme */
+  --background: #F2F2F2; /* Very light gray */
+  --foreground: #00111C; /* Darkest navy for text */
+
+  --card: #FFFFFF; /* White for cards */
+  --card-foreground: #00111C; /* Darkest navy for text */
+
+  --popover: #FFFFFF; /* White for popovers */
+  --popover-foreground: #00111C; /* Darkest navy for text */
+
+  --primary: #00406C; /* Lighter navy blue */
+  --primary-foreground: #F2F2F2; /* Off-white text */
+
+  --secondary: #003A61; /* Medium-light blue */
+  --secondary-foreground: #F2F2F2; /* Off-white text */
+
+  --muted: #E0E0E0; /* Light gray-blue for muted areas */
+  --muted-foreground: #002945; /* Medium navy for muted text */
+
+  --accent: #002945; /* Medium blue for accents */
+  --accent-foreground: #F2F2F2; /* Off-white text */
+
+  --destructive: #B32E2E; /* Red for destructive actions */
+  --destructive-foreground: #F2F2F2; /* Off-white text */
+
+  --border: #D1D1D1; /* Light gray for borders */
+  --input: #D1D1D1; /* Light gray for input borders */
+  --ring: #00406C; /* Lighter navy blue for focus rings */
+
+  /* Chart colors - lighter versions for light theme */
+  --chart-1: #007BFF; /* Blue */
+  --chart-2: #17A2B8; /* Teal */
+  --chart-3: #28A745; /* Green */
+  --chart-4: #FFC107; /* Yellow */
+  --chart-5: #FD7E14; /* Orange */
+
+  /* Sidebar specific colors */
+  --sidebar: #F2F2F2; /* Light background */
+  --sidebar-foreground: #00111C; /* Dark text */
+  --sidebar-primary: #00406C; /* Lighter navy blue */
+  --sidebar-primary-foreground: #F2F2F2; /* Off-white */
+  --sidebar-accent: #E0E0E0; /* Light accent */
+  --sidebar-accent-foreground: #00111C; /* Dark text */
+  --sidebar-border: #D1D1D1; /* Light gray for borders */
+  --sidebar-ring: #00406C; /* Lighter navy blue */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+body {
+  font-family: var(--font-poppins);
+  
+}
