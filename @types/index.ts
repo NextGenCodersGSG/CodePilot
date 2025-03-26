@@ -23,3 +23,11 @@ export interface IAnalysis {
   description?: string;
   overall_suggestions?: string[];
 }
+
+export enum Role {
+  User = "user",
+  Admin = "admin",
+  Guest = "guest"
+}
+
+export type UserRoles = `${Role}`;
