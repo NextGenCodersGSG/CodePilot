@@ -1,0 +1,25 @@
+.textarea {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #4b5563 #1f293749;
+    border-radius: 16px;
+  }
+  
+  .textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .textarea::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 4px;
+  }
+  
+  .textarea::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 6px;
+  }
+  
+  .textarea::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
+  
