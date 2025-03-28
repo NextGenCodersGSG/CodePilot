@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface IBug {
     correction: string;
     error: string;
@@ -31,3 +33,26 @@ export enum Role {
 }
 
 export type UserRoles = `${Role}`;
+
+export interface IUser {
+  name: string;
+  email: string;
+  role: UserRoles; 
+  password: string;
+}
+
+export interface ICodeReview {
+  user: mongoose.Types.ObjectId;
+  language: string;
+  codeFile: string;
+  createdAt: Date;
+}
+
+export interface IAIReviewResponse{
+  review: mongoose.Types.ObjectId;
+  description: string;
+  performanceIssues: String;
+  securityIssues: String;
+  bugs: String;
+  overallSuggestions: String;
+}

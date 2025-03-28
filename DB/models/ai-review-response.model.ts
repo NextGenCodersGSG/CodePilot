@@ -1,15 +1,9 @@
+import { IAIReviewResponse } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IAIReviewResponse extends Document {
-  review: mongoose.Types.ObjectId;
-  description: string;
-  performanceIssues: String;
-  securityIssues: String;
-  bugs: String;
-  overallSuggestions: String;
-}
+export interface IAIReviewResponseDocument extends Document, IAIReviewResponse {}
 
-const AIReviewResponseSchema = new Schema<IAIReviewResponse>(
+const AIReviewResponseSchema = new Schema<IAIReviewResponseDocument>(
   {
     review: { type: Schema.Types.ObjectId, ref: "CodeReview", required: true },
     description: { type: String, required: true },
@@ -21,5 +15,10 @@ const AIReviewResponseSchema = new Schema<IAIReviewResponse>(
   { timestamps: true }
 );
 
-const AIReviewResponseModel = mongoose.models.AIReviewResponse || mongoose.model<IAIReviewResponse>("AIReviewResponse", AIReviewResponseSchema);
+const AIReviewResponseModel =
+  mongoose.models.AIReviewResponse ||
+  mongoose.model<IAIReviewResponseDocument>(
+    "AIReviewResponse",
+    AIReviewResponseSchema
+  );
 export default AIReviewResponseModel;

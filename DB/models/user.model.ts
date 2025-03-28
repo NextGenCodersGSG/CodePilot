@@ -1,14 +1,9 @@
-import { Role, UserRoles } from "@/@types";
+import { IUser, Role, UserRoles } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IUser extends Document {
-  name: string;
-  email: string;
-  role: UserRoles; 
-  password: string;
-}
+export interface IUserDocument extends Document, IUser {}
 
-const UserSchema = new Schema<IUser>(
+const UserSchema = new Schema<IUserDocument>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -18,5 +13,6 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-const userModel = mongoose.models.User || mongoose.model<IUser>("User", UserSchema);
-export default userModel
+const userModel =
+  mongoose.models.User || mongoose.model<IUserDocument>("User", UserSchema);
+export default userModel;

@@ -1,13 +1,9 @@
+import { ICodeReview } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ICodeReview extends Document {
-  user: mongoose.Types.ObjectId;
-  language: string;
-  codeFile: string;
-  createdAt: Date;
-}
+export interface ICodeReviewDocument extends Document, ICodeReview {}
 
-const CodeReviewSchema = new Schema<ICodeReview>(
+const CodeReviewSchema = new Schema<ICodeReviewDocument>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     language: { type: String, required: true, unique: true },
@@ -16,5 +12,7 @@ const CodeReviewSchema = new Schema<ICodeReview>(
   { timestamps: { createdAt: "createdAt" } }
 );
 
-const codeReviewModel = mongoose.models.CodeReview || mongoose.model<ICodeReview>("CodeReview", CodeReviewSchema);
+const codeReviewModel =
+  mongoose.models.CodeReview ||
+  mongoose.model<ICodeReviewDocument>("CodeReview", CodeReviewSchema);
 export default codeReviewModel;
