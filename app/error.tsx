@@ -89,14 +89,11 @@ export default function Error({
     },
   }
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     try {
-      // In a real app, you would send this data to your API
-      // For example:
       const response = await fetch('/api/report-error', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
