@@ -21,11 +21,11 @@ export async function sendEmailToDevelopers({
     })
 
     const info = await transporter.sendMail({
-      from:  process.env.SMTP_FROM, // Must match SMTP_USER for Gmail
-      to: process.env.DEV_EMAIL, // Developer's email
-      replyTo: from, // User's email (so dev can reply)
+      from:  process.env.SMTP_FROM,
+      to: process.env.DEV_EMAIL,
+      replyTo: from,
       subject,
-      text: body, // Plain text email
+      text: body,
     })
 
     console.log('Email sent:', info.messageId)

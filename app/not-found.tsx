@@ -121,7 +121,6 @@ export default function NotFound() {
           </div>
         </motion.div>
 
-
         <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={itemVariants}>
           <Button
             onClick={() => router.back()}
