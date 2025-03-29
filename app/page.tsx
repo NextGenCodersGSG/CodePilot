@@ -13,6 +13,7 @@ import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 import Header from "@/components/header/Header"
+import ShinyText from "@/components/ui/ShinyText/shiny-text"
 
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
@@ -132,7 +133,7 @@ export default function LandingPage() {
                   transition={{ duration: 0.4,delay:0.4, ease: "easeInOut" }}
                 >
                   <CheckCircle className="h-4 w-4 text-[#00406C]" />
-                  <span>No credit card required</span>
+                  <ShinyText text="No credit card required" disabled={false} speed={5} className='' />
                 </motion.div>
               </motion.div>
               <motion.div
