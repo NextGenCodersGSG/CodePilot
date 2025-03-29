@@ -13,7 +13,6 @@ import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 
-// Custom hook to detect when an element is in view
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
   const ref = useRef(null)
@@ -42,7 +41,6 @@ function useInView(threshold = 0.1) {
   return { ref, controls }
 }
 
-// Animation variants
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -72,7 +70,6 @@ const MotionCard = motion(Card)
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // Create refs and controls for each section
   const featuresSection = useInView()
   const testimonialsSection = useInView()
   const pricingSection = useInView()
