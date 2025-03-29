@@ -32,7 +32,7 @@ const Header = () => {
   return (
     <div
     className={`flex justify-between items-center transition-all duration-300 ease-in-out p-6 md:p-4 sticky top-2 mx-auto z-30 border-b-2 ${
-      scrolled ? `w-[95%] ${navStyle}` : "w-[100%]"
+      scrolled ? `w-[97%] ${navStyle}` : "w-[100%]"
     }`}
     >
       <div>Code Pilot</div>
