@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import NavLink from "./nav-link/NavLink";
-import { links } from "@/common/data";
+import { links } from "@/components/header/common/data";
 
 const DesktopNav = () => {
   return (

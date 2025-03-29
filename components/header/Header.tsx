@@ -27,15 +27,15 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   const navStyle =
-    "bg-zinc-800/50 text-zinc-200 bg-[radial-gradient(#0000_2px,#3b301e7f_1px)]  bg-[length:4px_4px] bg-repeat";
+    "rounded-2xl backdrop-blur-sm bg-zinc-800/50 text-zinc-200 bg-[radial-gradient(#0000_2px,#003A6130_1px)]  bg-[length:4px_4px] bg-repeat border-none ";
 
   return (
     <div
-      className={`flex backdrop-blur-sm justify-between items-center transition-all duration-200 p-4 fixed top-2 w-[94%] mx-[3%] z-30 rounded-2xl  ${
-        scrolled ? navStyle : null
-      }`}
+    className={`flex justify-between items-center transition-all duration-300 ease-in-out p-6 md:p-4 sticky top-2 mx-auto z-30 border-b-2 ${
+      scrolled ? `w-[95%] ${navStyle}` : "w-[100%]"
+    }`}
     >
-      <div>Quick News</div>
+      <div>Code Pilot</div>
       <DesktopNav />
       <AlignJustify
         onClick={(e) => {
