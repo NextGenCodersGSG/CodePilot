@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import DesktopNav from "./navbar/DesktopNav";
-import { AlignJustify, X } from "lucide-react";
+import { AlignJustify, Code, X } from "lucide-react";
 import MobileNav from "./navbar/MobileNav";
 
 const Header = () => {
@@ -35,7 +35,10 @@ const Header = () => {
       scrolled ? `w-[97%] ${navStyle}` : "w-[100%]"
     }`}
     >
-      <div>Code Pilot</div>
+      <div className="flex gap-2">
+        <Code className="h-6 w-6 text-[#00406C]" />
+        <span>Code Pilot</span>
+      </div>
       <DesktopNav />
       <AlignJustify
         onClick={(e) => {
