@@ -50,16 +50,17 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   );
-
   const addProject = (project: IProject) => {
     setSidebarProjects((prev) => [...prev, project]);
   };
 
   return (
     <SidebarContext.Provider value={{ sidebarProjects, addProject, loading, error }}>
+
       {children}
     </SidebarContext.Provider>
   );
 };
 
 export const useSidebar = () => useContext(SidebarContext);
+
