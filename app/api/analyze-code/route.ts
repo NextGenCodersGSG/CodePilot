@@ -48,17 +48,19 @@ export async function POST(req: NextRequest) {
         3. Bugs - Find errors with fixes
         4. Code Summary - Brief technical overview
         5. Suggested Solutions - Key implementation recommendations
-        
+
         Format as JSON with keys:
-        - "performance_issues" (array of objects with "issue" and "solution")
-        - "security_issues" (array of objects with "vulnerability" and "fix")
-        - "bugs" (array of objects with "error" and "correction")
-        - "description" (string)
-        - "overall_suggestions" (array of strings)
-        
+        - "title" (string) - A short, descriptive title for this analysis
+        - "slug" (string) - A URL-friendly identifier based on the title (lowercase, hyphen-separated)
+        - "performance_issues" (array of objects with "issue", "solution", and "severity")
+        - "security_issues" (array of objects with "vulnerability", "fix", and "severity")
+        - "bugs" (array of objects with "error", "correction", and "severity")
+        - "description" (string) - A concise summary of the code
+        - "overall_suggestions" (array of strings) - Key recommendations for improvement
+
         Code:
         """${code}"""
-        
+
         Rules:
         1. JSON structure must be valid
         2. Include concrete solutions with code examples when applicable
@@ -66,10 +68,13 @@ export async function POST(req: NextRequest) {
         4. Use ${language}-specific best practices
         5. Solutions should be actionable and concise
         6. Avoid markdown formatting
-        7. Technical severity level for each issue (high/medium/low)
+        7. Assign severity levels to all issues (high/medium/low)
+        8. Ensure "title" and "slug" are informative and correctly formatted
         
         Example format:
         {
+          "title": "Optimizing Database Queries in Node.js",
+          "slug": "optimizing-database-queries-nodejs",
           "performance_issues": [
             {
               "issue": "N+1 database queries in loop",
@@ -87,7 +92,8 @@ export async function POST(req: NextRequest) {
           "description": "...",
           "overall_suggestions": ["Refactor component to use memoization", ...]
         }
-        `;
+`;
+
 
         const response = await fetch(OPENAI_API_URL, {
             method: "POST",
