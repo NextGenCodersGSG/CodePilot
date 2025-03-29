@@ -84,7 +84,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <BackgroundBeamsWithCollision>
         <section className="py-20 md:py-auto overflow-x-hidden min-h-screen rounded-b-2xl">
-          <div className="container  min-w-screen rounded-b-2xl">
+          <div className="container min-w-screen rounded-b-2xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center overflow-hidden ">
               <motion.div
                 className="space-y-6 px-10"
@@ -149,7 +149,7 @@ export default function LandingPage() {
         </section>
         </BackgroundBeamsWithCollision>
         {/* Features Section */}
-        <section id="features" className="py-20 bg-[#001A2C]">
+        <section id="features" className="py-20 bg-gradient-to-b dark: from-[#002945] dark:to-[#00111C]/95">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -224,7 +224,7 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="py-20 bg-[#00111C]">
+        <section id="testimonials" className="py-20 bg-gradient-to-b dark: from-[#00111C] via-[#00111C]/95 dark:to-[#001A2C] ">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -323,7 +323,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-[#001A2C]">
+        <section id="pricing" className="py-20 bg-gradient-to-b from-[#001A2C] via-[#001A2C]/95 to-[#00111C]">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -543,7 +543,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-[#002945] py-12 bg-[#00111C]">
+      <footer className="border-t border-[#002945] py-12 bg-gradient-to-b dark: from-[#00111C]/95 dark:to-[#002945]">
         <div className="container mx-auto px-6 md:px-8">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div>
