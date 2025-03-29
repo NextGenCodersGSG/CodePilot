@@ -9,6 +9,9 @@ import { CheckCircle, Code, Github, Linkedin, Twitter, Zap, Shield, BarChart, Me
 import { useState, useEffect, useRef } from "react"
 import { motion, useAnimation, type Variants } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
+import ThreeDImage from "@/components/3d-Image/ThreeDImage"
+import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
+import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 
 // Custom hook to detect when an element is in view
 function useInView(threshold = 0.1) {
@@ -64,7 +67,6 @@ const itemVariants: Variants = {
   },
 }
 
-// Motion Card component
 const MotionCard = motion(Card)
 
 export default function LandingPage() {
@@ -114,7 +116,7 @@ export default function LandingPage() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden container py-4 border-t border-[#002945]">
+          <div className="md:hidden flex flex-col container py-4 border-t border-[#002945]">
             <nav className="flex flex-col gap-4">
               <Link href="#features" className="text-sm font-medium hover:text-[#00406C]">
                 Features
@@ -128,7 +130,7 @@ export default function LandingPage() {
               <Link href="#" className="text-sm font-medium hover:text-[#00406C]">
                 Blog
               </Link>
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col gap-4 pt-4">
                 <Button
                   variant="outline"
                   size="sm"
@@ -146,12 +148,14 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1">
+
         {/* Hero Section */}
-        <section className="py-20 md:py-auto overflow-x-hidden min-h-screen">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center overflow-hidden">
+        <BackgroundBeamsWithCollision>
+        <section className="py-20 md:py-auto overflow-x-hidden min-h-screen rounded-b-2xl">
+          <div className="container  min-w-screen rounded-b-2xl">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center overflow-hidden ">
               <motion.div
-                className="space-y-6"
+                className="space-y-6 px-10"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -163,8 +167,10 @@ export default function LandingPage() {
                 >
                   <Badge className="transition duration-200 cursor-default mb-2 bg-[#003356] text-[#F2F2F2] hover:bg-[#003A61]">AI-Powered Code Review</Badge>
                 </motion.div>
-                <TextGenerateEffect duration={0.6} className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl" words="Write Better Code with AI-Driven Insights"/>
-                
+                <div>
+                  <ContainerTextFlip words={["Write Better", "Write Smarter","Develop Faster"]} />
+                  <TextGenerateEffect duration={0.6} className="text-4xl md:text-5xl font-bold tracking-tighter -mt-3" words="Code with AI-Driven Insights"/>
+                </div>
                   <motion.p 
                     className="text-lg text-[#B3B3B3] md:text-xl"
                     initial={{ opacity: 0, x: 100 }}
@@ -198,27 +204,17 @@ export default function LandingPage() {
                 </motion.div>
               </motion.div>
               <motion.div
-                className="relative hidden md:block rounded-lg"
+                className="relative hidden lg:block rounded-lg mr-15"
                 initial={{ opacity: 0, scale: 0.9, x:100, y: 100 }}
                 animate={{ opacity: 1, scale: 1,x :0, y:0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeInOut" }}
               >
-                <div className="rounded-lg absolute -inset-1 bg-gradient-to-r from-[#002945]/20 to-[#00406C]/40 opacity-50 blur-xl"></div>
-                <div className="relative rounded-lg border border-[#002945] bg-[#001523] p-4 shadow-xl">
-                  <Image
-                    src="/Ai.jpg"
-                    width={1000}
-                    height={800}
-                    alt="CodePilot dashboard preview"
-                    className="rounded-lg h-auto w-full object-cover"
-                    priority
-                  />
-                </div>
+                  <ThreeDImage/>
               </motion.div>
             </div>
           </div>
         </section>
-
+        </BackgroundBeamsWithCollision>
         {/* Features Section */}
         <section id="features" className="py-20 bg-[#001A2C]">
           <div className="container px-4 md:px-6 mx-auto">
@@ -232,7 +228,7 @@ export default function LandingPage() {
                 Powerful Features for Developers
               </h2>
               <p className="mt-4 text-lg text-[#B3B3B3] md:w-3/4 mx-auto">
-                CodePilot helps you write better code, find bugs faster, and ship with confidence.
+                CodePilot helps you write code, find bugs faster, and ship with confidence.
               </p>
             </motion.div>
 
