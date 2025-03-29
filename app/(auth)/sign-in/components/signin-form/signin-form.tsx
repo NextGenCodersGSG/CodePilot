@@ -5,6 +5,7 @@ import MotionTextField from "@/components/motion-text-field";
 import useSignin from "./hooks/useSignin";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Loader } from "lucide-react";
 
 const SignInForm = () => {
   const { formik } = useSignin();
@@ -40,6 +41,9 @@ const SignInForm = () => {
             className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61] mt-2"
             type="submit"
           >
+            {formik.isSubmitting ? (
+              <Loader className="mr-3 h-6 w-6 animate-spin" />
+            ) : null}
             Sign in
           </Button>
         </motion.div>
