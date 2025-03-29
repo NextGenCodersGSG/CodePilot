@@ -21,7 +21,7 @@ import AnalysisResults from "@/components/analysis-results/AnalysisResults";
 
 
 export default function Page() {
-  const [user, setUser] = useState("John");
+  const [user, _] = useState("John");
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("TypeScript");
   const [analysis, setAnalysis] = useState<{
