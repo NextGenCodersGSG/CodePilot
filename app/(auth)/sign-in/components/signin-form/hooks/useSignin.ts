@@ -4,15 +4,14 @@ import { useFormik } from "formik";
 import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constant";
 import { validationSchema } from "../validationSchema";
+import { toast } from "sonner";
 
 const useSignin = () => {
-    console.log("useSignin");
   const handleSignin = async (
     values: FormValues,
     resetForm: () => void,
     setSubmitting: (isSubmitting: boolean) => void
   ) => {
-    console.log("values",values);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/auth/sign-in`,
@@ -26,13 +25,13 @@ const useSignin = () => {
       );
       const data = await response.json();
       if (!response.ok) {
-        console.log(`${data.error}`);
+        toast.error(`${data.error}`);
         return;
       }
       resetForm();
-      console.log("Signin successful");
+      toast.success("Signin successful");
     } catch (error: any) {
-      console.log(`Signin error: ${error.message}`);
+      toast.error(`Signin error: ${error.message}`);
     } finally {
       setSubmitting(false);
     }
@@ -41,8 +40,6 @@ const useSignin = () => {
   const formik = useFormik<FormValues>({
     initialValues: INITIAL_VALUES,
     onSubmit: (values, { resetForm, setSubmitting }) => {
-        console.log("initialValues");
-        console.log(values);
       handleSignin(values, resetForm, setSubmitting);
     },
     validationSchema,
