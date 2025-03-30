@@ -19,11 +19,13 @@ export interface ISecurity {
   }
 
 export interface IAnalysis {
-  performance_issues?: IPerformance[];
-  security_issues?: ISecurity[];
-  bugs?: IBug[];
-  description?: string;
-  overall_suggestions?: string[];
+  title: string;
+  slug: string;
+  performance_issues: IPerformance[];
+  security_issues: ISecurity[];
+  bugs: IBug[];
+  description: string;
+  overall_suggestions: string[];
 }
 
 export enum Role {
@@ -57,4 +59,12 @@ export interface IAIReviewResponse{
   overallSuggestions: String;
 }
 
+interface Project {
+  name: string;
+  url: string;
+}
+
+export type IProject = Project & IAnalysis;
+
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
