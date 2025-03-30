@@ -28,8 +28,7 @@ export interface IAnalysis {
 
 export enum Role {
   User = "user",
-  Admin = "admin",
-  Guest = "guest"
+  Admin = "admin"
 }
 
 export type UserRoles = `${Role}`;
