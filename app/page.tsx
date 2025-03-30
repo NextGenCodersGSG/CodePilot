@@ -12,6 +12,8 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
+import Header from "@/components/header/Header"
+import ShinyText from "@/components/ui/ShinyText/shiny-text"
 
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
@@ -74,82 +76,15 @@ export default function LandingPage() {
   const testimonialsSection = useInView()
   const pricingSection = useInView()
 
+
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
-      <header className="px-6 sticky top-0 z-40 w-full border-b border-[#002945] bg-[#00111C]/95 backdrop-blur supports-[backdrop-filter]:bg-[#00111C]/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Code className="h-6 w-6 text-[#00406C]" />
-            <span className="text-xl font-bold">CodePilot</span>
-          </div>
-
-          <nav className="hidden md:flex gap-6">
-            <Link href="#features" className="text-sm font-medium hover:text-[#00406C]">
-              Features
-            </Link>
-            <Link href="#testimonials" className="text-sm font-medium hover:text-[#00406C]">
-              Testimonials
-            </Link>
-            <Link href="#pricing" className="text-sm font-medium hover:text-[#00406C]">
-              Pricing
-            </Link>
-            <Link href="#" className="text-sm font-medium hover:text-[#00406C]">
-              Blog
-            </Link>
-          </nav>
-
-          <div className="hidden md:flex gap-4">
-            <Link href="/sign-in" className=" transition duration-150 rounded-lg px-4 py-2 border-[#002945] bg-[#001A2C] hover:bg-[#002945] hover:text-[#F2F2F2]">
-              Log in
-            </Link>
-            <Link href="/sign-up" className="transition duration-150  rounded-lg px-4 py-2 bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-              Sign up
-            </Link>
-          </div>
-
-          <button className="md:hidden text-[#F2F2F2]" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="md:hidden flex flex-col container py-4 border-t border-[#002945]">
-            <nav className="flex flex-col gap-4">
-              <Link href="#features" className="text-sm font-medium hover:text-[#00406C]">
-                Features
-              </Link>
-              <Link href="#testimonials" className="text-sm font-medium hover:text-[#00406C]">
-                Testimonials
-              </Link>
-              <Link href="#pricing" className="text-sm font-medium hover:text-[#00406C]">
-                Pricing
-              </Link>
-              <Link href="#" className="text-sm font-medium hover:text-[#00406C]">
-                Blog
-              </Link>
-              <div className="flex flex-col gap-4 pt-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                >
-                  Log in
-                </Button>
-                <Button size="sm" className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-                  Sign up
-                </Button>
-              </div>
-            </nav>
-          </div>
-        )}
-      </header>
-
+      <Header/>
       <main className="flex-1">
-
         {/* Hero Section */}
         <BackgroundBeamsWithCollision>
         <section className="py-20 md:py-auto overflow-x-hidden min-h-screen rounded-b-2xl">
-          <div className="container  min-w-screen rounded-b-2xl">
+          <div className="container min-w-screen rounded-b-2xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center overflow-hidden ">
               <motion.div
                 className="space-y-6 px-10"
@@ -161,6 +96,7 @@ export default function LandingPage() {
                   initial={{ opacity: 0, x: 100 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="mb-1"
                 >
                   <Badge className="transition duration-200 cursor-default mb-2 bg-[#003356] text-[#F2F2F2] hover:bg-[#003A61]">AI-Powered Code Review</Badge>
                 </motion.div>
@@ -197,7 +133,7 @@ export default function LandingPage() {
                   transition={{ duration: 0.4,delay:0.4, ease: "easeInOut" }}
                 >
                   <CheckCircle className="h-4 w-4 text-[#00406C]" />
-                  <span>No credit card required</span>
+                  <ShinyText text="No credit card required" disabled={false} speed={5} className='' />
                 </motion.div>
               </motion.div>
               <motion.div
@@ -213,7 +149,7 @@ export default function LandingPage() {
         </section>
         </BackgroundBeamsWithCollision>
         {/* Features Section */}
-        <section id="features" className="py-20 bg-[#001A2C]">
+        <section id="features" className="py-20 bg-gradient-to-b dark: from-[#002945] dark:to-[#00111C]/95">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -288,7 +224,7 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="py-20 bg-[#00111C]">
+        <section id="testimonials" className="py-20 bg-gradient-to-b dark: from-[#00111C] via-[#00111C]/95 dark:to-[#001A2C] ">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -387,7 +323,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-[#001A2C]">
+        <section id="pricing" className="py-20 bg-gradient-to-b from-[#001A2C] via-[#001A2C]/95 to-[#00111C]">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -554,7 +490,7 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20">
+        <section id="get-started" className="py-20">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
               className=" rounded-lg bg-[#001A2C] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-[#002945]"
@@ -607,7 +543,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-[#002945] py-12 bg-[#00111C]">
+      <footer className="border-t border-[#002945] py-12 bg-gradient-to-b dark: from-[#00111C]/95 dark:to-[#002945]">
         <div className="container mx-auto px-6 md:px-8">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div>
