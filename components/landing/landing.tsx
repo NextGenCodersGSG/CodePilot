@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,7 +12,8 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 import ShinyText from "@/components/ui/ShinyText/shiny-text"
 import BillingSection from "./billing"
-import Header from "../header/Header"
+import Header from "@/components/header/Header"
+
 
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
@@ -68,14 +68,14 @@ const itemVariants: Variants = {
 }
 
 const MotionCard = motion(Card);
+
 export default function LandingPage() {
 
   const featuresSection = useInView()
   const testimonialsSection = useInView()
-
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
-      <Header />
+      <Header/>
       <main className="flex-1">
         {/* Hero Section */}
         <BackgroundBeamsWithCollision>
@@ -320,7 +320,6 @@ export default function LandingPage() {
 
         {/* Pricing Section */}
         <BillingSection/>
-
         {/* CTA Section */}
         <section id="get-started" className="py-20">
           <div className="container px-4 md:px-6 mx-auto">

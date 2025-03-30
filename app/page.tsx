@@ -28,6 +28,7 @@ const Page = () => {
         <BadgeCover />
       </section>
       <Footer />
+
     </div>
   )
 }
