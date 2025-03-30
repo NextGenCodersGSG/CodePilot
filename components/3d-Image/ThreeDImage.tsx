@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image"
 import { CardBody, CardContainer, useMouseEnter } from "@/components/ui/3d-card"
 import { motion } from "framer-motion"

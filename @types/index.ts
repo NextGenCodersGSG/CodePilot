@@ -143,3 +143,5 @@ export interface IZoom {
   startUrl: string;
   password: string;
 }
+export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
