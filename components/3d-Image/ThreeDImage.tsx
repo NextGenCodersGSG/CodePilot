@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image"
 import { CardBody, CardContainer } from "@/components/ui/3d-card"
 
