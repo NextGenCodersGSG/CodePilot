@@ -56,3 +56,5 @@ export interface IAIReviewResponse{
   bugs: String;
   overallSuggestions: String;
 }
+
+export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
