@@ -33,7 +33,7 @@ export default function SplineLoader() {
           observer.disconnect()
         }
       },
-      { threshold: 0.1 } // Trigger when at least 10% is visible
+      { threshold: 0.01 } // Trigger when at least 10% is visible
     )
     
     // Create a target element for the observer
