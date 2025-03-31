@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import AuthService from "@/module/services/auth.service";
 import { ILogin } from "@/@types/index";
 import { connection } from "@/DB/connection";
-import { cookies } from "next/headers";
-import { createToken } from "@/lib/storeGetDelete";
 
 
 export async function POST(req: NextRequest) {
