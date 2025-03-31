@@ -12,7 +12,7 @@ const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    role: { type: String, enum: Object.values(Role), default: Role.Guest },
+    role: { type: String, enum: Object.values(Role), default: Role.User },
     password: { type: String, required: true },
   },
   { timestamps: true }
