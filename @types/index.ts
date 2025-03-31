@@ -144,4 +144,3 @@ export interface IZoom {
   password: string;
 }
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
-

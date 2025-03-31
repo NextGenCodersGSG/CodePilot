@@ -18,7 +18,7 @@ import authRepo from "../repositories/auth.repo";
 class AuthService {
   async signIn(data: ILogin) {
     console.log("SignIn attempt with email:", data.email); // Log incoming email
-    
+
     const user = await UserRepository.findUserByEmail(data.email);
     if (!user) {
       console.log("User not found for email:", data.email);
