@@ -1,62 +1,20 @@
 "use client"
-
+import React from 'react';
 import { useState } from "react"
 import { motion } from "framer-motion"
-import {
-  Users,
-  UserCheck,
-  MessageSquare,
-  FileCode,
-  ChevronDown,
-  Search,
-  Bell,
-  Download,
-  MoreHorizontal,
-  AlertTriangle,
-  Ban,
-  Trash2,
-  Eye,
-  UserCog,
-  FileText,
-} from "lucide-react"
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts"
+import { useEffect } from "react";
+import { Users, UserCheck, MessageSquare, FileCode, ChevronDown, Search, Bell, Download, MoreHorizontal, AlertTriangle, Ban, Trash2, Eye, UserCog, FileText, } from "lucide-react"
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell, } from "recharts"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import { IUserLoginData, User } from "@/app/(auth)/sign-in/components/test-components/type";
 
 // Sample data for the charts
 const codeReviewsData = [
@@ -71,7 +29,6 @@ const codeReviewsData = [
 
 const userRolesData = [
   { name: "Admin", value: 5 },
-  { name: "Moderator", value: 12 },
   { name: "User", value: 2526 },
 ]
 
@@ -85,64 +42,6 @@ const userActivityData = [
   { name: "Sun", active: 1020, new: 39 },
 ]
 
-// Sample data for recent users
-const recentUsers = [
-  {
-    id: 1,
-    name: "Alex Johnson",
-    email: "alex@example.com",
-    role: "User",
-    status: "Active",
-    signupDate: "2023-10-15",
-    lastActive: "2023-10-21 14:32",
-    loginCount: 47,
-    flagged: false,
-  },
-  {
-    id: 2,
-    name: "Sarah Williams",
-    email: "sarah@example.com",
-    role: "Moderator",
-    status: "Active",
-    signupDate: "2023-10-16",
-    lastActive: "2023-10-21 09:45",
-    loginCount: 128,
-    flagged: false,
-  },
-  {
-    id: 3,
-    name: "Michael Chen",
-    email: "michael@example.com",
-    role: "User",
-    status: "Suspended",
-    signupDate: "2023-10-17",
-    lastActive: "2023-10-20 18:12",
-    loginCount: 23,
-    flagged: true,
-  },
-  {
-    id: 4,
-    name: "Emily Rodriguez",
-    email: "emily@example.com",
-    role: "Admin",
-    status: "Active",
-    signupDate: "2023-10-18",
-    lastActive: "2023-10-21 11:27",
-    loginCount: 215,
-    flagged: false,
-  },
-  {
-    id: 5,
-    name: "David Kim",
-    email: "david@example.com",
-    role: "User",
-    status: "Active",
-    signupDate: "2023-10-19",
-    lastActive: "2023-10-20 16:55",
-    loginCount: 19,
-    flagged: false,
-  },
-]
 
 // Sample notifications
 const notifications = [
@@ -156,7 +55,7 @@ const notifications = [
   {
     id: 2,
     type: "role",
-    message: "Sarah Williams has been promoted to Moderator",
+    message: "Sarah Williams has been promoted to User",
     time: "5 hours ago",
     read: false,
   },
@@ -186,7 +85,89 @@ export default function Page() {
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [showNotifications, setShowNotifications] = useState(false)
   const [unreadNotifications, setUnreadNotifications] = useState(notifications.filter((n) => !n.read).length)
+  const [totalUsers, setTotalUsers] = useState(0);
 
+
+  const [recentUsers, setRecentUsers] = useState([]); // State to hold user data
+  const [loading, setLoading] = useState(true); // State for loading indicator
+
+  const [logs, setLogs] = useState<IUserLoginData[]>([]);
+
+
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  //fetch total of user
+  useEffect(() => {
+    const fetchUserCount = async () => {
+      try {
+        const response = await fetch('/api/users/total'); // Adjust this path as necessary
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setTotalUsers(data.total); // Access the total value from the response
+      } catch (error) {
+        console.error('Error fetching user count:', error);
+      }
+    };
+
+    fetchUserCount();
+  }, []);
+
+
+  //fetch active users   
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await fetch('/api/users/logs');
+        const data: IUserLoginData[] = await response.json();
+        console.log(data); // Debug the response here to see if it's an array
+        setLogs(data);
+      } catch (error) {
+        console.error('Failed to fetch logs:', error);
+        setLogs([]); // Set to empty array in case of error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLogs();
+  }, []);
+
+  //fetch users from database to display it in the table 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/users/allUser');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+
+        const data = await response.json();
+
+        // Ensure data is an array before setting it
+        if (Array.isArray(data)) {
+          setUsers(data);
+        } else {
+          console.error('API did not return an array:', data);
+          setUsers([]); // Set to empty array as fallback
+        }
+      } catch (err) {
+        console.error('Error fetching users:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+        setUsers([]); // Set to empty array on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  if (loading) return <div>Loading...</div>; // Loading state
   // Handle marking all notifications as read
   const markAllAsRead = () => {
     setUnreadNotifications(0)
@@ -206,9 +187,13 @@ export default function Page() {
 
   // Handle user deletion
   const handleDeleteUser = (user: any) => {
-    setSelectedUser(user)
-    setShowDeleteDialog(true)
-  }
+    const confirmDelete = window.confirm(`Are you sure you want to delete ${user.name}?`);
+    if (confirmDelete) {
+      console.log(`Deleting user: ${user.name}`);
+      // Implement your logic for deleting the user
+      // e.g., make the API call to delete the user from the database
+    }
+  };
 
   // Handle user role management
   const handleManageRole = (user: any) => {
@@ -384,10 +369,10 @@ export default function Page() {
                     <Users className="h-4 w-4 text-[#00406C]" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">2,543</div>
-                    <p className="text-xs text-[#B3B3B3] mt-1">
+                    <div className="text-2xl font-bold">{totalUsers}</div>
+                    {/* <p className="text-xs text-[#B3B3B3] mt-1">
                       <span className="text-green-500">+12%</span> from last month
-                    </p>
+                    </p> */}
                   </CardContent>
                 </Card>
                 <Card className="bg-[#001523] border-[#002945]">
@@ -395,13 +380,20 @@ export default function Page() {
                     <CardTitle className="text-sm font-medium text-[#B3B3B3]">Active Users</CardTitle>
                     <UserCheck className="h-4 w-4 text-[#00406C]" />
                   </CardHeader>
+
                   <CardContent>
-                    <div className="text-2xl font-bold">1,128</div>
-                    <p className="text-xs text-[#B3B3B3] mt-1">
-                      <span className="text-green-500">+5%</span> from yesterday
-                    </p>
+                    {Array.isArray(logs) && logs.map(log => (
+                      <div key={log._id} className="mb-4">
+                        <div className="text-2xl font-bold">{log.counter}</div>
+                        {/* <p className="text-xs text-[#B3B3B3] mt-1">
+                          <span className="text-green-500">+5%</span> from yesterday
+                        </p> */}
+                      </div>
+                    ))}
+                    {!Array.isArray(logs) && <p>No logs available.</p>}
                   </CardContent>
                 </Card>
+
                 <Card className="bg-[#001523] border-[#002945]">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium text-[#B3B3B3]">Total Messages</CardTitle>
@@ -542,63 +534,30 @@ export default function Page() {
                         <thead>
                           <tr className="border-b border-[#002945]">
                             <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Name</th>
+                            <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Email</th>
                             <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Role</th>
-                            <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Status</th>
-                            <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Last Active</th>
                             <th className="px-4 py-3 text-right font-medium text-[#B3B3B3]">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {recentUsers.slice(0, 3).map((user) => (
+                          {Array.isArray(logs) && logs.slice(0, 3).map(log => (
                             <tr
-                              key={user.id}
+                              key={log._id}
                               className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors"
                             >
                               <td className="px-4 py-3">
                                 <div className="flex items-center gap-3">
                                   <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
                                     <span className="font-medium text-xs">
-                                      {user.name
-                                        .split(" ")
-                                        .map((n) => n[0])
-                                        .join("")}
+                                      {log.name.split(" ").map((n) => n[0]).join("")}
                                     </span>
                                   </div>
                                   <div>
-                                    <div className="font-medium">{user.name}</div>
-                                    <div className="text-xs text-[#B3B3B3]">{user.email}</div>
+                                    <div className="text-xs text-[#B3B3B3]">{log.email}</div>
                                   </div>
-                                  {user.flagged && (
-                                    <Badge className="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30 ml-2">
-                                      Flagged
-                                    </Badge>
-                                  )}
                                 </div>
                               </td>
-                              <td className="px-4 py-3">
-                                <Badge
-                                  className={cn(
-                                    "font-normal",
-                                    user.role === "Admin" && "bg-[#00406C] hover:bg-[#003A61]",
-                                    user.role === "Moderator" && "bg-blue-600 hover:bg-blue-700",
-                                    user.role === "User" && "bg-[#001A2C] hover:bg-[#002945]",
-                                  )}
-                                >
-                                  {user.role}
-                                </Badge>
-                              </td>
-                              <td className="px-4 py-3">
-                                <Badge
-                                  className={cn(
-                                    "font-normal",
-                                    user.status === "Active" && "bg-green-600 hover:bg-green-700",
-                                    user.status === "Suspended" && "bg-red-600 hover:bg-red-700",
-                                  )}
-                                >
-                                  {user.status}
-                                </Badge>
-                              </td>
-                              <td className="px-4 py-3 text-[#B3B3B3]">{user.lastActive}</td>
+                              <td className="px-4 py-3">User</td>
                               <td className="px-4 py-3 text-right">
                                 <DropdownMenu>
                                   <DropdownMenuTrigger asChild>
@@ -616,29 +575,15 @@ export default function Page() {
                                   >
                                     <DropdownMenuItem
                                       className="hover:bg-[#001A2C] cursor-pointer"
-                                      onClick={() => console.log(`View user: ${user.name}`)}
+                                      onClick={() => console.log(`View user: ${log.name}`)}
                                     >
                                       <Eye className="mr-2 h-4 w-4" />
                                       View Details
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem
-                                      className="hover:bg-[#001A2C] cursor-pointer"
-                                      onClick={() => handleManageRole(user)}
-                                    >
-                                      <UserCog className="mr-2 h-4 w-4" />
-                                      Manage Role
-                                    </DropdownMenuItem>
                                     <DropdownMenuSeparator className="bg-[#002945]" />
                                     <DropdownMenuItem
-                                      className="hover:bg-[#001A2C] cursor-pointer text-yellow-500"
-                                      onClick={() => handleSuspendUser(user)}
-                                    >
-                                      <Ban className="mr-2 h-4 w-4" />
-                                      {user.status === "Suspended" ? "Unsuspend User" : "Suspend User"}
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem
                                       className="hover:bg-[#001A2C] cursor-pointer text-red-500"
-                                      onClick={() => handleDeleteUser(user)}
+                                      onClick={() => handleDeleteUser(log)}
                                     >
                                       <Trash2 className="mr-2 h-4 w-4" />
                                       Delete User
@@ -648,6 +593,11 @@ export default function Page() {
                               </td>
                             </tr>
                           ))}
+                          {!Array.isArray(logs) && (
+                            <tr>
+                              <td colSpan={3} className="text-center">No logs available.</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -655,8 +605,7 @@ export default function Page() {
                 </Card>
               </motion.div>
             </TabsContent>
-
-            {/* User Management Tab */}
+            {/*user managment table */}
             <TabsContent value="users" className="space-y-6">
               <Card className="bg-[#001523] border-[#002945]">
                 <CardHeader>
@@ -668,10 +617,7 @@ export default function Page() {
                 <CardContent>
                   <div className="flex flex-col sm:flex-row gap-4 mb-6">
                     <div className="flex-1">
-                      <Input
-                        placeholder="Search by name or email"
-                        className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3]"
-                      />
+                      <Input placeholder="Search by name or email" className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3]" />
                     </div>
                     <div className="flex gap-2">
                       <Select defaultValue="all">
@@ -681,8 +627,8 @@ export default function Page() {
                         <SelectContent className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
                           <SelectItem value="all">All Roles</SelectItem>
                           <SelectItem value="admin">Admin</SelectItem>
-                          <SelectItem value="moderator">Moderator</SelectItem>
                           <SelectItem value="user">User</SelectItem>
+                          <SelectItem value="guest">Guest</SelectItem>
                         </SelectContent>
                       </Select>
                       <Select defaultValue="all">
@@ -690,16 +636,15 @@ export default function Page() {
                           <SelectValue placeholder="Filter by status" />
                         </SelectTrigger>
                         <SelectContent className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
-                          <SelectItem value="all">All Status</SelectItem>
+                          <SelectItem value="all">All Statuses</SelectItem>
                           <SelectItem value="active">Active</SelectItem>
                           <SelectItem value="suspended">Suspended</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                    <table className="min-w-full bg-[#001A2C] border-collapse">
                       <thead>
                         <tr className="border-b border-[#002945]">
                           <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Name</th>
@@ -712,283 +657,221 @@ export default function Page() {
                         </tr>
                       </thead>
                       <tbody>
-                        {recentUsers.map((user) => (
-                          <tr key={user.id} className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors">
-                            <td className="px-4 py-3">
-                              <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
-                                  <span className="font-medium text-xs">
-                                    {user.name
-                                      .split(" ")
-                                      .map((n) => n[0])
-                                      .join("")}
-                                  </span>
+                        {Array.isArray(users) && users.length > 0 ? (
+                          users.map((user) => (
+                            <tr key={user._id} className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors">
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3">
+                                  <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
+                                    <span className="font-medium text-xs">
+                                      {user.name.split(" ").map((n) => n[0]).join("")}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <div className="font-medium">{user.name}</div>
+                                  </div>
                                 </div>
-                                <div>
-                                  <div className="font-medium">{user.name}</div>
-                                  {user.flagged && (
-                                    <Badge className="bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30 mt-1">
-                                      Flagged
-                                    </Badge>
+                              </td>
+                              <td className="px-4 py-3 text-[#B3B3B3]">{user.email}</td>
+                              <td className="px-4 py-3">
+                                <Badge
+                                  className={cn(
+                                    "font-normal",
+                                    user.role === "Admin" && "bg-[#00406C] hover:bg-[#003A61]",
+                                    user.role === "User" && "bg-[#001A2C] hover:bg-[#002945]",
                                   )}
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-[#B3B3B3]">{user.email}</td>
-                            <td className="px-4 py-3">
-                              <Badge
-                                className={cn(
-                                  "font-normal",
-                                  user.role === "Admin" && "bg-[#00406C] hover:bg-[#003A61]",
-                                  user.role === "Moderator" && "bg-blue-600 hover:bg-blue-700",
-                                  user.role === "User" && "bg-[#001A2C] hover:bg-[#002945]",
-                                )}
-                              >
-                                {user.role}
-                              </Badge>
-                            </td>
-                            <td className="px-4 py-3">
-                              <Badge
-                                className={cn(
-                                  "font-normal",
-                                  user.status === "Active" && "bg-green-600 hover:bg-green-700",
-                                  user.status === "Suspended" && "bg-red-600 hover:bg-red-700",
-                                )}
-                              >
-                                {user.status}
-                              </Badge>
-                            </td>
-                            <td className="px-4 py-3 text-[#B3B3B3]">{user.signupDate}</td>
-                            <td className="px-4 py-3 text-[#B3B3B3]">{user.lastActive}</td>
-                            <td className="px-4 py-3 text-right">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 text-[#B3B3B3] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                                  >
-                                    <MoreHorizontal className="h-4 w-4" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                  align="end"
-                                  className="bg-[#001523] border-[#002945] text-[#F2F2F2]"
                                 >
-                                  <DropdownMenuItem
-                                    className="hover:bg-[#001A2C] cursor-pointer"
-                                    onClick={() => console.log(`View user: ${user.name}`)}
+                                  {user.role}
+                                </Badge>
+                              </td>
+
+                              <td className="px-4 py-3 text-[#B3B3B3]">{new Date(user.createdAt).toLocaleDateString()}</td>
+                              <td className="px-4 py-3 text-[#B3B3B3]">{new Date(user.updatedAt).toLocaleDateString()}</td>
+                              <td className="px-4 py-3 text-right">
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-8 w-8 text-[#B3B3B3] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                                    >
+                                      <MoreHorizontal className="h-4 w-4" />
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent
+                                    align="end"
+                                    className="bg-[#001523] border-[#002945] text-[#F2F2F2]"
                                   >
-                                    <Eye className="mr-2 h-4 w-4" />
-                                    View Details
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    className="hover:bg-[#001A2C] cursor-pointer"
-                                    onClick={() => handleManageRole(user)}
-                                  >
-                                    <UserCog className="mr-2 h-4 w-4" />
-                                    Manage Role
-                                  </DropdownMenuItem>
-                                  <DropdownMenuSeparator className="bg-[#002945]" />
-                                  <DropdownMenuItem
-                                    className="hover:bg-[#001A2C] cursor-pointer text-yellow-500"
-                                    onClick={() => handleSuspendUser(user)}
-                                  >
-                                    <Ban className="mr-2 h-4 w-4" />
-                                    {user.status === "Suspended" ? "Unsuspend User" : "Suspend User"}
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    className="hover:bg-[#001A2C] cursor-pointer text-red-500"
-                                    onClick={() => handleDeleteUser(user)}
-                                  >
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                                    Delete User
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                                    <DropdownMenuItem
+                                      className="hover:bg-[#001A2C] cursor-pointer"
+                                      onClick={() => handleManageRole(user)}
+                                    >
+                                      <UserCog className="mr-2 h-4 w-4" />
+                                      Manage Role
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      className="hover:bg-[#001A2C] cursor-pointer text-red-500"
+                                      onClick={() => handleSuspendUser(user)}
+                                    >
+                                      <Ban className="mr-2 h-4 w-4" />
+                                      {user.status === "Active" ? "Suspend User" : "Unsuspend User"}
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      className="hover:bg-[#001A2C] cursor-pointer text-red-500"
+                                      onClick={() => handleDeleteUser(user)}
+                                    >
+                                      <Trash2 className="mr-2 h-4 w-4" />
+                                      Delete User
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </td>
+                            </tr>
+                          ))): (
+                          <tr>
+                            <td colSpan={7} className="text-center py-4 text-[#B3B3B3]">
+                              {loading ? 'Loading users...' : 'No users found'}
                             </td>
                           </tr>
-                        ))}
+                        )}
                       </tbody>
                     </table>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
-
-            {/* Analytics Tab */}
-            <TabsContent value="analytics" className="space-y-6">
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <Card className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <CardTitle>User Activity (Past Week)</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">Active users and new signups per day</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-80">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={userActivityData}
-                          margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                          }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
-                          <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                          <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: "#001A2C",
-                              borderColor: "#002945",
-                              color: "#F2F2F2",
-                            }}
-                            labelStyle={{ color: "#F2F2F2" }}
-                          />
-                          <Legend />
-                          <Bar dataKey="active" name="Active Users" fill="hsl(var(--chart-1))" />
-                          <Bar dataKey="new" name="New Signups" fill="hsl(var(--chart-2))" />
-                        </BarChart>
-                      </ResponsiveContainer>
+            {/*analysis user */}
+            <Card className="bg-[#001523] border-[#002945]">
+              <CardHeader>
+                <CardTitle>User Engagement Metrics</CardTitle>
+                <CardDescription className="text-[#B3B3B3]">Detailed analytics on user engagement</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#B3B3B3]">Average Session Duration</span>
+                      <span className="font-medium">12m 34s</span>
                     </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <CardTitle>User Engagement Metrics</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">Detailed analytics on user engagement</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[#B3B3B3]">Average Session Duration</span>
-                          <span className="font-medium">12m 34s</span>
-                        </div>
-                        <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#00406C] rounded-full" style={{ width: "68%" }}></div>
-                        </div>
-                        <p className="text-xs text-[#B3B3B3]">
-                          <span className="text-green-500">+8%</span> from last week
-                        </p>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[#B3B3B3]">Messages per User</span>
-                          <span className="font-medium">18.2</span>
-                        </div>
-                        <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#00406C] rounded-full" style={{ width: "75%" }}></div>
-                        </div>
-                        <p className="text-xs text-[#B3B3B3]">
-                          <span className="text-green-500">+12%</span> from last week
-                        </p>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[#B3B3B3]">Code Reviews per User</span>
-                          <span className="font-medium">4.8</span>
-                        </div>
-                        <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#00406C] rounded-full" style={{ width: "45%" }}></div>
-                        </div>
-                        <p className="text-xs text-[#B3B3B3]">
-                          <span className="text-green-500">+5%</span> from last week
-                        </p>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[#B3B3B3]">User Retention Rate</span>
-                          <span className="font-medium">82%</span>
-                        </div>
-                        <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#00406C] rounded-full" style={{ width: "82%" }}></div>
-                        </div>
-                        <p className="text-xs text-[#B3B3B3]">
-                          <span className="text-green-500">+3%</span> from last month
-                        </p>
-                      </div>
+                    <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#00406C] rounded-full" style={{ width: "68%" }}></div>
                     </div>
-                  </CardContent>
-                </Card>
+                    <p className="text-xs text-[#B3B3B3]">
+                      <span className="text-green-500">+8%</span> from last week
+                    </p>
+                  </div>
 
-                <Card className="bg-[#001523] border-[#002945] lg:col-span-2">
-                  <CardHeader>
-                    <CardTitle>User Analytics Reports</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="font-medium">User Growth Report</h3>
-                            <p className="text-xs text-[#B3B3B3] mt-1">Monthly user acquisition and churn</p>
-                          </div>
-                          <FileText className="h-5 w-5 text-[#00406C]" />
-                        </div>
-                        <div className="mt-auto pt-4">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                          >
-                            <Download className="mr-2 h-4 w-4" />
-                            Download CSV
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="font-medium">Engagement Metrics</h3>
-                            <p className="text-xs text-[#B3B3B3] mt-1">User activity and interaction data</p>
-                          </div>
-                          <FileText className="h-5 w-5 text-[#00406C]" />
-                        </div>
-                        <div className="mt-auto pt-4">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                          >
-                            <Download className="mr-2 h-4 w-4" />
-                            Download CSV
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="font-medium">Code Review Analytics</h3>
-                            <p className="text-xs text-[#B3B3B3] mt-1">AI code review usage statistics</p>
-                          </div>
-                          <FileText className="h-5 w-5 text-[#00406C]" />
-                        </div>
-                        <div className="mt-auto pt-4">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                          >
-                            <Download className="mr-2 h-4 w-4" />
-                            Download CSV
-                          </Button>
-                        </div>
-                      </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#B3B3B3]">Messages per User</span>
+                      <span className="font-medium">18.2</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
+                    <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#00406C] rounded-full" style={{ width: "75%" }}></div>
+                    </div>
+                    <p className="text-xs text-[#B3B3B3]">
+                      <span className="text-green-500">+12%</span> from last week
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#B3B3B3]">Code Reviews per User</span>
+                      <span className="font-medium">4.8</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#00406C] rounded-full" style={{ width: "45%" }}></div>
+                    </div>
+                    <p className="text-xs text-[#B3B3B3]">
+                      <span className="text-green-500">+5%</span> from last week
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#B3B3B3]">User Retention Rate</span>
+                      <span className="font-medium">82%</span>
+                    </div>
+                    <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#00406C] rounded-full" style={{ width: "82%" }}></div>
+                    </div>
+                    <p className="text-xs text-[#B3B3B3]">
+                      <span className="text-green-500">+3%</span> from last month
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-[#001523] border-[#002945] lg:col-span-2">
+              <CardHeader>
+                <CardTitle>User Analytics Reports</CardTitle>
+                <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="font-medium">User Growth Report</h3>
+                        <p className="text-xs text-[#B3B3B3] mt-1">Monthly user acquisition and churn</p>
+                      </div>
+                      <FileText className="h-5 w-5 text-[#00406C]" />
+                    </div>
+                    <div className="mt-auto pt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        Download CSV
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="font-medium">Engagement Metrics</h3>
+                        <p className="text-xs text-[#B3B3B3] mt-1">User activity and interaction data</p>
+                      </div>
+                      <FileText className="h-5 w-5 text-[#00406C]" />
+                    </div>
+                    <div className="mt-auto pt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        Download CSV
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="font-medium">Code Review Analytics</h3>
+                        <p className="text-xs text-[#B3B3B3] mt-1">AI code review usage statistics</p>
+                      </div>
+                      <FileText className="h-5 w-5 text-[#00406C]" />
+                    </div>
+                    <div className="mt-auto pt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        Download CSV
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </Tabs>
         </main>
       </div>
@@ -1008,7 +891,7 @@ export default function Page() {
                 <span className="font-medium text-sm">
                   {selectedUser.name
                     .split(" ")
-                    .map((n:string) => n[0])
+                    .map((n: string) => n[0])
                     .join("")}
                 </span>
               </div>
@@ -1056,7 +939,7 @@ export default function Page() {
                   <span className="font-medium text-sm">
                     {selectedUser.name
                       .split(" ")
-                      .map((n:string) => n[0])
+                      .map((n: string) => n[0])
                       .join("")}
                   </span>
                 </div>
@@ -1074,7 +957,6 @@ export default function Page() {
                   </SelectTrigger>
                   <SelectContent className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
                     <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="moderator">Moderator</SelectItem>
                     <SelectItem value="user">User</SelectItem>
                   </SelectContent>
                 </Select>
@@ -1088,7 +970,7 @@ export default function Page() {
                       type="checkbox"
                       id="perm-manage-users"
                       className="rounded border-[#002945] bg-[#001A2C] text-[#00406C] focus:ring-[#00406C]"
-                      defaultChecked={selectedUser.role === "Admin" || selectedUser.role === "Moderator"}
+                      defaultChecked={selectedUser.role === "Admin" || selectedUser.role === "User"}
                     />
                     <label htmlFor="perm-manage-users" className="text-sm">
                       Manage Users
@@ -1110,7 +992,7 @@ export default function Page() {
                       type="checkbox"
                       id="perm-manage-content"
                       className="rounded border-[#002945] bg-[#001A2C] text-[#00406C] focus:ring-[#00406C]"
-                      defaultChecked={selectedUser.role === "Admin" || selectedUser.role === "Moderator"}
+                      defaultChecked={selectedUser.role === "Admin" || selectedUser.role === "User"}
                     />
                     <label htmlFor="perm-manage-content" className="text-sm">
                       Manage Content
@@ -1140,7 +1022,7 @@ export default function Page() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   )
 }
 
