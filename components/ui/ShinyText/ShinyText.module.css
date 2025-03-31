@@ -1,0 +1,25 @@
+@keyframes shine {
+    0% {
+      background-position-x: 200%;
+    }
+    100% {
+      background-position-x: -200%;
+    }
+  }
+  
+  .shinyText {
+    background-image: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.2) 30%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.2) 70%
+      );
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .animateShine {
+    animation: shine 5s linear infinite;
+  }
+  
