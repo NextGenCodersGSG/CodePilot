@@ -58,10 +58,38 @@ export function NavProjects({
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
       <SidebarMenu >
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name} className="hover:bg-muted rounded-lg p-2 ">
+          <SidebarMenuItem key={item.name} className="hover:bg-muted/90 rounded-lg p-2 ">
             <Link href={item.url}>
-              <span className="block w-full overflow-hidden text-ellipsis whitespace-nowrap">{item.name}</span>
+              <span className="block w-[90%] overflow-hidden text-ellipsis whitespace-nowrap">{item.name}</span>
             </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="cursor-pointer" asChild>
+                <SidebarMenuAction showOnHover>
+                  <MoreHorizontal />
+                  <span className="sr-only">More</span>
+                </SidebarMenuAction>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-48 rounded-lg"
+                side={isMobile ? "bottom" : "right"}
+                align={isMobile ? "end" : "start"}
+              >
+                <DropdownMenuItem>
+                  <Folder className="text-muted-foreground" />
+                  <span>View Project</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Forward className="text-muted-foreground" />
+                  <span>Share Project</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Trash2 className="text-muted-foreground" />
+                  <span>Delete Project</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
           </SidebarMenuItem>
         ))}
         <SidebarMenuItem>
