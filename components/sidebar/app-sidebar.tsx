@@ -1,17 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  BookOpen,
-  BrainCircuit,
-  BugPlay,
-  FlaskConical,
-  GalleryVerticalEnd,
-  LayoutDashboard,
-  LucideProps,
-  ShieldCheck,
-  SquareTerminal,
-} from "lucide-react"
+
 
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavProjects } from "@/components/sidebar/nav-projects"
@@ -24,9 +14,10 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useSidebar } from "@/providers/SidebarContext"
+import { GalleryVerticalEnd, LayoutDashboard, BugPlay, BrainCircuit, BookOpen } from "lucide-react"
 
-// This is sample data.
-const initialData = {
+export const data = {
   user: {
     name: "John Doe",
     email: "John@example.com",
@@ -98,28 +89,10 @@ const initialData = {
       ],
     },
   ],
-  projects: [
-    {
-      name: "AI Debugging Lab",
-      url: "#",
-      icon: FlaskConical,
-    },
-    {
-      name: "Security & Compliance",
-      url: "#",
-      icon: ShieldCheck,
-    },
-    {
-      name: "Code Optimization",
-      url: "#",
-      icon: SquareTerminal,
-    },
-  ],
 };
 
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [data,setData]= React.useState(initialData);
+  const {sidebarProjects} = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -127,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={sidebarProjects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
