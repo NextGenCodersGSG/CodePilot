@@ -1,4 +1,4 @@
-import { IUser, Role } from "@/@types";
+import { IUser, Role, UserRoles } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IUserDocument extends Document, IUser {}

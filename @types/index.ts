@@ -58,4 +58,3 @@ export interface IAIReviewResponse{
 }
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
-
