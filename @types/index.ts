@@ -66,4 +66,3 @@ interface Project {
 export type IProject = Project & IAnalysis;
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
-

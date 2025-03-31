@@ -79,16 +79,12 @@ export const data = {
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "#",
-        },
-        {
           title: "Get Started",
-          url: "#",
+          url: "/code-analysis/documentation",
         },
         {
-          title: "API Reference",
-          url: "#",
+          title: "Integration",
+          url: "/code-analysis/documentation/integration",
         },
       ],
     },

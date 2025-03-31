@@ -5,6 +5,7 @@ import { connection } from "@/DB/connection";
 import { cookies } from "next/headers";
 import { createToken } from "@/lib/storeGetDelete";
 
+
 export async function POST(req: NextRequest) {
   await connection();
   try {
@@ -14,7 +15,6 @@ export async function POST(req: NextRequest) {
     }
     const { token } = await AuthService.signIn(data);
     console.log("token", token);
-
     return NextResponse.json(
       {
         message: "User login successfully",
