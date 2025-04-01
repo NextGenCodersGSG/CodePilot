@@ -92,7 +92,7 @@ export const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {sidebarProjects} = useSidebar();
+  const {sidebarProjects ,loading} = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={sidebarProjects} />
+        <NavProjects projects={sidebarProjects} loading={loading} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
