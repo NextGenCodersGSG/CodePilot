@@ -1,7 +1,9 @@
-import { ILogin } from "@/@types";
+import xss from "xss";
+import { ILogin, IUser, Role } from "@/@types";
 import UserRepository from "../repositories/auth.repo";
-import { comparePassword } from "@/lib/hashAndCompare";
-import { createToken, getToken } from "@/lib/storeGetDelete";
+import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import { createToken} from "@/lib/storeGetDelete";
+import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
 
 
 class AuthService {
@@ -33,6 +35,29 @@ class AuthService {
 
     return { token, user };
   }
+  async signUp(data: IUser) {
+    const validateUser = await validationSchema.validate(data);
+    const exist = await UserRepository.findUserByEmail(data.email);
+    if(exist) {
+      throw new Error(`You Already have an account with email: ${data.email}`  )
+    }
+    if(!validateUser) {
+      throw new Error("Invalid data");
+    }
+    const hashedPass = await hashPassword(data.password);
+    const userData: IUser = {
+      name: xss(data.name) ,
+      email: xss(data.email),
+      password: hashedPass,
+      role: Role.User,
+    };
+    const newUser = await UserRepository.createUser(userData);
+    if (!newUser) {
+      throw new Error("Something went wrong, please try again later");
+    }
+    return newUser;
+  }
 }
 
 export default new AuthService();
+
