@@ -8,7 +8,7 @@ import RightContent from '@/components/landing/right-content'
 import SplineLoader from '@/components/landing/spline-loader'
 
 const Page = () => {
-  throw new Error('This is a client component');
+  // throw new Error('This is a client component');
   return (
     <div>
       <LandingPage />

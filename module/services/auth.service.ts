@@ -46,7 +46,7 @@ class AuthService {
     }
     const hashedPass = await hashPassword(data.password);
     const userData: IUser = {
-      name: xss(data.name) ,
+      name: xss(data.name),
       email: xss(data.email),
       password: hashedPass,
       role: Role.User,
