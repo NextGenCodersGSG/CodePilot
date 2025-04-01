@@ -5,7 +5,6 @@ import {
   Forward,
   MoreHorizontal,
   Trash2,
-  type LucideIcon,
 } from "lucide-react"
 
 import {
@@ -45,7 +44,6 @@ export function NavProjects({
         {loading ? (<div className="mx-auto"><LoadingSpinner className="h-6 w-6" /></div>) : projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-
                   <a href={item.url}>
                   <span>{item.name}</span>
                 </a>
