@@ -1,12 +1,11 @@
 "use client"
 
-import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Code, Github, Linkedin, Twitter, Zap, Shield, BarChart} from "lucide-react"
-import { useEffect, useRef } from "react"
+import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import { motion, useAnimation, type Variants } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
@@ -14,7 +13,19 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 import Header from "@/components/header/Header"
 import ShinyText from "@/components/ui/ShinyText/shiny-text"
+import { loadStripe } from '@stripe/stripe-js';
+import LoadingSpinner from "../spinner/LoadingSpinner"
 
+// Replace with your actual Stripe publishable key
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+
+type PlanId = 'starter' | 'pro' | 'team';
+
+interface LoadingState {
+  starter: boolean;
+  pro: boolean;
+  team: boolean;
+}
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
   const ref = useRef(null)
@@ -74,7 +85,52 @@ export default function LandingPage() {
   const featuresSection = useInView()
   const testimonialsSection = useInView()
   const pricingSection = useInView()
+  const [isLoading, setIsLoading] = useState<LoadingState>({
+    starter: false,
+    pro: false,
+    team: false
+  });
 
+  const handleCheckout = async (planId: PlanId) => {
+    // Update loading state for the specific plan
+    setIsLoading(prev => ({ ...prev, [planId]: true }));
+    
+    try {
+      // Call your backend API to create a Stripe checkout session
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const session = await response.json();
+      
+      // Redirect to Stripe Checkout
+      const stripe = await stripePromise;
+      if (stripe) {
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: session.id,
+        });
+        
+        if (error) {
+          console.error('Error redirecting to checkout:', error);
+        }
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+    } finally {
+      // Reset loading state
+      setIsLoading(prev => ({ ...prev, [planId]: false }));
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
@@ -380,9 +436,11 @@ export default function LandingPage() {
                   <CardFooter className="mt-auto">
                     <Button
                       variant="outline"
+                      onClick={() => handleCheckout('starter')}
+                      disabled={isLoading.starter}
                       className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
                     >
-                      Get started
+                      {isLoading.starter ? <LoadingSpinner/> : 'Get started'}
                     </Button>
                   </CardFooter>
                 </MotionCard>
@@ -429,7 +487,13 @@ export default function LandingPage() {
                     </ul>
                   </CardContent>
                   <CardFooter className="mt-auto">
-                    <Button className="cursor-pointer w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">Get started</Button>
+                    <Button
+                      onClick={() => handleCheckout('pro')}
+                      disabled={isLoading.pro}
+                      className="cursor-pointer w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]"
+                      >
+                        {isLoading.starter ? <LoadingSpinner/> : 'Get started'}
+                      </Button>
                   </CardFooter>
                 </MotionCard>
               </motion.div>
@@ -478,8 +542,10 @@ export default function LandingPage() {
                     <Button
                       variant="outline"
                       className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
+                      onClick={() => handleCheckout('team')}
+                      disabled={isLoading.team}
                     >
-                      Get started
+                        {isLoading.starter ? <LoadingSpinner/> : 'Get started'}
                     </Button>
                   </CardFooter>
                 </MotionCard>
