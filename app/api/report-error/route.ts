@@ -1,4 +1,6 @@
-import { sendEmailToDevelopers } from "@/utils/email";
+import { EmailTemplateProps } from "@/@types";
+import { emailTemplate } from "@/lib/emailTemplate";
+import EmailService from "@/module/services/email.service";
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
@@ -10,32 +12,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid input" }, { status: 400 })
     }
 
-    const emailBody = `
-    Reported by: ${email}
-    Feedback: ${feedback || 'No feedback provided'}
-    Error Message: ${errorMessage}
-    Error Digest: ${errorDigest || 'N/A'}
-    Stack Trace: ${errorStack || 'No stack trace available'}
-  `
+    const description = `An Error was discovered on the website by ${email} with the following details:
+      Error Message: ${errorMessage}
+      Stack Trace: ${errorStack}
+      Error Digest: ${errorDigest}
+      `;
+    const templateMessage : EmailTemplateProps = { link: "/localhost:3000",title: "Error Feedback", description: description, button: "View Error", secondary: "Happy Debugging!" };
+    const emailHtml = emailTemplate(templateMessage);
 
-    const emailSent = await sendEmailToDevelopers({
-      from: email,
-      subject: `Error Report: ${errorDigest || 'Unknown Error'}`,
-      body: emailBody,
-    });
+    await EmailService.sendEmail(process.env.DEV_EMAIL || "", "Error Feedback", emailHtml);
 
-    if(!emailSent.success){
-      return NextResponse.json({ error: "Failed to send email" }, { status: 500 })
-    }
-
-    console.log("Error report received:", {
-      email,
-      feedback,
-      errorMessage,
-      errorDigest,
-    })
-
-    return NextResponse.json({ success: true })
+    return NextResponse.json(
+      { message: "Verification email sent successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Failed to process error report:", error)
     return NextResponse.json({ error: "Failed to process error report" }, { status: 500 })

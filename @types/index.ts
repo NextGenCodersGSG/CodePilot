@@ -67,7 +67,6 @@ export type IProject = Project & IAnalysis;
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
 
-// types/index.ts
 export type PlanId = 'free' | 'pro' | 'team';
 
 export interface Plan {
@@ -97,4 +96,12 @@ export interface StripeWebhookEvent {
   };
   type: string;
   created: number;
+}
+
+export interface EmailTemplateProps {
+  link?: string;
+  title: string;
+  description: string;
+  secondary: string;
+  button?: string;
 }
