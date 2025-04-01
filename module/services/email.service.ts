@@ -15,7 +15,7 @@ class EmailService {
     } as nodemailer.TransportOptions);
   }
 
-  async sendEmail(userEmail: string, subject: string, message: string) {
+  async sendEmail(userEmail: string, subject: string, message: string, devEmail?: string) {
     try {
       const mailOptions = {
         from: process.env.SMTP_FROM_EMAIL,
