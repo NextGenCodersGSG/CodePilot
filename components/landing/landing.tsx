@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { motion, useAnimation, type Variants } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
@@ -72,8 +72,6 @@ export default function LandingPage() {
 
   const featuresSection = useInView()
   const testimonialsSection = useInView()
-  
- 
 
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">

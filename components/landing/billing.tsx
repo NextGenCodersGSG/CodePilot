@@ -12,7 +12,6 @@ import {
 import { CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, type Variants } from "framer-motion";
-
 import { loadStripe } from "@stripe/stripe-js";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { toast } from "../ui/sonner";
@@ -20,6 +19,7 @@ import { toast } from "../ui/sonner";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
 );
+
 type PlanId = "starter" | "pro" | "team";
 
 interface LoadingState {
@@ -27,6 +27,7 @@ interface LoadingState {
   pro: boolean;
   team: boolean;
 }
+
 function useInView(threshold = 0.1) {
   const controls = useAnimation();
   const ref = useRef(null);
@@ -85,7 +86,8 @@ const INITIAL_LOADING_STATE = {
   pro: false,
   team: false
 };
-export default function BillnigSection() {
+
+export default function BillingSection() {
   const pricingSection = useInView();
   const [isLoading, setIsLoading] = useState<LoadingState>(
     INITIAL_LOADING_STATE

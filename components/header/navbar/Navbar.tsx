@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Code, LucideIcon, Quote } from "lucide-react";
 import { Home, Star, ShoppingBag, UserPlus } from "lucide-react";
+
 const transition = {
   type: "spring",
   mass: 0.5,
@@ -79,17 +81,16 @@ export const Menu = ({
   );
 };
 
-
 export const ProductItem = ({
   title,
   description,
   href,
-  Icon, // Change 'icon' to 'Icon' to use it as a component
+  Icon,
 }: {
   title: string;
   description: string;
   href: string;
-  Icon: LucideIcon; // Expecting a Lucide icon component
+  Icon: LucideIcon;
 }) => {
   return (
     <Link href={href} className="flex space-x-2 items-center">
@@ -106,7 +107,6 @@ export const ProductItem = ({
     </Link>
   );
 };
-
 
 export const HoveredLink = ({ children, ...rest }: any) => {
   return (
