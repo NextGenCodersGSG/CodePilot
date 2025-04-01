@@ -15,6 +15,7 @@ import { motion, useAnimation, type Variants } from "framer-motion";
 
 import { loadStripe } from "@stripe/stripe-js";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import { toast } from "../ui/sonner";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
@@ -104,6 +105,7 @@ export default function BillnigSection() {
   const handleCheckout = async (planId: PlanId) => {
     if (!token) {
       console.log("user must be logged in to subscribe!");
+      toast("You must be logged in to subscribe!");
       return;
     }
     setIsLoading((prev) => ({ ...prev, [planId]: true }));

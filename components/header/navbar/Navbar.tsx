@@ -121,7 +121,6 @@ export const HoveredLink = ({ children, ...rest }: any) => {
 
 export default function Navbar() {
   const [active, setActive] = useState<string | null>(null);
-
   return (
     <header className="flex justify-center p-4">
       <Menu setActive={setActive}>
