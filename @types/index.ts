@@ -18,16 +18,6 @@ export interface ISecurity {
     vulnerability: string;
   }
 
-export interface IAnalysis {
-  title: string;
-  slug: string;
-  performance_issues: IPerformance[];
-  security_issues: ISecurity[];
-  bugs: IBug[];
-  description: string;
-  overall_suggestions: string[];
-}
-
 export enum Role {
   User = "user",
   Admin = "admin"
@@ -56,6 +46,16 @@ export interface IAIReviewResponse{
   securityIssues: String;
   bugs: String;
   overallSuggestions: String;
+}
+
+export interface IAnalysis {
+  title: string;
+  slug: string;
+  performance_issues: IPerformance[];
+  security_issues: ISecurity[];
+  bugs: IBug[];
+  description: string;
+  overall_suggestions: string[];
 }
 
 interface Project {

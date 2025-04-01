@@ -12,7 +12,6 @@ const Page = () => {
   return (
     <div>
       <LandingPage />
-      
       <section className='relative hidden xl:block min-h-[700px] overflow-hidden bg-[#00111C]'>
         {/* Background elements */}
         <div className="absolute inset-0 bg-[radial-gradient(#0000_2px,#00406C30_1px)] bg-[size:20px_20px] opacity-40" />

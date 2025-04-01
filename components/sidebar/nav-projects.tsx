@@ -24,15 +24,18 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
+import LoadingSpinner from "../spinner/LoadingSpinner"
+
 
 export function NavProjects({
   projects,
+  loading,
 }: {
   projects: {
     name: string
     url: string
-  }[]
+  }[],
+  loading: boolean
 }) {
   const { isMobile } = useSidebar()
   const [mounted, setMounted] = useState(false)
@@ -56,12 +59,14 @@ export function NavProjects({
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
-      <SidebarMenu >
-        {projects.map((item) => (
-          <SidebarMenuItem key={item.name} className="hover:bg-muted/90 rounded-lg p-2 ">
-            <Link href={item.url}>
-              <span className="block w-[90%] overflow-hidden text-ellipsis whitespace-nowrap">{item.name}</span>
-            </Link>
+      <SidebarMenu>
+        {loading ? (<div className="mx-auto"><LoadingSpinner className="h-6 w-6" /></div>) : projects.map((item) => (
+          <SidebarMenuItem key={item.name}>
+            <SidebarMenuButton asChild>
+               <a href={item.url}>
+                  <span>{item.name}</span>
+               </a>
+            </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger className="cursor-pointer" asChild>
                 <SidebarMenuAction showOnHover>

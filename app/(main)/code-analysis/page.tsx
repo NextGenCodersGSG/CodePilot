@@ -94,7 +94,6 @@ export default function Page() {
         overall_suggestions: data.overall_suggestions,
       }
       addProject(newProject);
-      console.log(newProject);
       
     } catch (error) {
       console.error("Error analyzing code:", error);
@@ -152,7 +151,7 @@ export default function Page() {
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }} 
-            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-5 w-full mt-5"
+            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
           >
             <textarea
               onChange={handleTypedMessage}

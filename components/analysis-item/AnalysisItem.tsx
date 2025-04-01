@@ -15,7 +15,7 @@ const AnalysisItem = ({index,issue,severity,solution,category}:Props) => {
     className="group relative p-4 rounded-2xl bg-gradient-to-br mb-3 from-gray-800/30 to-gray-900/50 hover:bg-gray-800/40 transition-all duration-300 last:mb-0"
   >
     <div
-      className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl rounded-tr-xl text-xs font-mono ${severity == "low"? "bg-green-600/40" : severity == "medium" ? "bg-yellow-600/40" : "bg-red-600/40"}`}
+      className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl rounded-tr-xl text-xs font-mono ${severity == "low"? "bg-blue-500/80" : severity == "medium" ? "bg-yellow-500/80" : "bg-red-500/80"}`}
     >
       {severity}
     </div>
