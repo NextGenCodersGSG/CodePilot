@@ -20,3 +20,12 @@ export interface PageAccessRight {
 export interface RouteConfigs {
   pageAccessName: PageAccessName;
 }
+
+export interface IUserLoginData {
+    _id: string; 
+    userId: string; 
+    name: string;   
+    email: string;  
+    counter:number;
+
+}

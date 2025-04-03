@@ -26,11 +26,21 @@ export enum Role {
 
 export type UserRoles = `${Role}`;
 
+// export interface IUser {
+//   name: string;
+//   email: string;
+//   role: UserRoles; 
+//   password: string;
+// }
 export interface IUser {
+  _id: string;          
   name: string;
   email: string;
-  role: UserRoles; 
-  password: string;
+  role: UserRoles;      
+  password: string;      
+  createdAt: string;     
+  updatedAt: string;    
+  __v?: number;          
 }
 
 export interface ICodeReview {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FileCode } from 'lucide-react'; // Ensure the icon import is correct
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React from 'react';
 
 const AIReviewDashboard = () => {
     const [totalAIReviews, setTotalAIReviews] = useState(0);
