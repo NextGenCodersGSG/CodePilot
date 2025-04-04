@@ -16,7 +16,7 @@ export async function GET() {
         const csv = generateCsv(users);
 
         // Return CSV as a file
-        return new Response(csv, {
+        return new NextResponse(csv, {
             headers: {
                 "Content-Type": "text/csv",
                 "Content-Disposition": 'attachment; filename="users.csv"',
