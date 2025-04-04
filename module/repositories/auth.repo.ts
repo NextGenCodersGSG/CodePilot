@@ -1,10 +1,29 @@
 import userModel, { IUserDocument } from "@/DB/models/user.model";
+import { IUser } from "@/@types/index";
 
-export class UserRepository {
+export class AuthRepository {
 
   async findUserByEmail(email: string): Promise<IUserDocument | null> {
     return await userModel.findOne({ email });
   }
 
+  async AddDeveloper(data: IUser, password: string){
+    const developer = await userModel.create({...data, password});
+    return developer;
+  }
+
+  async findUserByVerificationToken(userId: string, verifyToken: string): Promise<IUserDocument | null> {
+    return await userModel.findOne({
+        _id: userId,
+        verifyToken,
+        verifyTokenExpire: { $gt: new Date() },
+    });
 }
-export default new UserRepository();
+
+  async resetPassword(user: any, password: string){
+    user.password = password;
+    return await user.save();
+}
+
+}
+export default new AuthRepository();
