@@ -1,5 +1,5 @@
 import MeetingModel from "@/DB/models/meeting.model";
-import { IMeeting } from "@/@types/index";
+import { IMeeting, Status } from "@/@types/index";
 
 export class MeetingRepository {
     async createMeeting(data: IMeeting, userId: string) {
@@ -12,6 +12,16 @@ export class MeetingRepository {
             duration: data.duration,
         });
         return meeting;
+    }
+
+    async approveRequest(zoomId: string, meeting: any){
+        meeting.status = Status.APPROVED;
+        meeting.zoomMeeting = zoomId;
+        return await meeting.save();
+    }
+
+    async findMeetingById(id: string){
+        return MeetingModel.findById(id);
     }
 }
 

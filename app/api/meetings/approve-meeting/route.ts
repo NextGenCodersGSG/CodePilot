@@ -1,20 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import AuthService from "@/module/services/auth.service";
-import { IUser } from "@/@types/index";
+import { IMeeting } from "@/@types/index";
 import { connection } from "@/DB/connection";
-
+import meetingService from "@/module/services/meeting.service";
 
 export async function POST(req: NextRequest) {
     await connection();
     try {
-        const data: IUser = await req.json();
-        if (!data) {
-            return NextResponse.json({ error: "Data is required" }, { status: 400 });
+        // const { searchParams } = new URL(req.url);
+        // const meetingId = searchParams.get("id");
+        const {meetingId}=  await req.json();
+        if (!meetingId) {
+            return NextResponse.json({ error: "Meeting Id is required" }, { status: 400 });
         }
-        await AuthService.AddDeveloper(data);
+        await meetingService.approveMeeting(meetingId);
         return NextResponse.json(
             {
-                message: "Developer Added successfully",
+                message: "Meeting Approved successfully",
             },
             { status: 201 }
         );
