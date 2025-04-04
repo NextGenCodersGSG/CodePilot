@@ -1,6 +1,6 @@
 import UserRepository from "../repositories/user.repo";
 import meetingRepo from "../repositories/meeting.repo";
-import { IMeeting, IZoom } from "@/@types/index";
+import { IMeeting, IZoom, Status } from "@/@types/index";
 import zoomRepo from "../repositories/zoom.repo";
 import {getZoomAccessToken} from '@/lib/zoomAccessToken'
 
@@ -24,6 +24,10 @@ class MeetingService {
     async approveMeeting(meetingId: string) {
 
         const meeting = await meetingRepo.findMeetingById(meetingId);
+
+        if(meeting.status != Status.PENDING){
+            throw new Error("Only Pending Request Approved");
+        }
 
         if (!meeting) {
             throw new Error("Meeting Not Found");
@@ -71,6 +75,20 @@ class MeetingService {
         const zoomMeeting = await zoomRepo.createZoom(ZoomData);
 
         await meetingRepo.approveRequest(zoomMeeting._id, meeting);
+    }
+
+    async rejectMeeting(meetingId: string){
+        const meeting = await meetingRepo.findMeetingById(meetingId);
+
+        if(meeting.status != Status.PENDING){
+            throw new Error("Only Pending Request Rejected");
+        }
+
+        if (!meeting) {
+            throw new Error("Meeting Not Found");
+        }
+        
+        await meetingRepo.rejectMeeting(meeting);
     }
 }
 

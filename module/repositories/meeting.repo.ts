@@ -23,6 +23,11 @@ export class MeetingRepository {
     async findMeetingById(id: string){
         return MeetingModel.findById(id);
     }
+
+        async rejectMeeting( meeting: any){
+        meeting.status = Status.REJECTED;
+        return await meeting.save();
+    }
 }
 
 export default new MeetingRepository();
