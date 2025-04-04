@@ -7,7 +7,7 @@ const UserSchema = new Schema<IUserDocument>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    role: { type: String, enum: Object.values(Role), default: Role.Guest },
+    role: { type: String, enum: Object.values(Role), required: true },
     password: { type: String, required: true },
   },
   { timestamps: true }

@@ -20,7 +20,8 @@ export interface ISecurity {
 
 export enum Role {
   User = "user",
-  Admin = "admin"
+  Admin = "admin",
+  Developer = "developer"
 }
 
 export type UserRoles = `${Role}`;
