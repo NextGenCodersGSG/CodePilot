@@ -1,6 +1,6 @@
 import { ILogin, IUser } from "@/@types";
 import UserRepository from "../repositories/auth.repo";
-import { comparePassword } from "@/lib/hashAndCompare";
+import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import { createToken } from "@/lib/storeGetDelete";
 
 
@@ -39,7 +39,8 @@ class AuthService {
     if (existingUser) {
       throw new Error("Email is already in use");
     }
-    await UserRepository.AddDeveloper(data);
+    const hashedPassword: string = await hashPassword(data.password);
+    await UserRepository.AddDeveloper(data, hashedPassword);
   }
 }
 

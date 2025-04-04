@@ -7,8 +7,8 @@ export class AuthRepository {
     return await userModel.findOne({ email });
   }
 
-  async AddDeveloper(data: IUser){
-    const developer = await userModel.create({...data});
+  async AddDeveloper(data: IUser, password: string){
+    const developer = await userModel.create({...data, password});
     return developer;
   }
 
