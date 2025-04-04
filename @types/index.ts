@@ -74,3 +74,8 @@ export interface EmailTemplateProps {
   secondary: string;
   button?: string;
 }
+export interface IReviewPerDay {
+  name: string;
+  reviewes: number;
+}
+
