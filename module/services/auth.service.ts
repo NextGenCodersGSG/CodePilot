@@ -1,7 +1,8 @@
 import { ILogin } from "@/@types";
 import UserRepository from "../repositories/auth.repo";
-import { generateToken } from "@/lib/generateAndVerify";
 import { comparePassword } from "@/lib/hashAndCompare";
+import { createToken, getToken } from "@/lib/storeGetDelete";
+
 
 class AuthService {
   async signIn(data: ILogin) {
@@ -26,11 +27,7 @@ class AuthService {
     }
 
     console.log("Password matched, generating token...");
-
-    const token: string = await generateToken({
-      userId: user.id,
-      userRole: user.role,
-    });
+    const token = await createToken(user.id,user.role);
 
     console.log("Token generated:", token);
 

@@ -18,18 +18,9 @@ export interface ISecurity {
     vulnerability: string;
   }
 
-export interface IAnalysis {
-  performance_issues?: IPerformance[];
-  security_issues?: ISecurity[];
-  bugs?: IBug[];
-  description?: string;
-  overall_suggestions?: string[];
-}
-
 export enum Role {
   User = "user",
-  Admin = "admin",
-  Guest = "guest"
+  Admin = "admin"
 }
 
 export type UserRoles = `${Role}`;
@@ -57,4 +48,29 @@ export interface IAIReviewResponse{
   overallSuggestions: String;
 }
 
+export interface IAnalysis {
+  title: string;
+  slug: string;
+  performance_issues: IPerformance[];
+  security_issues: ISecurity[];
+  bugs: IBug[];
+  description: string;
+  overall_suggestions: string[];
+}
+
+interface Project {
+  name: string;
+  url: string;
+}
+
+export type IProject = Project & IAnalysis;
+
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
+export interface EmailTemplateProps {
+  link?: string;
+  title: string;
+  description: string;
+  secondary: string;
+  button?: string;
+}

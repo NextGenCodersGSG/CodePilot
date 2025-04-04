@@ -1,8 +1,7 @@
 "use client";
-import AnalysisItem from "@/components/analysis-item/AnalysisItem";
+
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import styles from "./textarea.module.css";
 import {
   Select,
@@ -13,30 +12,33 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IBug, IPerformance, ISecurity } from "@/@types";
+import { IAnalysis,  IProject } from "@/@types";
 import { motion } from "framer-motion";
-import { Hammer, MoveUp } from "lucide-react";
+import {  MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AnalysisResults from "@/components/analysis-results/AnalysisResults";
+import { useSidebar } from "@/providers/SidebarContext";
 
 
 export default function Page() {
   const [user, _] = useState("John");
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("TypeScript");
-  const [analysis, setAnalysis] = useState<{
-    performance_issues?: IPerformance[];
-    security_issues?: ISecurity[];
-    bugs?: IBug[];
-    description?: string;
-    overall_suggestions?: string[];
-  }>({});
+  const [analysis, setAnalysis] = useState<IAnalysis>({
+    title: "",
+    slug: "",
+    performance_issues: [],
+    security_issues: [],
+    bugs: [],
+    description: "",
+    overall_suggestions: []
+  });
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
-
+  const {addProject} = useSidebar();
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setIsEmpty(value.trim() === "");
@@ -77,9 +79,22 @@ export default function Page() {
         throw new Error(errorData.error || "Analysis failed");
       }
 
-      const data = await response.json();
+      const data : IAnalysis = await response.json();
       setAnalysis(data);
-      console.log(data);
+
+      const newProject : IProject = {
+        name: data.title || "Untitled Project",
+        url: `/code-analysis/${data.slug}`,
+        title: data.title || "Untitled Project",
+        slug: data.slug,
+        performance_issues: data.performance_issues,
+        security_issues: data.security_issues,
+        bugs: data.bugs,
+        description: data.description,
+        overall_suggestions: data.overall_suggestions,
+      }
+      addProject(newProject);
+      
     } catch (error) {
       console.error("Error analyzing code:", error);
       setError(
@@ -136,12 +151,12 @@ export default function Page() {
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }} 
-            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-5 w-full mt-5"
+            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
           >
             <textarea
               onChange={handleTypedMessage}
               className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-white ${styles.textarea}`}
-              placeholder="What’s on your mind?"
+              placeholder="What's on your mind?"
               autoFocus
               value={code}
               ref={areaRef}
