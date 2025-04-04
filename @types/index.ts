@@ -68,6 +68,37 @@ export type IProject = Project & IAnalysis;
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> { }
 
+export type PlanId = 'free' | 'pro' | 'team';
+
+export interface Plan {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  id: PlanId;
+}
+
+export interface CreateCheckoutSessionRequest {
+  plan: PlanId;
+}
+
+export interface CreateCheckoutSessionResponse {
+  sessionId?: string;
+  message?: string;
+  error?: string;
+}
+
+export interface StripeWebhookEvent {
+  id: string;
+  object: string;
+  api_version: string;
+  data: {
+    object: any;
+  };
+  type: string;
+  created: number;
+}
+
 export interface EmailTemplateProps {
   link?: string;
   title: string;

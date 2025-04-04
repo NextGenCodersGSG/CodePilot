@@ -3,7 +3,6 @@ import AuthService from "@/module/services/auth.service";
 import { ILogin } from "@/@types/index";
 import { connection } from "@/DB/connection";
 
-
 export async function POST(req: NextRequest) {
   await connection();
   try {

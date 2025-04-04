@@ -1,4 +1,3 @@
-// app/page.tsx
 import { Suspense } from 'react'
 import BadgeCover from '@/components/landing/badge-cover'
 import Footer from '@/components/landing/footer'
@@ -28,7 +27,6 @@ const Page = () => {
         <RightContent />
         <BadgeCover />
       </section>
-      
       <Footer />
     </div>
   )
