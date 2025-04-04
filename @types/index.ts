@@ -1,26 +1,27 @@
 import mongoose from "mongoose";
 
 export interface IBug {
-    correction: string;
-    error: string;
-    severity: string;
-  }
-  
+  correction: string;
+  error: string;
+  severity: string;
+}
+
 export interface IPerformance {
-    issue: string;
-    severity: string;
-    solution: string;
-  }
-  
+  issue: string;
+  severity: string;
+  solution: string;
+}
+
 export interface ISecurity {
-    fix: string;
-    severity: string;
-    vulnerability: string;
-  }
+  fix: string;
+  severity: string;
+  vulnerability: string;
+}
 
 export enum Role {
   User = "user",
-  Admin = "admin"
+  Admin = "admin",
+  Developer = "developer"
 }
 
 export type UserRoles = `${Role}`;
@@ -28,7 +29,7 @@ export type UserRoles = `${Role}`;
 export interface IUser {
   name: string;
   email: string;
-  role: UserRoles; 
+  role: UserRoles;
   password: string;
 }
 
@@ -39,7 +40,7 @@ export interface ICodeReview {
   createdAt: Date;
 }
 
-export interface IAIReviewResponse{
+export interface IAIReviewResponse {
   review: mongoose.Types.ObjectId;
   description: string;
   performanceIssues: String;
@@ -65,7 +66,7 @@ interface Project {
 
 export type IProject = Project & IAnalysis;
 
-export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+export interface ILogin extends Pick<IUser, 'email' | 'password'> { }
 
 export type PlanId = 'free' | 'pro' | 'team';
 
@@ -104,4 +105,41 @@ export interface EmailTemplateProps {
   description: string;
   secondary: string;
   button?: string;
+}
+
+export interface IMeeting {
+    title: string;
+    description: string;
+    adminId: mongoose.Types.ObjectId;
+    scheduledAt: Date
+    duration: number;
+}
+export enum Status{
+  PENDING = 'PENDING', 
+  APPROVED = 'APPROVED', 
+  REJECTED = 'REJECTED', 
+  COMPLETED = 'COMPLETED'
+}
+
+export type MeetingStatus = `${Status}`;
+
+export interface IMeeting {
+  title: string;
+  description: string;
+  adminId: mongoose.Types.ObjectId;
+  scheduledAt: Date
+  duration: number;
+  status: Status; 
+  requestedAt?: Date;
+  admin?:  mongoose.Schema.Types.ObjectId;
+  user?:  mongoose.Schema.Types.ObjectId;
+  zoomMeeting?: string;
+}
+
+export interface IZoom {
+  meeting: mongoose.Schema.Types.ObjectId;
+  zoomId:  string;
+  joinUrl: string;
+  startUrl: string;
+  password: string;
 }
