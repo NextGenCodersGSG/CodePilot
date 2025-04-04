@@ -20,6 +20,8 @@ import { IUser } from '@/@types';
 import { IUserLoginData } from '@/routes/types';
 import TotalUserCard from '../code-analysis/dashboard/components/totalLogs';
 import ProjectsDashboard from '../code-analysis/dashboard/components/projects';
+import ActiveUserDisplay from '../code-analysis/dashboard/components/recentUser';
+import UserLogs from '../code-analysis/dashboard/components/totalLogs';
 
 // Sample data for the charts
 const codeReviewsData = [
@@ -320,7 +322,7 @@ export default function Page() {
                     </p> */}
                   </CardContent>
                 </Card>
-                <TotalUserCard/>
+                <UserLogs/>
 
                 <ProjectsDashboard/>
                 <AIReviewDashboard/>
@@ -413,7 +415,8 @@ export default function Page() {
               </TabsContent>             
             {/*user managment table */}
             <UserManagementCard/>
-            
+            <ActiveUserDisplay />
+
             <Card className="bg-[#001523] border-[#002945] lg:col-span-2">
               <CardHeader>
                 <CardTitle>User Analytics Reports</CardTitle>

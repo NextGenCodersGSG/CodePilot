@@ -25,7 +25,7 @@ const UserManagementCard = () => {
                 }
                 const data: IUser[] = await response.json();
                 setUsers(data);
-                setFilteredUsers(data); // Initialize filtered users
+                setFilteredUsers(data); 
             } catch (err) {
                 if (err instanceof Error) {
                     setError(err.message);
