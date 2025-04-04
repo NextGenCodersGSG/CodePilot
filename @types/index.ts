@@ -74,3 +74,11 @@ export interface EmailTemplateProps {
   secondary: string;
   button?: string;
 }
+
+export interface IMeeting {
+    title: string;
+    description: string;
+    adminId: mongoose.Types.ObjectId;
+    scheduledAt: Date
+    duration: number;
+}

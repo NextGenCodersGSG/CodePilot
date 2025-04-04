@@ -1,5 +1,5 @@
-import { ILogin, IUser } from "@/@types";
-import UserRepository from "../repositories/auth.repo";
+import { ILogin } from "@/@types";
+import AuthRepository from "../repositories/auth.repo";
 import { comparePassword } from "@/lib/hashAndCompare";
 import { createToken } from "@/lib/storeGetDelete";
 
@@ -8,7 +8,7 @@ class AuthService {
   async signIn(data: ILogin) {
     console.log("SignIn attempt with email:", data.email); // Log incoming email
 
-    const user = await UserRepository.findUserByEmail(data.email);
+    const user = await AuthRepository.findUserByEmail(data.email);
     if (!user) {
       console.log("User not found for email:", data.email);
       throw new Error("Invalid credentials");
