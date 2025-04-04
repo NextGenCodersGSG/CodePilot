@@ -43,7 +43,8 @@ class AuthService {
     if (existingUser) {
       throw new Error("Email is already in use");
     }
-    await UserRepository.AddDeveloper(data);
+    const hashedPassword = await hashPassword(data.password);
+    await UserRepository.AddDeveloper(data, hashedPassword);
   }
 
   
