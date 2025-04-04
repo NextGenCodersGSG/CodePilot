@@ -12,5 +12,18 @@ export class AuthRepository {
     return developer;
   }
 
+  async findUserByVerificationToken(userId: string, verifyToken: string): Promise<IUserDocument | null> {
+    return await userModel.findOne({
+        _id: userId,
+        verifyToken,
+        verifyTokenExpire: { $gt: new Date() },
+    });
+}
+
+  async resetPassword(user: any, password: string){
+    user.password = password;
+    return await user.save();
+}
+
 }
 export default new AuthRepository();
