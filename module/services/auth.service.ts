@@ -1,7 +1,7 @@
 import { ILogin } from "@/@types";
 import AuthRepository from "../repositories/auth.repo";
 import { comparePassword } from "@/lib/hashAndCompare";
-import { createToken, getToken } from "@/lib/storeGetDelete";
+import { createToken } from "@/lib/storeGetDelete";
 
 
 class AuthService {
@@ -32,6 +32,14 @@ class AuthService {
     console.log("Token generated:", token);
 
     return { token, user };
+  }
+
+  async AddDeveloper(data: IUser){
+    const existingUser = await UserRepository.findUserByEmail(data.email);
+    if (existingUser) {
+      throw new Error("Email is already in use");
+    }
+    await UserRepository.AddDeveloper(data);
   }
 }
 
