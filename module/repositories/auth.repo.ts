@@ -1,3 +1,4 @@
+import { IUser } from "@/@types";
 import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { IUser } from "@/@types/index";
 
