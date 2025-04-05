@@ -15,8 +15,4 @@ export const links = [
     path: "#get-started",
     text: "Get Started",
   },
-  {
-    path: "/sign-in",
-    text: "Login",
-  },
 ];

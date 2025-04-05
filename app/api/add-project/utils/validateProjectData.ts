@@ -1,7 +1,6 @@
 import { IProject } from "@/@types";
 
 export function validateProjectData(data: any): IProject {
-    // Check for required fields
     const requiredFields = [
       'name', 'url', 'title', 'slug', 'description'
     ];
@@ -12,7 +11,6 @@ export function validateProjectData(data: any): IProject {
       }
     }
     
-    // Ensure arrays exist (even if empty)
     if (!Array.isArray(data.bugs)) {
       data.bugs = [];
     }

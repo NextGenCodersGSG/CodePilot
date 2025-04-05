@@ -1,4 +1,3 @@
-// app/page.tsx
 import { Suspense } from 'react'
 import BadgeCover from '@/components/landing/badge-cover'
 import Footer from '@/components/landing/footer'
@@ -8,7 +7,6 @@ import RightContent from '@/components/landing/right-content'
 import SplineLoader from '@/components/landing/spline-loader'
 
 const Page = () => {
-  // throw new Error('This is a client component');
   return (
     <div>
       <LandingPage />
@@ -29,8 +27,8 @@ const Page = () => {
         <RightContent />
         <BadgeCover />
       </section>
-      
       <Footer />
+
     </div>
   )
 }
