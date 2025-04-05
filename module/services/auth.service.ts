@@ -1,14 +1,12 @@
 import { ILogin, IUser, Role } from "@/@types";
 import crypto from "crypto";
 import xss from "xss";
-import { ILogin, IUser, Role } from "@/@types";
 import UserRepository from "../repositories/auth.repo";
 import CountLogs from "@/DB/models/count-logs.model";
 import { generateToken } from "@/lib/generateAndVerify";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
 import { connection } from "@/DB/connection";
-import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import EmailService from "./email.service";
 import { createToken } from "@/lib/storeGetDelete";
 import { emailTemplate } from "@/lib/emailTemplate";
@@ -53,13 +51,6 @@ class AuthService {
 
     return { token, user };
   }
-  
-  async signUp(data: IUser) {
-    const validateUser = await validationSchema.validate(data);
-    const exist = await UserRepository.findUserByEmail(data.email);
-    if(exist) {
-      throw new Error(`You Already have an account with email: ${data.email}`  )
-    }
 
   static async signOut(userId: string) {
     await CountLogs.findOneAndUpdate(
@@ -75,42 +66,41 @@ class AuthService {
     await UserRepository.AddDeveloper(data, hashedPassword);
   }
 
-  
   async ForgetPassword(email: string) {
     console.log(email);
     const user = await UserRepository.findUserByEmail(email);
     if (!user) {
-        throw new Error("User not found");
+      throw new Error("User not found");
     }
     const resetToken = user.getVerificationToken();
     await user.save();
     const ResetLink = `/reset-password?resetToken=${resetToken}&id=${user?._id}`;
-    const message = emailTemplate({link:ResetLink, title: "", description: "", secondary: "", button: "Reset Password" });
+    const message = emailTemplate({ link: ResetLink, title: "", description: "", secondary: "", button: "Reset Password" });
     // Send verification email
     await EmailService.sendEmail(user?.email, "Reset Password", message);
-}
+  }
 
-async ResetPassword(password: string, resetToken: string, userId: string) {
+  async ResetPassword(password: string, resetToken: string, userId: string) {
     const verifyToken = crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
     const user = await UserRepository.findUserByVerificationToken(userId, verifyToken);
     if (!user) {
-        throw new Error("user not found, token not found, or token expired")
+      throw new Error("user not found, token not found, or token expired")
     }
     const hashedPassword: string = await hashPassword(password);
-    try{
-        await authRepo.resetPassword(user, hashedPassword);
-    }catch(error){
-        
+    try {
+      await authRepo.resetPassword(user, hashedPassword);
+    } catch (error) {
+
     }
-}
   }
+
   async signUp(data: IUser) {
     const validateUser = await validationSchema.validate(data);
-    if(!validateUser) {
+    if (!validateUser) {
       throw new Error("Invalid data");
     }
     const hashedPass = await hashPassword(data.password);

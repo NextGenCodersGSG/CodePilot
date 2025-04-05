@@ -1,6 +1,5 @@
 import { IUser } from "@/@types";
 import userModel, { IUserDocument } from "@/DB/models/user.model";
-import { IUser } from "@/@types/index";
 
 export class AuthRepository {
 
@@ -26,10 +25,8 @@ export class AuthRepository {
     return await user.save();
 }
 
+async createUser(user: IUser): Promise<IUserDocument | null> {
+  return await userModel.create(user);
+}
 }
 export default new AuthRepository();
-  async createUser(user: IUser): Promise<IUserDocument | null> {
-    return await userModel.create(user);
-  }
-}
-export default new UserRepository();
