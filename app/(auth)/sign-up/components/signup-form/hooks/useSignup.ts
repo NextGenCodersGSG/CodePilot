@@ -15,7 +15,7 @@ const useSignup = () => {
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/auth/sign-up`,
+            const res = await fetch(`/api/auth/sign-up`,
                 {
                     method: "POST",
                     headers: {
@@ -30,10 +30,10 @@ const useSignup = () => {
                 return;
             }
             resetForm();
-            toast.success("Account Created Successfully, You will be redirected to the login screen!");
+            toast.success("Account Created Successfully");
             setTimeout(() => {
                 redirect("/sign-in")
-            }, 2000)
+            }, 1000)
         }
         catch(error: any) {
             toast.error(`sign-up Error: ${error.message}`)
