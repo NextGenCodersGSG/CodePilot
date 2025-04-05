@@ -1,5 +1,5 @@
+import { ILogin, IUser, Role } from "@/@types";
 import crypto from "crypto";
-import { ILogin, IUser } from "@/@types";
 import xss from "xss";
 import { ILogin, IUser, Role } from "@/@types";
 import UserRepository from "../repositories/auth.repo";
@@ -7,12 +7,12 @@ import { generateToken } from "@/lib/generateAndVerify";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
 import { connection } from "@/DB/connection";
-
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import EmailService from "./email.service";
 import { createToken } from "@/lib/storeGetDelete";
 import { emailTemplate } from "@/lib/emailTemplate";
 import authRepo from "../repositories/auth.repo";
+
 
 
 class AuthService {
@@ -44,6 +44,13 @@ class AuthService {
 
     return { token, user };
   }
+  
+  async signUp(data: IUser) {
+    const validateUser = await validationSchema.validate(data);
+    const exist = await UserRepository.findUserByEmail(data.email);
+    if(exist) {
+      throw new Error(`You Already have an account with email: ${data.email}`  )
+    }
 
   async AddDeveloper(data: IUser){
     const existingUser = await UserRepository.findUserByEmail(data.email);
@@ -100,6 +107,7 @@ async ResetPassword(password: string, resetToken: string, userId: string) {
       role: Role.User,
     };
     await connection();
+
     const newUser = await UserRepository.createUser(userData);
     if (!newUser) {
       throw new Error("Something went wrong, please try again later");

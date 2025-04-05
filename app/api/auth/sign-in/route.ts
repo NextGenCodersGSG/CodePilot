@@ -10,12 +10,14 @@ export async function POST(req: NextRequest) {
     if (!data) {
       return NextResponse.json({ error: "Data is required" }, { status: 400 });
     }
-    const { token } = await AuthService.signIn(data);
+    const { token, user } = await AuthService.signIn(data);
+    const role: string = user.role
     console.log("token", token);
     return NextResponse.json(
       {
         message: "User login successfully",
         token,
+        role
       },
       { status: 201 }
     );
