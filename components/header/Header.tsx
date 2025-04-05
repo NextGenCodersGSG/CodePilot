@@ -1,62 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import DesktopNav from "./navbar/DesktopNav";
-import { AlignJustify, Code, X } from "lucide-react";
-import MobileNav from "./navbar/MobileNav";
 
-const Header = () => {
-  const [isMenuVisible, setMenuVisible] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    window.onclick = () => {
-      setMenuVisible(false);
-    };
-  }, []);
+import Navbar from "./navbar/Navbar";
 
-  const handleScroll = () => {
-    const scrollTop = window.scrollY;
-    if (scrollTop > 70) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  const navStyle =
-    "rounded-2xl backdrop-blur-sm bg-zinc-800/50 text-zinc-200 bg-[radial-gradient(#0000_2px,#003A6130_1px)]  bg-[length:4px_4px] bg-repeat border-none ";
-
+export default function Header() {
   return (
-    <div
-    className={`flex justify-between items-center transition-all duration-300 ease-in-out p-6 md:p-4 sticky top-2 mx-auto z-30 border-b-2 ${
-      scrolled ? `w-[97%] ${navStyle}` : "w-[100%]"
-    }`}
-    >
-      <div className="flex gap-2">
-        <Code className="h-6 w-6 text-[#00406C]" />
-        <span>Code Pilot</span>
-      </div>
-      <DesktopNav />
-      <AlignJustify
-        onClick={(e) => {
-          e.stopPropagation();
-          setMenuVisible(!isMenuVisible);
-        }}
-        className={`${
-          !isMenuVisible ? "block" : "hidden"
-        } md:hidden z-30 cursor-pointer`}
-      />
-      <X
-        className={`${
-          isMenuVisible ? "block" : "hidden"
-        } md:hidden z-30 cursor-pointer`}
-      />
-      <MobileNav isMenuVisible={isMenuVisible} />
-    </div>
+    <header className="w-full dark:bg-transparent sticky top-2 z-50">
+        {/* Navbar Component */}
+        <Navbar />
+    </header>
   );
-};
-
-export default Header;
+}

@@ -94,6 +94,7 @@ export default function Page() {
         overall_suggestions: data.overall_suggestions,
       }
       addProject(newProject);
+      console.log(newProject);
       
     } catch (error) {
       console.error("Error analyzing code:", error);

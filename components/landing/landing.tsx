@@ -1,19 +1,19 @@
 "use client"
-
-import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Code, Github, Linkedin, Twitter, Zap, Shield, BarChart} from "lucide-react"
+import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
 import { useEffect, useRef } from "react"
 import { motion, useAnimation, type Variants } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
-import Header from "@/components/header/Header"
 import ShinyText from "@/components/ui/ShinyText/shiny-text"
+import BillingSection from "./billing"
+import Header from "@/components/header/Header"
+
 
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
@@ -67,15 +67,12 @@ const itemVariants: Variants = {
   },
 }
 
-const MotionCard = motion(Card)
+const MotionCard = motion(Card);
 
 export default function LandingPage() {
 
   const featuresSection = useInView()
   const testimonialsSection = useInView()
-  const pricingSection = useInView()
-
-
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
       <Header/>
@@ -322,172 +319,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-gradient-to-b from-[#001A2C] via-[#001A2C]/95 to-[#00111C]">
-          <div className="container px-4 md:px-6 mx-auto">
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#F2F2F2]">
-                Simple, Transparent Pricing
-              </h2>
-              <p className="mt-4 text-lg text-[#B3B3B3] md:w-3/4 mx-auto">
-                Choose the plan that's right for you or your team. All plans include a 14-day free trial.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="grid gap-8 md:grid-cols-3"
-              ref={pricingSection.ref}
-              variants={containerVariants}
-              initial="hidden"
-              animate={pricingSection.controls}
-            >
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945] h-full">
-                  <CardHeader>
-                    <CardTitle className="text-[#F2F2F2]">Starter</CardTitle>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-[#F2F2F2]">$0</span>
-                      <span className="text-[#B3B3B3] ml-1">/month</span>
-                    </div>
-                    <CardDescription className="mt-2 text-[#B3B3B3]">
-                      Perfect for individual developers and small projects.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Up to 5 projects</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Basic syntax analysis</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Error detection</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Community support</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter className="mt-auto">
-                    <Button
-                      variant="outline"
-                      className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
-                    >
-                      Get started
-                    </Button>
-                  </CardFooter>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#00406C] h-full">
-                  <CardHeader>
-                    <CardTitle className="text-[#F2F2F2]">Pro</CardTitle>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-[#F2F2F2]">$20</span>
-                      <span className="text-[#B3B3B3] ml-1">/month</span>
-                    </div>
-                    <CardDescription className="mt-2 text-[#B3B3B3]">
-                      For professional developers who need more power.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Unlimited projects</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Advanced syntax analysis</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Error detection & fixes</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Security scanning</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Performance insights</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Email support</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter className="mt-auto">
-                    <Button className="cursor-pointer w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">Get started</Button>
-                  </CardFooter>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945] h-full">
-                  <CardHeader>
-                    <CardTitle className="text-[#F2F2F2]">Team</CardTitle>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold text-[#F2F2F2]">$50</span>
-                      <span className="text-[#B3B3B3] ml-1">/month</span>
-                    </div>
-                    <CardDescription className="mt-2 text-[#B3B3B3]">
-                      For teams that need collaboration and advanced features.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Everything in Pro</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Up to 10 team members</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Team collaboration</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Custom rule sets</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">API access</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                        <span className="text-[#F2F2F2]">Priority support</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter className="mt-auto">
-                    <Button
-                      variant="outline"
-                      className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
-                    >
-                      Get started
-                    </Button>
-                  </CardFooter>
-                </MotionCard>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
+        <BillingSection/>
         {/* CTA Section */}
         <section id="get-started" className="py-20">
           <div className="container px-4 md:px-6 mx-auto">
