@@ -97,7 +97,7 @@ const UserManagementCard = () => {
                 <CardHeader>
                     <CardTitle>User Management</CardTitle>
                     <CardDescription className="text-[#B3B3B3]">
-                        Manage user accounts, roles, and permissions
+                        Manage user accounts.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

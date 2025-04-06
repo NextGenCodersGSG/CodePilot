@@ -25,47 +25,47 @@ const ActiveUserDisplay = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-const deleteUser = async (userId: string) => {
-        const response = await fetch(`/api/deleteUser/${userId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        return response;
-    };
-    
-    const handleDeleteUser = async (user: ICountLogs) => {
-        const confirmDelete = window.confirm(`Are you sure you want to delete the user "${user.name}"?`);
-    
-        if (confirmDelete) {
-            try {
-                const response = await deleteUser(user.id);
+  const deleteUser = async (userId: string) => {
+    const response = await fetch(`/api/deleteUser/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  };
 
-                if (response.ok) {
-                    setUsers((prevUsers) => prevUsers.filter(u => u._id !== user._id));
-                    alert('User deleted successfully.');
-                } else {
-                    const contentType = response.headers.get('Content-Type');
+  const handleDeleteUser = async (user: ICountLogs) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete the user "${user.name}"?`);
 
-                    let errorMessage = `Failed to delete user. Status: ${response.status}`;
+    if (confirmDelete) {
+      try {
+        const response = await deleteUser(user.id);
 
-                    if (contentType && contentType.includes('application/json')) {
-                        const errorResponse = await response.json();
-                        errorMessage = errorResponse?.message || 'An unknown error occurred.';
-                    }
+        if (response.ok) {
+          setUsers((prevUsers) => prevUsers.filter(u => u._id !== user._id));
+          alert('User deleted successfully.');
+        } else {
+          const contentType = response.headers.get('Content-Type');
 
-                    throw new Error(errorMessage);
-                }
-            } catch (error) {
-                if (error instanceof Error) {
-                    alert(`An error occurred: ${error.message}`);
-                } else {
-                    alert('An unknown error occurred.');
-                }
-            }
+          let errorMessage = `Failed to delete user. Status: ${response.status}`;
+
+          if (contentType && contentType.includes('application/json')) {
+            const errorResponse = await response.json();
+            errorMessage = errorResponse?.message || 'An unknown error occurred.';
+          }
+
+          throw new Error(errorMessage);
         }
-    };
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(`An error occurred: ${error.message}`);
+        } else {
+          alert('An unknown error occurred.');
+        }
+      }
+    }
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -84,7 +84,7 @@ const deleteUser = async (userId: string) => {
             variant="outline"
             size="sm"
             className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-            onClick={() => {/* Your logic to view all users */}}
+            onClick={() => {/* Your logic to view all users */ }}
           >
             View All Users
           </Button>
@@ -102,26 +102,24 @@ const deleteUser = async (userId: string) => {
               </thead>
               <tbody>
                 {recentUsers.map((user) => (
-                  <tr key={user.userId} className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors">
-                  <td>
-                   <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
-                          <span className="font-medium text-xs">
-                            {user.name.split(" ").map((n) => n[0]).join("")}
-                          </span>
-                        </div>
-                  </td>
+                  <tr key={user._id as string} className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors">
+                    <td>
+                      <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
+                        <span className="font-medium text-xs">
+                          {user.name.split(" ").map((n) => n[0]).join("")}
+                        </span>
+                      </div>
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div>
                           <div className="font-medium">{user.name}</div>
                         </div>
                       </div>
-                    </td> 
-                    <td>
-                    <div className="text-xs text-[#B3B3B3]">{user.email}</div>
                     </td>
-
-                    {/* <td className="px-4 py-3 text-[#B3B3B3]">{user.lastActive}</td> */}
+                    <td>
+                      <div className="text-xs text-[#B3B3B3]">{user.email}</div>
+                    </td>
                     <td className="px-4 py-3 text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -133,17 +131,11 @@ const deleteUser = async (userId: string) => {
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="bg-[#001523] border-[#002945] text-[#F2F2F2]"
-                        >
-                          
-                    
-
+                        <DropdownMenuContent align="end" className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
                           <DropdownMenuItem
                             className="hover:bg-[#001A2C] cursor-pointer text-red-500"
-                            onClick={() => { handleDeleteUser(user)}}
-                           >
+                            onClick={() => { handleDeleteUser(user) }}
+                          >
                             <Trash2 className="mr-2 h-4 w-4" />
                             Delete User
                           </DropdownMenuItem>
