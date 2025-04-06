@@ -50,14 +50,13 @@ class AuthService {
   }
 
   async ForgetPassword(email: string) {
-    console.log(email);
     const user = await UserRepository.findUserByEmail(email);
     if (!user) {
       throw new Error("User not found");
     }
     const resetToken = user.getVerificationToken();
     await user.save();
-    const ResetLink = `/reset-password?resetToken=${resetToken}&id=${user?._id}`;
+    const ResetLink = `${process.env.NEXT_PUBLIC_URL}/reset-password?resetToken=${resetToken}&id=${user?._id}`;
     const message = emailTemplate({ link: ResetLink, title: "", description: "", secondary: "", button: "Reset Password" });
     // Send verification email
     await EmailService.sendEmail(user?.email, "Reset Password", message);

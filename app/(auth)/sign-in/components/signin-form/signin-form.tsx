@@ -6,6 +6,7 @@ import useSignin from "./hooks/useSignin";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 
 const SignInForm = () => {
   const { formik } = useSignin();
@@ -31,6 +32,10 @@ const SignInForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
+        <Link href="/forget-password" className="text-sm text-[#00406C] hover:text-[#003A61] transition-colors">
+          Forgot password?
+        </Link>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,12 +44,12 @@ const SignInForm = () => {
         >
           <Button
             className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61] mt-2"
-            type="submit" 
+            type="submit"
           >
             {formik.isSubmitting ? (
               <Loader className="mr-3 h-6 w-6 animate-spin" />
             ) : "Sign in"}
-            
+
           </Button>
         </motion.div>
       </Form>
