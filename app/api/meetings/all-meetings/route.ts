@@ -1,6 +1,6 @@
 import meetingService from '@/module/services/meeting.service';
 import { getToken } from '@/lib/storeGetDelete';
-import { Role } from '../../../../@types/index';
+import { IMeeting, Role } from '../../../../@types/index';
 import { NextRequest, NextResponse } from 'next/server';
 import { connection } from '@/DB/connection';
 

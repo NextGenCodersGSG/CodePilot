@@ -6,6 +6,7 @@ import { format } from "date-fns"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { AnimatedTooltip } from "./animated-tooltip"
+import { Status } from "@/@types"
 
 // Updated Meeting interface to match the new data structure
 interface Meeting {
@@ -13,7 +14,7 @@ interface Meeting {
   description: string
   duration: number
   scheduledAt: string
-  status: "PENDING" | "APPROVED" | "REJECTED" | "COMPLETED" | "CANCELLED"
+  status: Status
   title: string
 }
 
@@ -26,27 +27,22 @@ interface MeetingsTableProps {
 export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTableProps) {
   const getStatusDetails = (status: Meeting["status"]) => {
     switch (status) {
-      case "PENDING":
+      case Status.PENDING:
         return {
           label: "Awaiting Confirmation",
           color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
         }
-      case "APPROVED":
+      case Status.APPROVED:
         return {
           label: "Confirmed",
           color: "bg-green-500/20 text-green-400 border-green-500/30",
         }
-      case "COMPLETED":
-        return {
-          label: "Completed",
-          color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-        }
-      case "REJECTED":
+      case  Status.REJECTED:
         return {
           label: "Declined",
           color: "bg-red-500/20 text-red-400 border-red-500/30",
         }
-      case "CANCELLED":
+      case Status.CANCELED:
         return {
           label: "Cancelled",
           color: "bg-gray-500/20 text-gray-400 border-gray-500/30",
@@ -75,7 +71,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
             const scheduledDate = new Date(meeting.scheduledAt)
             const isPast = scheduledDate < new Date()
             const isActive =
-              meeting.status !== "CANCELLED" && meeting.status !== "REJECTED" && meeting.status !== "COMPLETED"
+              meeting.status !== Status.CANCELED && meeting.status !== Status.REJECTED && meeting.status !== Status.APPROVED
             const statusDetails = getStatusDetails(meeting.status)
 
             return (

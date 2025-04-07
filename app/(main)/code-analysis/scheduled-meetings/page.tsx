@@ -10,13 +10,14 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { MeetingsTable } from "@/components/scheduled-meetings/meetings-table"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Status } from "@/@types";
 
 interface Meeting {
   id: string
   description: string
   duration: number
   scheduledAt: string
-  status: "PENDING" | "APPROVED" | "REJECTED" | "COMPLETED" | "CANCELLED"
+  status: Status
   title: string
 }
 
@@ -40,7 +41,6 @@ const ScheduledMeetingsPage = () => {
         }
 
         const data = await response.json()
-        console.log(data)
 
         setMeetings(data)
       } catch (err) {
@@ -70,7 +70,7 @@ const ScheduledMeetingsPage = () => {
         throw new Error(data.message || 'Failed to cancel meeting');
       }
 
-      setMeetings(meetings.map((meeting) => (meeting.id === meetingId ? { ...meeting, status: "CANCELLED" } : meeting)))
+      setMeetings(meetings.map((meeting) => (meeting.id === meetingId ? { ...meeting, status: Status.CANCELED } : meeting)))
 
     } catch (err) {
       console.error("Error cancelling meeting:", err)
@@ -133,7 +133,7 @@ const ScheduledMeetingsPage = () => {
             <TabsTrigger
               value="cards"
               className={cn(
-                "flex items-center gap-2 text-[#B3B3B3]",
+                "flex items-center gap-2 text-[#B3B3B3] cursor-pointer",
                 viewMode === "cards" ? "bg-[#00406C] text-[#F2F2F2]" : "hover:text-[#F2F2F2]",
               )}
             >
@@ -143,7 +143,7 @@ const ScheduledMeetingsPage = () => {
             <TabsTrigger
               value="table"
               className={cn(
-                "flex items-center gap-2 text-[#B3B3B3]",
+                "flex items-center gap-2 text-[#B3B3B3] cursor-pointer",
                 viewMode === "table" ? "bg-[#00406C] text-[#F2F2F2]" : "hover:text-[#F2F2F2]",
               )}
             >
@@ -181,31 +181,27 @@ interface MeetingCardProps {
 const MeetingCard = ({ meeting, onCancel, isCancelling }: MeetingCardProps) => {
   const scheduledDate = new Date(meeting.scheduledAt)
   const isPast = scheduledDate < new Date()
-  const isActive = meeting.status !== "CANCELLED" && meeting.status !== "REJECTED" && meeting.status !== "COMPLETED"
+  const isActive = meeting.status !== Status.CANCELED && meeting.status !== Status.REJECTED && meeting.status !== Status.APPROVED
 
   const getStatusDetails = (status: Meeting["status"]) => {
     switch (status) {
-      case "PENDING":
+      case Status.PENDING:
         return {
           label: "Awaiting Confirmation",
           color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
         }
-      case "APPROVED":
+      case Status.APPROVED:
         return {
           label: "Confirmed",
           color: "bg-green-500/20 text-green-400 border-green-500/30",
         }
-      case "COMPLETED":
-        return {
-          label: "Completed",
-          color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-        }
-      case "REJECTED":
+     
+      case Status.REJECTED:
         return {
           label: "Declined",
           color: "bg-red-500/20 text-red-400 border-red-500/30",
         }
-      case "CANCELLED":
+      case Status.CANCELED:
         return {
           label: "Cancelled",
           color: "bg-gray-500/20 text-gray-400 border-gray-500/30",
@@ -223,10 +219,9 @@ const MeetingCard = ({ meeting, onCancel, isCancelling }: MeetingCardProps) => {
   return (
     <Card className="bg-[#001523] border-[#002945] overflow-hidden relative">
       {/* Status badge positioned at top right */}
-      <Badge variant="outline" className={cn("absolute top-3 right-3 border z-10", statusDetails.color)}>
+      <Badge variant="outline" className={cn("absolute top-2 right-2 border z-10", statusDetails.color)}>
         {statusDetails.label}
-      </Badge>
-
+        </Badge>
       <CardHeader className="pb-1 pt-3 px-4 border-b border-[#002945]">
         <CardTitle className="text-2xl text-[#F2F2F2]">{meeting.title}</CardTitle>
       </CardHeader>
@@ -250,13 +245,13 @@ const MeetingCard = ({ meeting, onCancel, isCancelling }: MeetingCardProps) => {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-2 pb-3 px-4 border-t border-[#002945] bg-[#001A2C] flex justify-center">
+      <CardFooter className="pt-2 pb-3 px-4 border-t border-[#002945] bg-[#001A2C] flex justify-center mt-auto">
         {isActive && !isPast ? (
           <Button
             variant="outline"
             className="w-full text-red-400 border-red-500/30 hover:bg-red-500/10 hover:text-red-300 cursor-pointer"
             onClick={() => onCancel(meeting.id)}
-            disabled={isCancelling}
+            disabled={meeting.status === Status.CANCELED || isCancelling}
           >
             {isCancelling ? (
               <>
