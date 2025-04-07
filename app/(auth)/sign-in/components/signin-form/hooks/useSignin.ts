@@ -34,16 +34,6 @@ const useSignin = () => {
 
       resetForm();
       toast.success("Signin successful");
-      const responseLogs = await fetch(
-        `/api/logs`,
-        {
-          method: "Get",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
       localStorage.setItem("auth-token", data.token);
       const role: string = data.role;
 

@@ -17,6 +17,7 @@ import UserManagementCard from './components/allUser';
 import ActiveUserDisplay from './components/recentUser';
 import UserLogs from './components/totalLogs';
 import { IUser } from '@/@types';
+import TotalUsers from './components/totalUsers';
 
 
 const codeReviewsData = [
@@ -82,63 +83,8 @@ const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3
 
 export default function Page() {
   const [selectedTab, setSelectedTab] = useState("overview")
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [showRoleDialog, setShowRoleDialog] = useState(false)
-  const [selectedUser, setSelectedUser] = useState<any>(null)
   const [showNotifications, setShowNotifications] = useState(false)
   const [unreadNotifications, setUnreadNotifications] = useState(notifications.filter((n) => !n.read).length)
-  const [totalUsers, setTotalUsers] = useState(0);
-
-
-  const [recentUsers, setRecentUsers] = useState([]); // State to hold user data
-  const [loading, setLoading] = useState(true); // State for loading indicator
-
-  const [logs, setLogs] = useState<IUserLoginData[]>([]);
-
-
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  //fetch total of user
-  useEffect(() => {
-    const fetchUserCount = async () => {
-      try {
-        const response = await fetch('/api/users/total'); // Adjust this path as necessary
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setTotalUsers(data.total); // Access the total value from the response
-      } catch (error) {
-        console.error('Error fetching user count:', error);
-      }
-    };
-
-    fetchUserCount();
-  }, []);
-
-
-  //fetch active users   
-  useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const response = await fetch('/api/logs');
-        const data: IUserLoginData[] = await response.json();
-        console.log(data); // Debug the response here to see if it's an array
-        setLogs(data);
-      } catch (error) {
-        console.error('Failed to fetch logs:', error);
-        setLogs([]); // Set to empty array in case of error
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLogs();
-  }, []);
-
-  
-  if (loading) return <div>Loading...</div>; // Loading state
   // Handle marking all notifications as read
   const markAllAsRead = () => {
     setUnreadNotifications(0)
@@ -305,18 +251,8 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="bg-[#001523] border-[#002945]">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-[#B3B3B3]">Total Users</CardTitle>
-                    <Users className="h-4 w-4 text-[#00406C]" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{totalUsers}</div>
- 
-                  </CardContent>
-                </Card>
+                <TotalUsers/>
                 <UserLogs/>
-
                 <ProjectsDashboard/>
                 <AIReviewDashboard/>
               </motion.div>

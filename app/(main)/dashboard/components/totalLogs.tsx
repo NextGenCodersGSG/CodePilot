@@ -3,27 +3,26 @@ import { UserCheck } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 const UserLogs = () => {
-  const [loading, setLoading] = useState(true); // State for loading indicator
-  const [error, setError] = useState<string | null>(null); // State for error message
-  const [activeUsers, setActiveUsers] = useState<number>(0); // Set as number to hold active user count
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState<string | null>(null); 
+  const [activeUsers, setActiveUsers] = useState<number>(0); 
 
   useEffect(() => {
     const fetchUserLogs = async () => {
       try {
-        const response = await fetch('/api/logs'); // Adjust this path as necessary
+        const response = await fetch('/api/logs');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched data:', data); // For debugging purposes
+        console.log('Fetched data:', data); 
 
-        // Set the activeUsers state to the value from the response
-        setActiveUsers(data.activeUsers); // Expecting 'activeUsers' to be the count
+        setActiveUsers(data.activeUsers); 
       } catch (error) {
         console.error('Error fetching user count:', error);
-        setError("Error fetching user logs. Please try again."); // Update error handling
+        setError("Error fetching user logs. Please try again.");
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       }
     };
 
