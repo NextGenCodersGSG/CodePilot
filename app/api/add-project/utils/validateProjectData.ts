@@ -2,7 +2,7 @@ import { IProject } from "@/@types";
 
 export function validateProjectData(data: any): IProject {
     const requiredFields = [
-      'name', 'url', 'title', 'slug', 'description'
+      'name', 'url', 'title', 'slug', 'description', 'userId'
     ];
     
     for (const field of requiredFields) {

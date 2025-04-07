@@ -1,7 +1,8 @@
 import { IProject } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IProjectDocument extends Document, IProject {}
+export interface IProjectDocument extends Document, IProject {
+}
 
 // Bug Schema
 const BugSchema = new Schema({
@@ -26,17 +27,13 @@ const SecuritySchema = new Schema({
 
 const ProjectSchema = new Schema<IProjectDocument>(
   {
-    // Project fields
+    userId: { type: String, required: true },
     name: { type: String, required: true },
     url: { type: String, required: true },
-    
-    // Analysis fields
     title: { type: String, required: true },
     slug: { type: String, required: true, index: true },
     description: { type: String, required: true },
     overall_suggestions: [{ type: String }],
-    
-    // Nested document arrays
     bugs: [BugSchema],
     performance_issues: [PerformanceSchema],
     security_issues: [SecuritySchema],
@@ -44,7 +41,6 @@ const ProjectSchema = new Schema<IProjectDocument>(
   { timestamps: true }
 );
 
-// Create index for faster queries
 ProjectSchema.index({ name: 1 });
 
 const projectModel =
