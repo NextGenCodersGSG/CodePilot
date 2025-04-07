@@ -4,12 +4,6 @@ import projectModel from "@/DB/models/projects.model";
 
 export async function GET(req: NextRequest) {
   await connection();
-<<<<<<< HEAD
-  
-  try {
-
-    const projects = await projectModel.find({});
-=======
   try {
     const userId = req.nextUrl.searchParams.get("userId");
     
@@ -20,7 +14,6 @@ export async function GET(req: NextRequest) {
     }
 
       const projects = await projectModel.find({userId: userId});
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
     
     return NextResponse.json({ 
       success: true, 

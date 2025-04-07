@@ -7,13 +7,7 @@ export async function POST(req: NextRequest) {
   await connection();
   
   try {
-<<<<<<< HEAD
-
     const body = await req.json();
-    
-=======
-    const body = await req.json();
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
     const projectData = validateProjectData(body);
     const project = new projectModel(projectData);
     

@@ -49,11 +49,6 @@ const SignInForm = () => {
             {formik.isSubmitting ? (
               <Loader className="mr-3 h-6 w-6 animate-spin" />
             ) : "Sign in"}
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
           </Button>
         </motion.div>
       </Form>
