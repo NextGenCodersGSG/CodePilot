@@ -33,7 +33,7 @@ class AuthService {
     }
 
     console.log("Password matched, generating token...");
-    const token = await createToken(user.id, user.role);
+    const token = await createToken(user.id, user.name, user.email, user.role);
 
     console.log("Token generated:", token);
 

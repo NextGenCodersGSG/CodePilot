@@ -7,6 +7,8 @@ const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 export interface TokenPayload extends JwtPayload {
   userId: string;
+  name: string;
+  email: string;
   userRole?: UserRoles;
 }
 

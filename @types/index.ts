@@ -130,8 +130,8 @@ export type MeetingStatus = `${Status}`;
 export interface IMeeting {
   title: string;
   description: string;
-  devId: mongoose.Types.ObjectId;
-  userId?:  mongoose.Schema.Types.ObjectId;
+  devId: string;
+  userId?: string;
   requestedAt?: Date;
   scheduledAt: Date
   duration: number;

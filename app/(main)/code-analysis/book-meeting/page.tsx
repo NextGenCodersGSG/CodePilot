@@ -9,48 +9,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { format, parse, setHours, setMinutes } from "date-fns"
+import { format } from "date-fns"
 import { CalendarIcon, Clock, Users, Video, CalendarPlus2Icon as CalendarIcon2, ClockIcon, MessageSquare, CheckCircle2 } from 'lucide-react'
 import { cn } from "@/lib/utils"
-import { Card, CardContent } from "@/components/ui/card"
 import { getUserId } from "../utils/getUserId"
 import { toast } from "sonner"
-
-interface IDeveloper {
-  name: string
-  id: string
-}
-
-// Status enum to match the backend
-enum Status {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  CANCELED = 'CANCELED'
-}
-
-// Meeting interface to match the backend
-interface IMeeting {
-  title: string;
-  description: string;
-  devId: string; // Using string instead of mongoose.Types.ObjectId for frontend
-  scheduledAt: Date;
-  duration: number;
-  status: Status;
-  requestedAt?: Date;
-  userId?: string; // Using string instead of mongoose.Schema.Types.ObjectId for frontend
-  zoomMeeting?: string;
-}
+import { defaultValue, durationOptions, timeSlots } from "./components/constants"
+import { IMeeting } from "@/@types"
+import { IDeveloper } from "./components/type"
 
 const BookMeetingPage = () => {
   const [developers, setDevelopers] = useState<IDeveloper[]>([])
-  const [meetingData, setMeetingData] = useState<Partial<IMeeting>>({
-    title: "",
-    description: "",
-    devId: "",
-    duration: 30, // Default to 30 minutes
-    status: Status.PENDING
-  })
+  const [meetingData, setMeetingData] = useState<Partial<IMeeting>>(defaultValue);
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [time, setTime] = useState<string>("")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -82,10 +52,8 @@ const BookMeetingPage = () => {
     fetchDevelopers()
   }, [])
 
-  // Update meeting data when date or time changes
   useEffect(() => {
     if (date && time) {
-      // Parse the time string and combine with the selected date
       const [hourStr, minuteStr, period] = time.split(/:|\s/);
       const hour = parseInt(hourStr) + (period === "PM" && parseInt(hourStr) !== 12 ? 12 : 0);
       const minute = parseInt(minuteStr);
@@ -136,40 +104,14 @@ const BookMeetingPage = () => {
       method: "POST",
     });
 
-  if(response.ok)
+  if(response.ok){
     toast.success("Meeting scheduled successfully!");
+    setMeetingData(defaultValue);
+  }
   else
     toast.error("Failed to schedule meeting. Please try again later.");
   setIsSubmitting(false);
   }
-
-  const durationOptions = [
-    { value: "15", label: "15 minutes" },
-    { value: "30", label: "30 minutes" },
-    { value: "45", label: "45 minutes" },
-    { value: "60", label: "1 hour" },
-    { value: "90", label: "1.5 hours" },
-    { value: "120", label: "2 hours" },
-  ];
-
-  const timeSlots = [
-    "09:00 AM",
-    "09:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "01:00 PM",
-    "01:30 PM",
-    "02:00 PM",
-    "02:30 PM",
-    "03:00 PM",
-    "03:30 PM",
-    "04:00 PM",
-    "04:30 PM",
-  ]
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -414,10 +356,10 @@ const BookMeetingPage = () => {
               </motion.div>
 
               {/* Submit Button */}
-              <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div variants={itemVariants}>
                 <Button
                   type="submit"
-                  className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]"
+                  className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

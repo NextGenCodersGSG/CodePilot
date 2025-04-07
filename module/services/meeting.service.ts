@@ -10,10 +10,6 @@ class MeetingService {
         if (!developer) {
             throw new Error("Invalid Admin");
         }
-        // const user = await getToken();
-        // if (!user) {
-        //     throw new Error("Invalid User");
-        // }
         try {
             await meetingRepo.createMeeting(data);
         } catch (error: any) {
