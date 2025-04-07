@@ -70,6 +70,7 @@ export interface IAnalysis {
 }
 
 interface Project {
+  userId:string;
   name: string;
   url: string;
 }

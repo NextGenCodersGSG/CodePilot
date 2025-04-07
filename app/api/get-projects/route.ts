@@ -4,10 +4,16 @@ import projectModel from "@/DB/models/projects.model";
 
 export async function GET(req: NextRequest) {
   await connection();
-  
   try {
+    const userId = req.nextUrl.searchParams.get("userId");
+    
+    if (!userId) {
+      return NextResponse.json({
+        error: "User ID is required",
+      }, { status: 400 });
+    }
 
-    const projects = await projectModel.find({});
+      const projects = await projectModel.find({userId: userId});
     
     return NextResponse.json({ 
       success: true, 
