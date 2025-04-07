@@ -17,11 +17,9 @@ export async function createToken(userId: string, name:string, email: string, us
 
 export async function getToken(): Promise<TokenPayload | undefined | null > {
     const token = (await cookies()).get("auth-token")?.value;
-    console.log("getToken",token);
 
     if(!token) return undefined;
     const payload =await verifyToken(token);
-    console.log("verifyToken",payload);
     return payload;
 }
 

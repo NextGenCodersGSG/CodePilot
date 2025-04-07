@@ -1,5 +1,3 @@
-import { Status } from "@/@types";
-
 export const durationOptions = [
     { value: "15", label: "15 minutes" },
     { value: "30", label: "30 minutes" },
@@ -33,5 +31,4 @@ export const defaultValue = {
     description: "",
     developerId: "",
     duration: 30,
-    status: Status.PENDING
   }

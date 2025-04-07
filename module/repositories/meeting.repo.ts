@@ -14,6 +14,16 @@ export class MeetingRepository {
         return meeting;
     }
 
+    async conflictMeetings(developerId: string, scheduledAt: Date, duration: number){
+        return await MeetingModel.find({
+            developer: developerId,
+            scheduledAt: {
+                $gte: new Date(scheduledAt.getTime() - duration * 60000),
+                $lte: new Date(scheduledAt.getTime() + duration * 60000)
+            }
+        });
+    }
+
     async approveRequest(zoomId: string, meeting: any){
         meeting.status = Status.APPROVED;
         meeting.zoomMeeting = zoomId;

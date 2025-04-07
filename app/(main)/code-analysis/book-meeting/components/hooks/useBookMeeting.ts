@@ -43,6 +43,20 @@ export const useBookMeeting = () => {
         const scheduledAt = new Date(values.date as Date)
         scheduledAt.setHours(hour)
         scheduledAt.setMinutes(minute)
+        
+    const localDate = new Date(scheduledAt); 
+
+    // Convert to UTC Date (no timezone offset)
+    const utcDate = new Date(
+      Date.UTC(
+        localDate.getFullYear(),
+        localDate.getMonth(),
+        localDate.getDate(),
+        localDate.getHours(),
+        localDate.getMinutes(),
+        localDate.getSeconds()
+      )
+    );
 
         // Prepare meeting request
         const meetingRequest: IMeeting = {
@@ -50,13 +64,11 @@ export const useBookMeeting = () => {
           developerId: values.developerId,
           description: values.description,
           duration: values.duration,
-          scheduledAt,
+          scheduledAt: utcDate,
           userId: userId,
           requestedAt: new Date(),
           status: Status.PENDING,
         }
-
-        console.log("Submitting meeting request:", meetingRequest)
 
         const response = await fetch("/api/meetings/request-meeting", {
           method: "POST",
@@ -66,16 +78,15 @@ export const useBookMeeting = () => {
           body: JSON.stringify(meetingRequest),
         })
 
-        if (response.ok) {
-          toast.success("Meeting scheduled successfully!")
-          formik.resetForm()
-        } else {
-          const errorData = await response.json()
-          toast.error(errorData.message || "Failed to schedule meeting. Please try again later.")
+        const data = await response.json();
+        if (!response.ok) {
+          toast.error(data.error);
+          return;
         }
-      } catch (error) {
-        console.error("Error scheduling meeting:", error)
-        toast.error("An unexpected error occurred. Please try again later.")
+        toast.success("Meeting scheduled successfully!")
+        formik.resetForm()
+      } catch (error: any) {
+        toast.error(error.message)
       } finally {
         setIsSubmitting(false)
       }
