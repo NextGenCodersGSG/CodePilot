@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
         );
     } catch (error) {
         if (error instanceof Error) {
+            console.log(error);
+            
             return NextResponse.json({ error: error.message }, { status: 401 });
         }
         return NextResponse.json(

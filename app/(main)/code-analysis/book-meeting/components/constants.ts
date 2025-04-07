@@ -31,7 +31,7 @@ export const timeSlots = [
 export const defaultValue = {
     title: "",
     description: "",
-    devId: "",
+    developerId: "",
     duration: 30,
     status: Status.PENDING
   }

@@ -100,7 +100,6 @@ class MeetingService {
 
     async cancelMeeting(meetingId: string){
         const meeting = await meetingRepo.findMeetingById(meetingId);
-
         if (!meeting) {
             throw new Error("Meeting Not Found");
         }

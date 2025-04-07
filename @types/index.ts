@@ -130,10 +130,10 @@ export type MeetingStatus = `${Status}`;
 export interface IMeeting {
   title: string;
   description: string;
-  scheduledAt: Date
+  scheduledAt: Date;
   duration: number;
   status: Status; 
-  userId:  string;
+  userId: string;
   developerId?: string;
   zoomMeetingId?:  string;
   requestedAt?: Date;

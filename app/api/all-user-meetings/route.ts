@@ -8,7 +8,7 @@ export async function GET (req: NextRequest){
         if(!userId){
             return NextResponse.json({error: "User Id is required"}, {status: 400});
         }
-        const response = await meetingService.getAllMeetings(userId);
+        const response = await meetingService.getUserMeetings(userId);
             
         console.log(response);
         return NextResponse.json(response, {status: 200});
