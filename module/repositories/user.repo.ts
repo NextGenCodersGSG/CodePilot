@@ -2,6 +2,7 @@ import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { Role } from "@/@types/index";
 
 export class UserRepository {
+  
     async findUserById(id: string, role: Role): Promise<IUserDocument | null> {
         return await userModel.findOne({ _id: id, role });
     }

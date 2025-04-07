@@ -23,7 +23,7 @@ class MeetingService {
         //     throw new Error("User Not Found");
         // }
         try {
-            await meetingRepo.createMeeting(data, "67eef879584b5be6828c372c");
+            await meetingRepo.createMeeting(data);
         } catch (error: any) {
             throw new Error(error.message);
         }

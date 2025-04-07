@@ -13,7 +13,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { useSidebar } from "@/providers/SidebarContext"
-import { GalleryVerticalEnd, LayoutDashboard, BugPlay, BrainCircuit, BookOpen } from "lucide-react"
+import { GalleryVerticalEnd, LayoutDashboard, BugPlay, BrainCircuit, BookOpen, Video } from "lucide-react"
 
 export const data = {
   user: {
@@ -42,17 +42,17 @@ export const data = {
       ]
     },
     {
-      title: "Live Debugging",
+      title: "Meetings",
       url: "#",
-      icon: BugPlay,
+      icon: Video,
       items: [
         {
           title: "Start Session",
-          url: "#",
+          url: "/code-analysis/book-meeting",
         },
         {
-          title: "History Log",
-          url: "#",
+          title: "Scheduled Meetings",
+          url: "/code-analysis/scheduled-meetings",
         },
       ],
     },
