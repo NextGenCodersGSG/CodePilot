@@ -10,7 +10,7 @@ export class UserRepository {
         return await userModel.find({});
     }
     async findAllDevelopers() {
-        return await userModel.find({role: Role.Developer});
+        return await userModel.find({role: Role.Developer}).select('_id name');
     }
 }
 export default new UserRepository();
