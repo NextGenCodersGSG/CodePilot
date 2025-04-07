@@ -1,4 +1,5 @@
 "use client";
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import DesktopNav from "./navbar/DesktopNav";
 import { AlignJustify, Code, X } from "lucide-react";
@@ -60,3 +61,16 @@ const Header = () => {
 };
 
 export default Header;
+=======
+
+import Navbar from "./navbar/Navbar";
+
+export default function Header() {
+  return (
+    <header className="w-full dark:bg-transparent sticky top-2 z-50">
+        {/* Navbar Component */}
+        <Navbar />
+    </header>
+  );
+}
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a

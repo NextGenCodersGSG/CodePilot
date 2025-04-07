@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import AuthService from "@/module/services/auth.service";
 import { ILogin } from "@/@types/index";
 import { connection } from "@/DB/connection";
+<<<<<<< HEAD
 
+=======
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 
 export async function POST(req: NextRequest) {
   await connection();
@@ -11,12 +14,14 @@ export async function POST(req: NextRequest) {
     if (!data) {
       return NextResponse.json({ error: "Data is required" }, { status: 400 });
     }
-    const { token } = await AuthService.signIn(data);
+    const { token, user } = await AuthService.signIn(data);
+    const role: string = user.role
     console.log("token", token);
     return NextResponse.json(
       {
         message: "User login successfully",
         token,
+        role
       },
       { status: 201 }
     );

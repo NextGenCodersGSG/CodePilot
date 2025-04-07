@@ -1,4 +1,5 @@
 "use client"
+<<<<<<< HEAD
 
 import Link from "next/link"
 import Image from "next/image"
@@ -6,14 +7,28 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle, Code, Github, Linkedin, Twitter, Zap, Shield, BarChart} from "lucide-react"
+=======
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 import { useEffect, useRef } from "react"
 import { motion, useAnimation, type Variants } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
+<<<<<<< HEAD
 import Header from "@/components/header/Header"
 import ShinyText from "@/components/ui/ShinyText/shiny-text"
+=======
+import ShinyText from "@/components/ui/ShinyText/shiny-text"
+import BillingSection from "./billing"
+import Header from "@/components/header/Header"
+
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 
 function useInView(threshold = 0.1) {
   const controls = useAnimation()
@@ -67,15 +82,22 @@ const itemVariants: Variants = {
   },
 }
 
+<<<<<<< HEAD
 const MotionCard = motion(Card)
+=======
+const MotionCard = motion(Card);
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 
 export default function LandingPage() {
 
   const featuresSection = useInView()
   const testimonialsSection = useInView()
+<<<<<<< HEAD
   const pricingSection = useInView()
 
 
+=======
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
       <Header/>
@@ -322,6 +344,7 @@ export default function LandingPage() {
         </section>
 
         {/* Pricing Section */}
+<<<<<<< HEAD
         <section id="pricing" className="py-20 bg-gradient-to-b from-[#001A2C] via-[#001A2C]/95 to-[#00111C]">
           <div className="container px-4 md:px-6 mx-auto">
             <motion.div
@@ -488,6 +511,9 @@ export default function LandingPage() {
           </div>
         </section>
 
+=======
+        <BillingSection/>
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
         {/* CTA Section */}
         <section id="get-started" className="py-20">
           <div className="container px-4 md:px-6 mx-auto">

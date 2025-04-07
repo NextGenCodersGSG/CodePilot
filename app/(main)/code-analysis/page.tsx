@@ -18,7 +18,7 @@ import {  MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AnalysisResults from "@/components/analysis-results/AnalysisResults";
 import { useSidebar } from "@/providers/SidebarContext";
-
+import { selectElement } from "./constants";
 
 export default function Page() {
   const [user, _] = useState("John");
@@ -38,7 +38,7 @@ export default function Page() {
   const [isEmpty, setIsEmpty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
-  const {addProject} = useSidebar();
+  const {addProject, addUserSession} = useSidebar();
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setIsEmpty(value.trim() === "");
@@ -59,6 +59,22 @@ export default function Page() {
     if(textarea){
       textarea.style.height = "fit-content"; 
     } 
+  }
+
+  //TODO: This should be used from the utils/getUserId.ts but it doesn't work for some reason.
+  const getUserId = async () => {
+    try {
+      const response = await fetch("/api/auth/token");
+      const user = await response.json();
+
+      const userId = user.token.userId as string;
+      addUserSession(userId);
+      console.log(userId);
+      
+      return userId;
+    } catch (error) {
+      console.error("Error fetching user ID:", error);
+    }
   }
 
   const analyzeCode = async () => {
@@ -83,6 +99,7 @@ export default function Page() {
       setAnalysis(data);
 
       const newProject : IProject = {
+        userId: await getUserId() || "",
         name: data.title || "Untitled Project",
         url: `/code-analysis/${data.slug}`,
         title: data.title || "Untitled Project",
@@ -105,22 +122,14 @@ export default function Page() {
     }
   };
 
-  const selectElement = [
-    "TypeScript",
-    "JavaScript",
-    "React",
-    "Python",
-    "Java",
-    "C#",
-    "Rust",
-  ]
-
   const handleSelectedLanguage = (value: string) => {
     setLanguage(value);
   };
+
   useEffect(() => {
-    console.log(language);
-  }, [language]);
+    getUserId();
+  }, []);
+
   return (
     <section className={`px-4 py-8 ${isSent? "mt-auto" : "my-auto"}`}>
       <div className="mx-auto text-center">

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -22,3 +23,15 @@ export default function Unauthorized() {
     </div>
   )
 }
+=======
+import React from 'react'
+import Unauthorized from '../unauthorized'
+
+const page = () => {
+  return (
+    <Unauthorized/>
+  )
+}
+
+export default page
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // app/page.tsx
+=======
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 import { Suspense } from 'react'
 import BadgeCover from '@/components/landing/badge-cover'
 import Footer from '@/components/landing/footer'
@@ -8,7 +11,10 @@ import RightContent from '@/components/landing/right-content'
 import SplineLoader from '@/components/landing/spline-loader'
 
 const Page = () => {
+<<<<<<< HEAD
   throw new Error('This is a client component');
+=======
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
   return (
     <div>
       <LandingPage />
@@ -29,8 +35,13 @@ const Page = () => {
         <RightContent />
         <BadgeCover />
       </section>
+<<<<<<< HEAD
       
       <Footer />
+=======
+      <Footer />
+
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
     </div>
   )
 }
@@ -44,4 +55,8 @@ function LoadingOverlay() {
   )
 }
 
+<<<<<<< HEAD
 export default Page
+=======
+export default Page
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a

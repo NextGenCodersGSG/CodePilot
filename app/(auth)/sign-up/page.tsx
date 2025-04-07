@@ -65,9 +65,6 @@ export default function SignupPage() {
               transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
               className="w-full"
             >
-              <Button className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61]">
-                Create account
-              </Button>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

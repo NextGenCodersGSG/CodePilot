@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -22,3 +23,15 @@ export default function AlreadySignedIn() {
   )
 }
 
+=======
+import React from 'react'
+import AlreadySignedIn from '../already-signed-in'
+
+const page = () => {
+  return (
+    <AlreadySignedIn/>
+  )
+}
+
+export default page
+>>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
