@@ -116,24 +116,31 @@ const BookMeetingPage = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Set requestedAt to current time
     const meetingRequest: IMeeting = {
       ...meetingData as IMeeting,
       userId: userId,
       requestedAt: new Date()
     };
 
-    // Log the meeting request to the console
     console.log("Meeting Request:", meetingRequest);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      toast.success("Meeting scheduled successfully!");
-    }, 1500)
+    setIsSubmitting(true);
+    const response = await fetch("/api/meetings/request-meeting", {
+      body: JSON.stringify(meetingRequest),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+  if(response.ok)
+    toast.success("Meeting scheduled successfully!");
+  else
+    toast.error("Failed to schedule meeting. Please try again later.");
+  setIsSubmitting(false);
   }
 
   const durationOptions = [
@@ -198,28 +205,6 @@ const BookMeetingPage = () => {
       },
     },
   }
-
-  const successVariants: Variants = {
-    hidden: { opacity: 0, y: -20, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    },
-    exit: { 
-      opacity: 0, 
-      y: -20, 
-      scale: 0.8,
-      transition: {
-        duration: 0.3
-      }
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#00111C] py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

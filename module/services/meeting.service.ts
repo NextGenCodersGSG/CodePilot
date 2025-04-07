@@ -6,8 +6,8 @@ import {getZoomAccessToken} from '@/lib/zoomAccessToken'
 
 class MeetingService {
     async requestMeeting(data: IMeeting) {
-        const admin = UserRepository.findAdminById(data.devId);
-        if (!admin) {
+        const developer = UserRepository.findAdminById(data.devId);
+        if (!developer) {
             throw new Error("Invalid Admin");
         }
         // const user = await getToken();
@@ -15,7 +15,7 @@ class MeetingService {
         //     throw new Error("Invalid User");
         // }
         try {
-            await meetingRepo.createMeeting(data, "67eef879584b5be6828c372c");
+            await meetingRepo.createMeeting(data);
         } catch (error: any) {
             throw new Error(error.message);
         }
