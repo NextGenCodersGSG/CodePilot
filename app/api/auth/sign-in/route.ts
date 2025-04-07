@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import AuthService from "@/module/services/auth.service";
 import { ILogin } from "@/@types/index";
 import { connection } from "@/DB/connection";
-<<<<<<< HEAD
-
-=======
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 
 export async function POST(req: NextRequest) {
   await connection();
