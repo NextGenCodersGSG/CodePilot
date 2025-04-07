@@ -1,12 +1,12 @@
 import MeetingModel from "@/DB/models/meeting.model";
-import { IMeeting, Status } from "@/@types/index";
+import { IMeeting, Role, Status } from "@/@types/index";
 
 export class MeetingRepository {
     async createMeeting(data: IMeeting, userId: string) {
-        const meeting = await MeetingModel.create({
+        const meeting: IMeeting = await MeetingModel.create({
             title: data.title,
             description: data.description,
-            admin: data.adminId,
+            developer: data.developerId,
             user: userId,
             scheduledAt: data.scheduledAt,
             duration: data.duration,
@@ -32,6 +32,26 @@ export class MeetingRepository {
         async cancelMeeting( meeting: any){
         meeting.status = Status.CANCELED;
         return await meeting.save();
+    }
+    
+    async findMeetingsByUser(userId:string) {
+        return MeetingModel.find({ user: userId })
+        .populate({
+            path: 'zoomMeeting',
+            select: 'joinUrl password zoomId',
+            options: { lean: true }
+        })
+        .lean();
+    }
+
+    async findMeetingsByDeveloper(developerId: string) {
+        return MeetingModel.find({ developer: developerId })
+            .populate({
+                path: 'zoomMeeting',
+                select: 'startUrl zoomId password',
+                options: { lean: true }
+            })
+            .lean();
     }
 }
 
