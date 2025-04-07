@@ -4,41 +4,41 @@ import { connection } from '@/DB/connection';
 import userModel from '@/DB/models/user.model';
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-    const userIdString = params.id; // Extracting the user ID from route parameters
-
-    let userId: ObjectId;
     try {
-        userId = new ObjectId(userIdString); 
-    } catch (error) {
-        console.log("Invalid Object ID format");
-        return NextResponse.json({ message: "Invalid User ID format" }, { status: 400 });
-    }
+        // Validate ID parameter
+        if (!params.id || typeof params.id !== 'string') {
+            return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
+        }
 
-    console.log("Attempting to delete user with ID:", userId);
+        let userId: ObjectId;
+        try {
+            userId = new ObjectId(params.id);
+        } catch (error) {
+            return NextResponse.json({ message: "Invalid User ID format" }, { status: 400 });
+        }
 
-    try {
-        await connection(); 
+        await connection();
 
-        const userToDelete = await userModel.findById(userId);
-        if (!userToDelete) {
-            console.log("User not found with ID:", userId);
+        // Find and delete in one operation
+        const deletedUser = await userModel.findByIdAndDelete(userId);
+        
+        if (!deletedUser) {
             return NextResponse.json({ message: "User not found" }, { status: 404 });
         }
 
-        const deletedUser = await userModel.findByIdAndDelete(userId);
-        console.log("Deleted user:", deletedUser);
+        return NextResponse.json({ 
+            message: "User deleted successfully",
+            deletedId: deletedUser._id.toString()
+        }, { status: 200 });
 
-        return NextResponse.json({ message: "User deleted successfully" }, { status: 200 });
     } catch (error) {
         console.error("Error deleting user:", error);
-
-        // Use type checking to handle the error
-        if (error instanceof Error) {
-            // Handle any known error type
-            return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
-        } else {
-            // Handle unknown error type
-            return NextResponse.json({ error: 'Internal Server Error', details: 'An unknown error occurred.' }, { status: 500 });
-        }
+        return NextResponse.json(
+            { 
+                error: 'Internal Server Error',
+                details: error instanceof Error ? error.message : 'Unknown error'
+            },
+            { status: 500 }
+        );
     }
 }

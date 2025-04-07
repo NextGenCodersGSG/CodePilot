@@ -130,17 +130,21 @@ export type MeetingStatus = `${Status}`;
 export interface IMeeting {
   title: string;
   description: string;
-  devId: string;
-  userId?: string;
-  requestedAt?: Date;
   scheduledAt: Date
   duration: number;
   status: Status; 
-  zoomMeeting?: string;
+  userId:  string;
+  developerId?: string;
+  zoomMeetingId?:  string;
+  requestedAt?: Date;
+  startUrl?: string;
+  joinUrl?: string;
+  zoomId?: string;
+  password?: string;
 }
 
 export interface IZoom {
-  meeting: mongoose.Schema.Types.ObjectId;
+  meetingId: string;
   zoomId:  string;
   joinUrl: string;
   startUrl: string;
