@@ -2,12 +2,12 @@ import MeetingModel from "@/DB/models/meeting.model";
 import { IMeeting, Role, Status } from "@/@types/index";
 
 export class MeetingRepository {
-    async createMeeting(data: IMeeting, userId: string) {
+    async createMeeting(data: IMeeting) {
         const meeting: IMeeting = await MeetingModel.create({
             title: data.title,
             description: data.description,
             developer: data.developerId,
-            user: userId,
+            user: data.userId,
             scheduledAt: data.scheduledAt,
             duration: data.duration,
         });

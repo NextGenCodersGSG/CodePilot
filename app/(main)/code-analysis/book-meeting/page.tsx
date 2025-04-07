@@ -29,13 +29,13 @@ const BookMeetingPage = () => {
   useEffect(() => {
     const fetchDevelopers = async () => {
       try {
-        const response = await fetch("/api/all-developers")
-        const data = await response.json()
+        const response = await fetch("/api/all-developers");
+        const data = await response.json();
+
         const filteredDevelopers = data.map((dev: any) => ({
           name: dev.name,
           id: dev._id,
-        }))
-        console.log(filteredDevelopers);
+        }));
         setDevelopers(filteredDevelopers);
         setUserId(await getUserId() || "");
       } catch (error) {
@@ -94,8 +94,9 @@ const BookMeetingPage = () => {
       requestedAt: new Date()
     };
 
-    console.log("Meeting Request:", meetingRequest);
     setIsSubmitting(true);
+    console.log(meetingRequest);
+    
     const response = await fetch("/api/meetings/request-meeting", {
       body: JSON.stringify(meetingRequest),
       headers: {
@@ -248,8 +249,8 @@ const BookMeetingPage = () => {
                   <label className="text-[#F2F2F2] font-medium">Select a Developer</label>
                 </div>
                 <Select 
-                  onValueChange={(value) => handleSelectChange("devId", value)} 
-                  value={meetingData.devId}
+                  onValueChange={(value) => handleSelectChange("developerId", value)} 
+                  value={meetingData.developerId}
                   required
                 >
                   <SelectTrigger className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
