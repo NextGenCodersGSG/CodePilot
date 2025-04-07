@@ -6,7 +6,7 @@ import {getZoomAccessToken} from '@/lib/zoomAccessToken'
 
 class MeetingService {
     async requestMeeting(data: IMeeting) {
-        const developer = UserRepository.findAdminById(data.devId);
+        const developer = UserRepository.findDevById(data.devId);
         if (!developer) {
             throw new Error("Invalid Admin");
         }
@@ -99,6 +99,13 @@ class MeetingService {
         }
         
         await meetingRepo.cancelMeeting(meeting);
+    }
+
+    async getAllMeetings(userId: string){
+        if(!userId){
+            throw new Error("User Id is required");
+        }
+        return await meetingRepo.getAllMeetings(userId);
     }
 }
 

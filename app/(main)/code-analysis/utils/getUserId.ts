@@ -1,5 +1,3 @@
-import { IDeveloper } from "../book-meeting/components/type";
-
 export const getUserId = async () => {
     try {
       const response = await fetch("/api/auth/token");

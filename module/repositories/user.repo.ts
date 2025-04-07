@@ -2,7 +2,7 @@ import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { Role } from "@/@types/index";
 
 export class UserRepository {
-    async findAdminById(id: string): Promise<IUserDocument | null> {
+    async findDevById(id: string): Promise<IUserDocument | null> {
         return await userModel.findOne({ _id: id, role: Role.Admin });
     }
     async findAllUsers() {

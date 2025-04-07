@@ -33,6 +33,10 @@ export class MeetingRepository {
         meeting.status = Status.CANCELED;
         return await meeting.save();
     }
+
+    async getAllMeetings(userId: string){
+        return MeetingModel.find({user: userId});
+    }
 }
 
 export default new MeetingRepository();
