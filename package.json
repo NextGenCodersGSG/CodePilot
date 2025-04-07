@@ -38,11 +38,8 @@
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@splinetool/react-spline": "^4.0.0",
-<<<<<<< HEAD
-=======
     "@stripe/react-stripe-js": "^3.5.1",
     "@stripe/stripe-js": "^6.1.0",
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -69,10 +66,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "recharts": "^2.15.1",
     "sonner": "^2.0.2",
-<<<<<<< HEAD
-=======
     "stripe": "^17.7.0",
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.2.4",

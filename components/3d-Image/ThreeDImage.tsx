@@ -9,20 +9,6 @@ export default function ThreeDImage() {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   
   return (
-<<<<<<< HEAD
-    <CardContainer className="inter-var">
-      <CardBody className="transition duration-300 bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.2] dark:bg-black w-auto h-auto rounded-3xl  border-2 dark:border-blue-950 dark:hover:border-emerald-900 ">
-          <Image
-            src="/CodePilot.png"
-            width={1000}
-            height={1000}
-            alt="CodePilot dashboard preview"
-            className="rounded-3xl h-auto w-full object-cover "
-            priority
-          />
-      </CardBody>
-    </CardContainer>
-=======
     <div className="relative w-full h-full">
       <motion.div 
         className="fixed inset-0 bg-background/95 z-10 pointer-events-none"
@@ -114,7 +100,6 @@ function DescriptionSidePanels() {
         </ul>
       </motion.div>
     </div>
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
   )
 }
 

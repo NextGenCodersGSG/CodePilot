@@ -1,11 +1,6 @@
 "use client"
 
 import * as React from "react"
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavProjects } from "@/components/sidebar/nav-projects"
 import { NavUser } from "@/components/sidebar/nav-user"
