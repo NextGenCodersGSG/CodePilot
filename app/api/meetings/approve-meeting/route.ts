@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { IMeeting } from "@/@types/index";
 import { connection } from "@/DB/connection";
 import meetingService from "@/module/services/meeting.service";
 
