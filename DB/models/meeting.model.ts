@@ -5,7 +5,7 @@ const meetingSchema = new mongoose.Schema({
     description: { type: String },
     status: {
         type: String,
-        enum: ['PENDING', 'APPROVED', 'REJECTED', 'COMPLETED'],
+        enum: ['PENDING', 'APPROVED', 'REJECTED', 'CANCELED'],
         default: 'PENDING'
     },
     requestedAt: { type: Date, default: Date.now },

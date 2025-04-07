@@ -128,7 +128,7 @@ export enum Status{
   PENDING = 'PENDING', 
   APPROVED = 'APPROVED', 
   REJECTED = 'REJECTED', 
-  COMPLETED = 'COMPLETED'
+  CANCELED = 'CANCELED'
 }
 
 export type MeetingStatus = `${Status}`;
