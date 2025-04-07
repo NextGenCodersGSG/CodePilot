@@ -1,6 +1,6 @@
 import { ICodeReview } from "@/@types";
 import { connection } from "@/DB/connection";
-import CodeReviewRepo  from "@/module/repositories/reviews-chart.repo";
+import CodeReviewRepo  from "@/module/repositories/reviews.repo";
 interface IReviewPerDay {
     name: string,
     reviewes: number,
