@@ -28,6 +28,11 @@ export class MeetingRepository {
         meeting.status = Status.REJECTED;
         return await meeting.save();
     }
+
+        async cancelMeeting( meeting: any){
+        meeting.status = Status.CANCELED;
+        return await meeting.save();
+    }
 }
 
 export default new MeetingRepository();

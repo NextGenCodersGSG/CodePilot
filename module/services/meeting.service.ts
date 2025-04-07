@@ -90,6 +90,20 @@ class MeetingService {
         
         await meetingRepo.rejectMeeting(meeting);
     }
+
+    async cancelMeeting(meetingId: string){
+        const meeting = await meetingRepo.findMeetingById(meetingId);
+
+        if(meeting.status != Status.PENDING){
+            throw new Error("Only Pending Request Canceled");
+        }
+
+        if (!meeting) {
+            throw new Error("Meeting Not Found");
+        }
+        
+        await meetingRepo.cancelMeeting(meeting);
+    }
 }
 
 export default new MeetingService();
