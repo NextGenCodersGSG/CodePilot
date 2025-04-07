@@ -9,5 +9,8 @@ export class UserRepository {
     async findAllUsers() {
         return await userModel.find({});
     }
+    async findAllDevelopers() {
+        return await userModel.find({role: Role.Developer});
+    }
 }
 export default new UserRepository();
