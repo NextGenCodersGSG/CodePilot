@@ -118,13 +118,6 @@ export interface EmailTemplateProps {
   button?: string;
 }
 
-export interface IMeeting {
-    title: string;
-    description: string;
-    adminId: mongoose.Types.ObjectId;
-    scheduledAt: Date
-    duration: number;
-}
 export enum Status{
   PENDING = 'PENDING', 
   APPROVED = 'APPROVED', 
@@ -137,13 +130,12 @@ export type MeetingStatus = `${Status}`;
 export interface IMeeting {
   title: string;
   description: string;
-  adminId: mongoose.Types.ObjectId;
+  devId: mongoose.Types.ObjectId;
+  userId?:  mongoose.Schema.Types.ObjectId;
+  requestedAt?: Date;
   scheduledAt: Date
   duration: number;
   status: Status; 
-  requestedAt?: Date;
-  admin?:  mongoose.Schema.Types.ObjectId;
-  user?:  mongoose.Schema.Types.ObjectId;
   zoomMeeting?: string;
 }
 
@@ -154,4 +146,5 @@ export interface IZoom {
   startUrl: string;
   password: string;
 }
+
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
