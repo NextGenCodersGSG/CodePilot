@@ -57,24 +57,23 @@ const ScheduledMeetingsPage = () => {
   const handleCancelMeeting = async (meetingId: string) => {
     try {
       setCancellingId(meetingId)
+      const response = await fetch(`/api/meetings/cancel-meeting`, {
+        method: 'POST',
+        body: JSON.stringify({ meetingId }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      // Here you would implement your API call to cancel the meeting
-      // For example:
-      // const response = await fetch(`/api/cancel-meeting/${meetingId}`, {
-      //   method: 'POST',
-      // });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to cancel meeting');
+      }
 
-      // if (!response.ok) {
-      //   throw new Error('Failed to cancel meeting');
-      // }
-
-      // Optimistically update the UI
       setMeetings(meetings.map((meeting) => (meeting.id === meetingId ? { ...meeting, status: "CANCELLED" } : meeting)))
 
-      // Show success message or notification here
     } catch (err) {
       console.error("Error cancelling meeting:", err)
-      // Show error message or notification here
     } finally {
       setCancellingId(null)
     }

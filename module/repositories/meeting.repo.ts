@@ -33,7 +33,7 @@ export class MeetingRepository {
         meeting.status = Status.CANCELED;
         return await meeting.save();
     }
-  
+
     async findMeetingsByUser(userId:string) {
         return MeetingModel.find({ user: userId })
         .populate({
