@@ -9,6 +9,8 @@ import { MoreHorizontal, Trash2 } from 'lucide-react';
 const ActiveUserDisplay = () => {
   const [recentUsers, setRecentUsers] = useState<ICountLogs[]>([]);
   const [users, setUsers] = useState<ICountLogs[]>([]);
+    const [selectedTab, setSelectedTab] = useState("overview")
+  
   const fetchUsers = async () => {
     try {
       const response = await fetch('/api/recent-user');
@@ -63,6 +65,7 @@ const ActiveUserDisplay = () => {
       }
     }
   };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -81,8 +84,8 @@ const ActiveUserDisplay = () => {
             variant="outline"
             size="sm"
             className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-            onClick={() => {/* Your logic to view all users */ }}
-          >
+            onClick={() => setSelectedTab("analytics")}
+            >
             View All Users
           </Button>
         </CardHeader>

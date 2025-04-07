@@ -18,6 +18,7 @@ import ActiveUserDisplay from './components/recentUser';
 import UserLogs from './components/totalLogs';
 import { IUser } from '@/@types';
 import TotalUsers from './components/totalUsers';
+import UserMatrics from './components/usersMatrics';
 
 
 const codeReviewsData = [
@@ -77,7 +78,7 @@ const notifications = [
     read: true,
   },
 ]
-export interface IUserLoginData extends Pick<IUser, 'email' | 'password'> {}
+export interface IUserLoginData extends Pick<IUser, 'email' | 'password'> { }
 // Colors for the pie chart
 const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))"]
 
@@ -251,10 +252,10 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <TotalUsers/>
-                <UserLogs/>
-                <ProjectsDashboard/>
-                <AIReviewDashboard/>
+                <TotalUsers />
+                <UserLogs />
+                <ProjectsDashboard />
+                <AIReviewDashboard />
               </motion.div>
 
               {/* Chart Section */}
@@ -273,33 +274,14 @@ export default function Page() {
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                           data={codeReviewsData}
-                          margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                          }}
+                          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                         >
                           <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
                           <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
                           <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: "#001A2C",
-                              borderColor: "#002945",
-                              color: "#F2F2F2",
-                            }}
-                            labelStyle={{ color: "#F2F2F2" }}
-                          />
+                          <Tooltip contentStyle={{ backgroundColor: "#001A2C", borderColor: "#002945", color: "#F2F2F2" }} />
                           <Legend />
-                          <Line
-                            type="monotone"
-                            dataKey="reviews"
-                            name="Code Reviews"
-                            stroke="hsl(var(--chart-1))"
-                            activeDot={{ r: 8 }}
-                            strokeWidth={2}
-                          />
+                          <Line type="monotone" dataKey="reviews" name="Code Reviews" stroke="hsl(var(--chart-1))" activeDot={{ r: 8 }} strokeWidth={2} />
                         </LineChart>
                       </ResponsiveContainer>
                     </div>
@@ -340,14 +322,25 @@ export default function Page() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div> 
-              </TabsContent>             
-            {/*user managment table */}
-            <UserManagementCard/>
-            <ActiveUserDisplay />
+              </motion.div>
+
+              {/* Recent Users Display */}
+              <ActiveUserDisplay />
+            </TabsContent>
+
+            {/* User Management Tab */}
+            <TabsContent value="users" className="space-y-6">
+              <UserManagementCard />
+            </TabsContent>
+
+            <TabsContent value="analytics" className="flex w-full h-full">
+              <div className="w-full h-full"> 
+                <UserMatrics className="w-full h-full" />
+              </div>
+            </TabsContent>
           </Tabs>
         </main>
-      </div>      
+      </div>
     </div >
   )
 }
