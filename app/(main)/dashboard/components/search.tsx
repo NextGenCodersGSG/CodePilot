@@ -8,9 +8,8 @@ interface UserSearchProps {
 
 const UserSearch: React.FC<UserSearchProps> = ({ users }) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [filteredUsers, setFilteredUsers] = useState<IUserDocument[]>(users); // Initialize filtered users
+    const [filteredUsers, setFilteredUsers] = useState<IUserDocument[]>(users); 
 
-    // Effect to filter users whenever the search term changes
     useEffect(() => {
         const results = users.filter(user => 
             user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,7 +28,6 @@ const UserSearch: React.FC<UserSearchProps> = ({ users }) => {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            {/* User Table */}
             <table className="min-w-full bg-[#001A2C] border border-[#002945]">
                 <thead>
                     <tr className="bg-[#002945] text-[#F2F2F2]">
