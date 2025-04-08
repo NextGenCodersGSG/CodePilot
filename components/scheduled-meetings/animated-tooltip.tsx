@@ -32,7 +32,7 @@ export function AnimatedTooltip({ content, children, side = "top", sideOffset = 
         <TooltipContent
           side={side}
           sideOffset={sideOffset}
-          className={`p-0 max-w-md bg-[#001523] border-1 border-[#002945] text-[#F2F2F2] shadow-xl rounded-2xl overflow-hidden ${className}`}
+          className={`p-0 max-w-[300px] bg-[#001523] border-1 border-[#002945] text-[#F2F2F2] shadow-xl rounded-2xl overflow-hidden ${className}`}
         >
           <motion.div
             initial={{ opacity: 0, y: side === "top" ? 10 : -10, scale: 0.95 }}
@@ -44,7 +44,7 @@ export function AnimatedTooltip({ content, children, side = "top", sideOffset = 
               damping: 30,
               mass: 1,
             }}
-            className="p-2"
+            className="p-2 w-full"
           >
             {content}
           </motion.div>

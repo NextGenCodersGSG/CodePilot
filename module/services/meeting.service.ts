@@ -35,7 +35,7 @@ class MeetingService {
         const meeting = await meetingRepo.findMeetingById(meetingId);
 
         if (meeting.status != Status.PENDING) {
-            throw new Error("Only Pending Request Approved");
+            throw new Error("Only Pending Requests Can Be Approved");
         }
 
         if (!meeting) {

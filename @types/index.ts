@@ -137,6 +137,7 @@ export enum Status{
 export type MeetingStatus = `${Status}`;
 
 export interface IMeeting {
+  id?: string;
   title: string;
   description: string;
   scheduledAt: Date;
@@ -144,12 +145,8 @@ export interface IMeeting {
   status: Status; 
   userId: string;
   developerId?: string;
-  zoomMeetingId?:  string;
   requestedAt?: Date;
-  startUrl?: string;
-  joinUrl?: string;
-  zoomId?: string;
-  password?: string;
+  zoom: IZoom
 }
 
 export interface IZoom {
