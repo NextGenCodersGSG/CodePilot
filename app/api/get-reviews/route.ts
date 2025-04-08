@@ -1,9 +1,12 @@
-import { getReviewsPerDay } from "@/lib/getReviewsPerDay"
+import { IChartData } from "@/@types";
+import { connection } from "@/DB/connection";
+import ChartsService from "@/module/services/charts.service";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
+    await connection();
     try {
-        const reviewData = await getReviewsPerDay();
+        const reviewData: IChartData[] = await ChartsService.getReviewsData();
         if(!reviewData || reviewData.length === 0) {
             return NextResponse.json({reviews: []}, {status: 400});
         }
