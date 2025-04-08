@@ -94,6 +94,16 @@ export default function Page() {
   // Handle CSV export
   const handleExportCSV = () => {
     console.log("Exporting user data as CSV")
+            // Create a temporary anchor element
+            const link = document.createElement("a");
+            // Set the href to the API endpoint that generates the CSV file
+            link.href = "/api/export-csv/all-users";
+            // Specify the filename for the downloaded file
+            link.download = "users.csv";
+            // Programmatically trigger the download
+            link.click();
+    
+    
   }
 
   return (
@@ -335,7 +345,7 @@ export default function Page() {
 
             <TabsContent value="analytics" className="flex w-full h-full">
               <div className="w-full h-full"> 
-                <UserMatrics className="w-full h-full" />
+                <UserMatrics />
               </div>
             </TabsContent>
           </Tabs>
