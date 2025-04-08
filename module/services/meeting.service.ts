@@ -33,7 +33,8 @@ class MeetingService {
 
     async approveMeeting(meetingId: string) {
         const meeting = await meetingRepo.findMeetingById(meetingId);
-
+        console.log("from services", meeting);
+        
         if (meeting.status != Status.PENDING) {
             throw new Error("Only Pending Request Approved");
         }

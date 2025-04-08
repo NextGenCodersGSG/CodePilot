@@ -7,10 +7,13 @@ import { connection } from '@/DB/connection';
 export async function GET(req: NextRequest) {
     await connection();
     try {
-        // const token = await getToken();
-        // if (!token) {
-        //     return res.status(401).json({ error: 'Unauthorized' });
-        // }
+        const token = await getToken();
+        if (!token) {
+            return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 }
+            );
+        }
         // let meetings;
         // if(token.userRole === Role.Developer){
         //     meetings = await meetingService.getDeveloperMeetings(token.userId);
@@ -20,7 +23,7 @@ export async function GET(req: NextRequest) {
             // return NextResponse.json({ Unauthorized }, { status: 401 });
         // 
         //}
-        const meetings = await meetingService.getDeveloperMeetings("67f287e6855d4cc1fe30bea8");
+        const meetings = await meetingService.getDeveloperMeetings(token.userId);
         console.log(meetings.length);
         console.log(meetings);
         
