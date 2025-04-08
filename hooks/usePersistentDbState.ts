@@ -41,9 +41,7 @@ export function usePersistentDbState<T>(
   };
 
   return [data, updateData, loading, error];
-<<<<<<< HEAD
-}
-=======
+
 }
 
->>>>>>> ea5d391babbc57689cdd76f23727f8f0c038863a
+
