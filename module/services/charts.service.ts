@@ -1,4 +1,4 @@
-import { IChartData, ICodeReview, IUser } from "@/@types";
+import { IChartData, ICodeReview, IUser, IUserFromDB } from "@/@types";
 import CodeReviewRepo  from "@/module/repositories/reviews.repo";
 import getDayFromISO from "@/lib/getDayFromISO";
 import { convertToChartData } from "@/lib/convertToChartData";
@@ -22,6 +22,16 @@ class ChartsService {
             usersRoles[user.role] = (usersRoles[user.role] || 0) + 1;
         });
         const chartData: IChartData[] = convertToChartData(usersRoles, "value");
+        return chartData;
+    }
+    async getSignsData() {
+        const users: IUserFromDB[] = await UserRepository.findAllUsers();
+        const usersSignsperDay: {[key: string]: number} = {};
+        users.map((user) => {
+            const day = getDayFromISO(new Date(user.createdAt));
+            usersSignsperDay[day] = (usersSignsperDay[day] || 0) + 1;
+        })
+        const chartData: IChartData[] = convertToChartData(usersSignsperDay, "value");
         return chartData;
     }
 }
