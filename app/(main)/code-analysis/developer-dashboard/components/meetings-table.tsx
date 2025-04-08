@@ -7,6 +7,7 @@ import { StatusBadge } from "./status-badge"
 import { MeetingActions } from "./meeting-actions"
 import { IMeeting, Status } from "@/@types"
 import { formatDate } from "./utils/format-date"
+import { AnimatedTooltip } from "@/components/scheduled-meetings/animated-tooltip"
 
 interface MeetingsTableProps {
   meetings: IMeeting[]
@@ -27,7 +28,7 @@ export function MeetingsTable({ meetings: initialMeetings }: MeetingsTableProps)
         <TableHeader className="bg-[#001A2C]">
           <TableRow>
             <TableHead className="text-[#F2F2F2] font-medium">Title</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">User</TableHead>
+            <TableHead className="text-[#F2F2F2] font-medium">Description</TableHead>
             <TableHead className="text-[#F2F2F2] font-medium">Date & Time</TableHead>
             <TableHead className="text-[#F2F2F2] font-medium">Duration</TableHead>
             <TableHead className="text-[#F2F2F2] font-medium">Status</TableHead>
@@ -46,7 +47,15 @@ export function MeetingsTable({ meetings: initialMeetings }: MeetingsTableProps)
                 className="bg-[#001523] hover:bg-[#001A2C] border-b border-[#002945] last:border-0"
               >
                 <TableCell className="font-medium text-[#F2F2F2]">{meeting.title}</TableCell>
-                <TableCell className="text-[#B3B3B3]">{meeting.userId || "Unknown User"}</TableCell>
+                <TableCell>                  
+                  <AnimatedTooltip
+                    content={<p className="text-sm p-1">{meeting.description}</p>}
+                    side="bottom"
+                    className="bg-[#00111C] border-[#002945]"
+                  >
+                    <div className="text-sm text-[#B3B3B3] max-w-[300px] truncate">{meeting.description}</div>
+                  </AnimatedTooltip>
+                </TableCell>
                 <TableCell className="text-[#B3B3B3]">{formatDate(meeting.scheduledAt)}</TableCell>
                 <TableCell className="text-[#B3B3B3]">{meeting.duration} min</TableCell>
                 <TableCell>
