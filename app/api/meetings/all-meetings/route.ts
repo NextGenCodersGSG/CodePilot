@@ -20,13 +20,18 @@ export async function GET(req: NextRequest) {
             // return NextResponse.json({ Unauthorized }, { status: 401 });
         // 
         //}
-        const meetings = await meetingService.getUserMeetings("67f31143d995b4975b5a97a0");
+        const meetings = await meetingService.getDeveloperMeetings("67f287e6855d4cc1fe30bea8");
+        console.log(meetings.length);
+        console.log(meetings);
+        
         if(!meetings.length){
             return NextResponse.json({ message: "No meetings Founds"}, { status: 404 });
         }
         return NextResponse.json({meetings}, { status: 201 });
     } catch (error) {
         if (error instanceof Error) {
+            console.log(error);
+            
             return NextResponse.json({ error: error.message }, { status: 401 });
         }
         return NextResponse.json(
