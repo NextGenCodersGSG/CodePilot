@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Meeting Id is required" }, { status: 400 });
         }
         await meetingService.approveMeeting(meetingId);
+       
         return NextResponse.json(
             {
                 message: "Meeting Approved successfully",
