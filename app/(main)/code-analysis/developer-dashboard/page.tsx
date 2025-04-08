@@ -6,8 +6,6 @@ import { MeetingsTable } from "./components/meetings-table"
 import { EmptyState } from "./components/empty-state"
 import type { IMeeting } from "@/@types"
 import { Loader2, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import { getUserId } from "../utils/getUserId"
 
 interface MeetingsResponse {
@@ -55,7 +53,7 @@ const MeetingsPage = () => {
 
   return (
     <motion.div
-      className="container mx-auto py-8 px-4"
+      className="container mx-auto py-8 px-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -73,7 +71,6 @@ const MeetingsPage = () => {
           <p className="text-[#B3B3B3] mt-2">Manage and review all scheduled meetings with users</p>
         </motion.div>
 
-        <div className="flex gap-3">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -84,13 +81,6 @@ const MeetingsPage = () => {
               <span className="font-medium text-[#F2F2F2]">{meetings.length}</span> meetings assigned
             </p>
           </motion.div>
-          <Button
-            className="cursor-pointer"
-            onClick={()=> {toast.info("Logging Out...", {duration: 1000})}}
-          >
-            Logout
-          </Button>
-        </div>
       </div>
 
       {isLoading ? (
