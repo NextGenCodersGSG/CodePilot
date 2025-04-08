@@ -14,14 +14,16 @@ class MeetingService {
         if (!developer) {
             throw new Error("Invalid Developer");
         }
-        // const user = await getToken();
-        // if (!user) {
-        //     throw new Error("Invalid User");
-        // }
-        // const userExist = await userRepo.findUserById(user.userId, Role.User);
-        // if(!userExist){
-        //     throw new Error("User Not Found");
-        // }
+        data.scheduledAt = new Date(data.scheduledAt);
+        const conflictMeetings = await meetingRepo.conflictMeetings(data.developerId, data.scheduledAt, data.duration);
+        if(conflictMeetings.length){
+            throw new Error("Developer Unavailable at this time");
+        }
+        console.log(typeof data.scheduledAt);
+        const user = await userRepo.findUserById(data.userId, Role.User);
+        if(!user){
+            throw new Error("User Not Found");
+        }
         try {
             await meetingRepo.createMeeting(data);
         } catch (error: any) {
@@ -100,6 +102,7 @@ class MeetingService {
 
     async cancelMeeting(meetingId: string){
         const meeting = await meetingRepo.findMeetingById(meetingId);
+
         if (!meeting) {
             throw new Error("Meeting Not Found");
         }
