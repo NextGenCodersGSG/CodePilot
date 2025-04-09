@@ -22,8 +22,10 @@ const AdminDropdown = () => {
 
   return (
     <button
-    className="w-full p-0 ml-1 h-fit flex gap-2 justify-start  m-0 text-sm bg-transparent hover:bg-transparent cursor-pointer border"
-     onClick={handleLogout}>Log out</button>
+      className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer border border-#4b5563 "
+      onClick={handleLogout}>Log out
+    
+    </button>
   );
 };
 export default AdminDropdown;
