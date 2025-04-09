@@ -9,8 +9,7 @@ const Footer = () => {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <Code className="h-6 w-6 text-[#00406C]" />
-            <span className="text-xl font-bold text-[#F2F2F2]">CodePilot</span>
+            <span className="text-2xl lg:text-4xl font-bold text-[#F2F2F2]">CodePilot</span>
           </div>
           <p className="text-sm text-[#B3B3B3] mb-4">
             AI-powered code review and debugging to help developers ship better code faster.

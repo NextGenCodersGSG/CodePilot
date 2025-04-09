@@ -5,6 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Home, FileCode, Code } from "lucide-react"
 import { useState, useEffect } from "react"
+import Logo from "@/components/logo/Logo"
 
 export default function AlreadySignedIn() {
   const containerVariants = {
@@ -169,10 +170,7 @@ export default function AlreadySignedIn() {
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} className="mt-12 flex items-center justify-center gap-2 text-[#B3B3B3]">
-          <Code className="h-5 w-5 text-[#00406C]" />
-          <span className="text-lg font-medium">CodePilot</span>
-        </motion.div>
+        <Logo/>
       </motion.div>
 
       {/* Floating particles */}
