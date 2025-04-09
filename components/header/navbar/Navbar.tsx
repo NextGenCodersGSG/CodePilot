@@ -11,6 +11,7 @@ import Logo from "@/components/logo/Logo";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const transition = {
   type: "spring",
@@ -212,8 +213,11 @@ export default function Navbar() {
                     }),
                   });
                   if(response.ok) {
-                    toast.success("Logged out successfully");
+                    toast.success("Logging out...", {duration: 600});
                     setUser(null);
+                    setTimeout(()=> {
+                      redirect("sign-in");
+                    },500)
                   }
                 }}
               >
