@@ -60,7 +60,6 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
     }
   );
 
-
   const addProject = (project: IProject) => {
     setSidebarProjects((prev) => [...prev, project]);
   };
