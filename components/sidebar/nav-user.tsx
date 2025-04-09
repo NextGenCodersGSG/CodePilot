@@ -29,6 +29,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { Button } from "../ui/button"
+import { toast } from "sonner"
+import { redirect } from "next/navigation"
 
 export function NavUser({
   user,
@@ -36,7 +39,7 @@ export function NavUser({
   user: {
     name: string
     email: string
-    avatar: string
+    avatar?: string
   }
 }) {
   const { isMobile } = useSidebar()
@@ -52,7 +55,7 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user.name[0]}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -71,7 +74,7 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm cursor-pointer">
                 <Avatar className="h-8 w-8 rounded-lg ">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{user.name[0]}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
@@ -103,8 +106,27 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              <LogOut />
-              Log out
+              <button 
+                className="w-full p-0 ml-1 h-fit flex gap-2 justify-start  m-0 text-sm bg-transparent hover:bg-transparent cursor-pointer"
+              onClick={async () => {
+                const response = await fetch("/api/log-out", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                })
+
+                if(response.ok){
+                  toast.success("Logging Out...", {duration: 600});
+                  setTimeout(() => {
+                    redirect("/sign-in");
+                  },500)
+                }
+                
+              }}>
+                <LogOut />
+                Log out
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
