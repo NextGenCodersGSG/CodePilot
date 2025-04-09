@@ -10,7 +10,6 @@ import {
   Save,
   X,
   Lock,
-  Activity
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +32,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { PasswordChangeForm } from "./password-change-form";
 import { PlanCard } from "./plan-card";
-import { UserActivityList } from "./user-activity-list";
 import { IUserData } from "./types";
 import { toast } from "sonner";
 
@@ -104,12 +102,10 @@ export default function ProfilePage(userData: IUserData ) {
   const [activeTab, setActiveTab] = useState("account");
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
 
-
   const handleSaveName = () => {
     if (nameValue.trim()) {
       setUser({ ...user, name: nameValue });
       setIsEditingName(false);
-
       toast.success("Password changed successfully", { duration: 2000 });
     }
   };
