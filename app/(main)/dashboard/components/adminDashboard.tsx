@@ -78,7 +78,6 @@ export default function Dashboard({
   const handleClosePopup = () => {
     setSearchQuery(""); // Clear search query to close popup
   };
-  const loggedInAdmin = "John Doe";
 
   return (
     <div className="min-h-screen bg-[#00111C] text-[#F2F2F2] relative">
@@ -100,15 +99,9 @@ export default function Dashboard({
                 <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B3B3B3]" />
               </div>
 
-              <AdminDropdown adminName={loggedInAdmin} />
+              <AdminDropdown  />
 
-              {/* <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
-                  <span className="font-medium text-sm">AJ</span>
-                </div>
-                <span className="hidden md:inline-block">Admin User</span>
-                <ChevronDown className="h-4 w-4 text-[#B3B3B3]" />
-              </div> */}
+            
             </div>
           </div>
         </header>

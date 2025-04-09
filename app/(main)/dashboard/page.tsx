@@ -102,9 +102,9 @@ const fetchRecentUsers = async () => {
   } catch (error) {
     console.error("Error fetching recent users:", error);
     return [];
-  }
-};
 
+  }
+}
 // Fetch active users data
 const fetchUserLogs = async () => {
   const apiUrl = `${baseUrl}/api/logs`;
