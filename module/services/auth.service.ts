@@ -1,14 +1,17 @@
 import { ILogin, IUser, Role } from "@/@types";
+import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/generateAndVerifyToken";
+import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
+import { connection } from "@/DB/connection";
+import { createToken } from "@/lib/storeGetDelete";
+import { emailTemplate } from "@/lib/emailTemplate";
 import crypto from "crypto";
 import xss from "xss";
 import UserRepository from "../repositories/auth.repo";
-import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
-import { connection } from "@/DB/connection";
 import EmailService from "./email.service";
-import { createToken } from "@/lib/storeGetDelete";
-import { emailTemplate } from "@/lib/emailTemplate";
 import authRepo from "../repositories/auth.repo";
-import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import  LogsRepository  from "../repositories/countLogs.repo";
 
 class AuthService {
   async signIn(data: ILogin) {
@@ -33,7 +36,7 @@ class AuthService {
     }
 
     console.log("Password matched, generating token...");
-    const token = await createToken(user.id, user.role);
+    const token = await createToken(user.id, user.name, user.email, user.role);
 
     console.log("Token generated:", token);
 
@@ -50,14 +53,13 @@ class AuthService {
   }
 
   async ForgetPassword(email: string) {
-    console.log(email);
     const user = await UserRepository.findUserByEmail(email);
     if (!user) {
       throw new Error("User not found");
     }
     const resetToken = user.getVerificationToken();
     await user.save();
-    const ResetLink = `/reset-password?resetToken=${resetToken}&id=${user?._id}`;
+    const ResetLink = `${process.env.NEXT_PUBLIC_URL}/reset-password?resetToken=${resetToken}&id=${user?._id}`;
     const message = emailTemplate({ link: ResetLink, title: "", description: "", secondary: "", button: "Reset Password" });
     // Send verification email
     await EmailService.sendEmail(user?.email, "Reset Password", message);
@@ -100,6 +102,25 @@ class AuthService {
       throw new Error("Something went wrong, please try again later");
     }
     return newUser;
+  }
+  async logout() {
+
+    try {
+      const authToken: string = (await cookies()).get("auth-token")?.value || "";
+      if (!authToken) {
+        throw new Error("No token found");
+      }
+      const email: string  = (await verifyToken(authToken))?.email || "";
+      if (!email) {
+        throw new Error("Invalid token");
+      }
+      await LogsRepository.deleteUserFromCounts(email);
+      (await cookies()).delete("auth-token");
+      return "The user with email: ${email} has been logged out succefully";
+    } catch (error) {
+      console.error("Error deleting token cookie:", error);
+      throw new Error("Failed to logout");
+    }
   }
 }
 

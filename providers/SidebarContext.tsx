@@ -4,23 +4,39 @@ import { IProject } from "@/@types";
 import { usePersistentDbState } from "@/hooks/usePersistentDbState";
 import { getUserId } from "@/app/(main)/code-analysis/utils/getUserId";
 
+interface IUserData {
+  name: string;
+  email: string;
+  avatar?: string;
+}
+
+const initialUserData: IUserData = {
+  name: "",
+  email: "",
+  avatar: "/profile.jpg"
+};
+
 const SidebarContext = createContext<{
   sidebarProjects: IProject[];
   addProject: (project: IProject) => void;
   loading: boolean;
   error: Error | null;
-  addUserSession: (uId: string) => void
+  addUserSession: (uId: string) => void;
+  setUserData: (user: IUserData) => void;
+  userData: IUserData;
 }>({
   sidebarProjects: [],
   addProject: () => {},
   loading: false,
   error: null,
-  addUserSession: ()=>{}
+  addUserSession: ()=>{},
+  setUserData: ()=>{},
+  userData: initialUserData
 });
 
 export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState<string>("");
-
+  const [userData, setUserData] = useState<IUserData>(initialUserData);
   const fetchProjects = useCallback(async (): Promise<IProject[]> => {
     setUserId(await getUserId() || "");
 
@@ -50,7 +66,7 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
   }, [userId]);
 
   const [sidebarProjects, setSidebarProjects, loading, error] = usePersistentDbState<IProject[]>(
-    [], // initially Empty
+    [],
     fetchProjects,
     async (projects) => {
       if (projects.length > 0) {
@@ -60,7 +76,6 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
     }
   );
 
-
   const addProject = (project: IProject) => {
     setSidebarProjects((prev) => [...prev, project]);
   };
@@ -69,8 +84,10 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
     setUserId(userId);
   }
 
+  
+
   return (
-    <SidebarContext.Provider value={{ sidebarProjects, addProject, loading, error ,addUserSession}}>
+    <SidebarContext.Provider value={{ sidebarProjects, addProject, loading, error ,addUserSession, setUserData, userData}}>
 
       {children}
     </SidebarContext.Provider>

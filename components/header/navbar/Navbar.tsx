@@ -1,12 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { Code, LucideIcon, Quote } from "lucide-react";
+import { LucideIcon, Quote } from "lucide-react";
 import { Home, Star, ShoppingBag, UserPlus } from "lucide-react";
+import Logo from "@/components/logo/Logo";
+import { Button } from "@/components/ui/button";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const transition = {
   type: "spring",
@@ -71,6 +76,7 @@ export const Menu = ({
   setActive: (item: string | null) => void;
   children: React.ReactNode;
 }) => {
+
   return (
     <nav
       onMouseLeave={() => setActive(null)}
@@ -121,13 +127,27 @@ export const HoveredLink = ({ children, ...rest }: any) => {
 
 export default function Navbar() {
   const [active, setActive] = useState<string | null>(null);
+  const [user, setUser] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const isUserLoggedIn = async () => {
+      const response = fetch(`/api/auth/token`);
+      const result = (await response).json();
+      const token = (await result).token;
+      console.log(token);
+      setUser(token);
+      setIsLoading(false);
+    };
+
+    isUserLoggedIn();
+  },[]);
+
   return (
-    <header className="flex justify-center p-4">
+    <header className="flex justify-center p-4 max-h-[100px]">
       <Menu setActive={setActive}>
-        <div className="hidden md:flex gap-2 mr-auto">
-            <Code className="h-6 w-6 text-[#00406C]"/>
-            <span className="font-semibold text-xl">CodePilot</span>
-        </div>
+       <Logo width={50} height={50} className="mr-auto" textDirection="Row" />
         <MenuItem setActive={setActive} active={active} item="Home">
           <ProductItem
             title="Home"
@@ -168,11 +188,49 @@ export default function Navbar() {
           />
         </MenuItem>
 
-        <Link href="/sign-in">
-        <button className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer">
-          Login
-        </button>
-      </Link>
+        {
+          isLoading ? (
+            <Button 
+                className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]"
+                onClick={()=> {
+                  // The logout api
+                }}
+              >
+          <LoadingSpinner/>
+          </Button>
+          ) : (
+            user? (
+              <Button 
+                className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]"
+                onClick={async () =>  {
+                  const response = await fetch(`/api/log-out`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      token: user,
+                    }),
+                  });
+                  if(response.ok) {
+                    toast.success("Logging out...", {duration: 600});
+                    setUser(null);
+                    setTimeout(()=> {
+                      redirect("sign-in");
+                    },500)
+                  }
+                }}
+              >
+                Logout
+              </Button>) : (        
+                <Link href="/sign-in">
+                  <Button className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]">
+                    Login
+                  </Button>
+                </Link>
+            )
+          )
+        }
       </Menu>
     </header>
   );

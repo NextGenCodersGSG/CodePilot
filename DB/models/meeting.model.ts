@@ -5,13 +5,13 @@ const meetingSchema = new mongoose.Schema({
     description: { type: String },
     status: {
         type: String,
-        enum: ['PENDING', 'APPROVED', 'REJECTED', 'COMPLETED'],
+        enum: ['PENDING', 'APPROVED', 'REJECTED', 'CANCELED'],
         default: 'PENDING'
     },
     requestedAt: { type: Date, default: Date.now },
     scheduledAt: { type: Date, required: true },
     duration: { type: Number, default: 30, min: 15, max: 120 },
-    admin: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    developer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     zoomMeeting: { type: mongoose.Schema.Types.ObjectId, ref: 'Zoom' }
 }, { timestamps: true });

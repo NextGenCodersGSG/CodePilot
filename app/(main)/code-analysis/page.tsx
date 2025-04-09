@@ -12,16 +12,18 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IAnalysis,  IProject } from "@/@types";
+import { IAnalysis,  IProject, IUser } from "@/@types";
 import { motion } from "framer-motion";
 import {  MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AnalysisResults from "@/components/analysis-results/AnalysisResults";
 import { useSidebar } from "@/providers/SidebarContext";
 import { selectElement } from "./constants";
+import { getUserData } from "./utils/getUserId";
+import { getGreeting } from "./utils/greetings";
 
 export default function Page() {
-  const [user, _] = useState("John");
+  const [username, setUsername] = useState("John");
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("TypeScript");
   const [analysis, setAnalysis] = useState<IAnalysis>({
@@ -35,10 +37,11 @@ export default function Page() {
   });
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
-  const {addProject, addUserSession} = useSidebar();
+  const {addProject, addUserSession, setUserData} = useSidebar();
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setIsEmpty(value.trim() === "");
@@ -127,8 +130,31 @@ export default function Page() {
   };
 
   useEffect(() => {
-    getUserId();
+    const  loadUserId = async () => {
+      setPageLoading(true);
+      const user = await getUserData();
+      const displayName = user.name?.split(" ")[0];
+      console.log(user);
+      const userData = {
+        name: user.name || "Unknown",
+        email: user.email || "Unknown",
+      }
+      setUserData(userData);
+      setUsername(displayName || "Unknown");
+      setPageLoading(false);
+    } 
+    
+    loadUserId();
   }, []);
+
+  if(pageLoading){
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
+        <LoadingSpinner className="h-10 w-10"/>
+      </div>
+    )
+  }
+  const greeting = getGreeting();
 
   return (
     <section className={`px-4 py-8 ${isSent? "mt-auto" : "my-auto"}`}>
@@ -141,7 +167,7 @@ export default function Page() {
           exit={{ opacity: 0, x: -70 }}
         >
           <h1 className="text-3xl lg:text-4xl xl:text-5xl my-4 font-bold">
-            Hi, {user}.
+            {greeting}, {username}.
           </h1>
           <h2 className="text-lg md:text-xl lg:text-2xl my-4 font-bold text-gray-500">
             What Can I Help You With Today?

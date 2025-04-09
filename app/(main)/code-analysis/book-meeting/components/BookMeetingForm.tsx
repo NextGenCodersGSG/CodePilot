@@ -1,0 +1,225 @@
+"use client"
+
+import type React from "react"
+import { Form, FormikProvider } from "formik"
+import { delay, motion } from "framer-motion"
+import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
+import { CalendarIcon, Clock, Users, ClockIcon, MessageSquare } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { durationOptions, timeSlots } from "./constants"
+import type { IDeveloper } from "./type"
+import MotionTextField from "@/components/motion-text-field"
+
+interface BookMeetingFormProps {
+  formik: any
+  isSubmitting: boolean
+  handleDateChange: (date: Date | undefined) => void
+  handleTimeChange: (time: string) => void
+  developers: IDeveloper[]
+}
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      delay: i * 0.1,
+    },
+  }),
+};
+
+export const BookMeetingForm: React.FC<BookMeetingFormProps> = ({
+  formik,
+  isSubmitting,
+  handleDateChange,
+  handleTimeChange,
+  developers,
+}) => {
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="bg-[#001523] border border-[#002945] rounded-xl p-6 md:p-8 shadow-xl relative overflow-hidden"
+    >
+      <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[#00406C]/10 blur-3xl"></div>
+      <div className="absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-[#00406C]/10 blur-3xl"></div>
+      <FormikProvider value={formik}>
+        <Form onSubmit={formik.handleSubmit} className="space-y-6 relative z-10">
+          {/* Meeting Title */}
+          <motion.div variants={itemVariants} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-[#00406C]" />
+              <label htmlFor="title" className="text-[#F2F2F2] font-medium">
+                Meeting Title
+              </label>
+            </div>
+            <MotionTextField name="title" placeholder="e.g., Website Development Consultation" label="" />
+          </motion.div>
+
+          {/* Developer Selection */}
+          <motion.div custom={2} variants={itemVariants} transition={{delay: 0.2}} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-[#00406C]" />
+              <label className="text-[#F2F2F2] font-medium">Select a Developer</label>
+            </div>
+            <Select
+              onValueChange={(value) => formik.setFieldValue("developerId", value)}
+              value={formik.values.developerId}
+            >
+              <SelectTrigger className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
+                <SelectValue placeholder="Choose a developer" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
+                {developers.map((developer) => (
+                  <SelectItem key={developer.id} value={developer.id}>
+                    {developer.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {formik.touched.developerId && formik.errors.developerId && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.developerId}</p>
+            )}
+          </motion.div>
+
+          {/* Date Selection */}
+          <motion.div custom={3}  variants={itemVariants} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <CalendarIcon className="h-5 w-5 text-[#00406C]" />
+              <label className="text-[#F2F2F2] font-medium">Select a Date</label>
+            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  type="button"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal bg-[#001A2C] border-[#002945] text-[#F2F2F2]",
+                    !formik.values.date && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formik.values.date ? format(formik.values.date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 bg-[#001A2C] border-[#002945]">
+                <Calendar
+                  mode="single"
+                  selected={formik.values.date}
+                  onSelect={handleDateChange}
+                  initialFocus
+                  disabled={(date) => date < new Date()}
+                  className="bg-[#001A2C] text-[#F2F2F2]"
+                />
+              </PopoverContent>
+            </Popover>
+            {formik.touched.date && formik.errors.date && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.date}</p>
+            )}
+          </motion.div>
+
+          {/* Time Selection */}
+          <motion.div custom={4}  variants={itemVariants} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-[#00406C]" />
+              <label className="text-[#F2F2F2] font-medium">Select a Time</label>
+            </div>
+            <Select onValueChange={handleTimeChange} value={formik.values.time}>
+              <SelectTrigger className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
+                <SelectValue placeholder="Choose a time slot" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] max-h-[300px]">
+                {timeSlots.map((slot) => (
+                  <SelectItem key={slot} value={slot}>
+                    {slot}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {formik.touched.time && formik.errors.time && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.time}</p>
+            )}
+          </motion.div>
+
+          {/* Duration Selection */}
+          <motion.div custom={5}  variants={itemVariants} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <ClockIcon className="h-5 w-5 text-[#00406C]" />
+              <label className="text-[#F2F2F2] font-medium">Meeting Duration</label>
+            </div>
+            <Select
+              onValueChange={(value) => formik.setFieldValue("duration", Number.parseInt(value))}
+              value={formik.values.duration?.toString()}
+            >
+              <SelectTrigger className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
+                <SelectValue placeholder="Select duration" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]">
+                {durationOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {formik.touched.duration && formik.errors.duration && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.duration}</p>
+            )}
+          </motion.div>
+
+          {/* Meeting Purpose */}
+          <motion.div custom={6}  variants={itemVariants} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-[#00406C]" />
+              <label htmlFor="description" className="text-[#F2F2F2] font-medium">
+                What would you like to discuss?
+              </label>
+            </div>
+            <Textarea
+              id="description"
+              name="description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder="Briefly describe what you'd like to get out of this meeting..."
+              className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] min-h-[120px]"
+            />
+            {formik.touched.description && formik.errors.description && (
+              <p className="text-sm text-red-500 mt-1">{formik.errors.description}</p>
+            )}
+          </motion.div>
+
+          {/* Submit Button */}
+          <motion.div custom={7}  variants={itemVariants}>
+            <Button
+              type="submit"
+              className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <motion.div
+                    className="mr-2 h-4 w-4 border-2 border-[#F2F2F2] border-t-transparent rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  />
+                  Scheduling Meeting...
+                </>
+              ) : (
+                "Schedule Consultation"
+              )}
+            </Button>
+          </motion.div>
+        </Form>
+      </FormikProvider> 
+    </motion.div>
+  )
+}
