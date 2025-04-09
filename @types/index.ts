@@ -42,6 +42,7 @@ export interface IUser {
   role: UserRoles;
   password: string;
 }
+
 export interface IUserFromDB {
   _id: string;
   name: string;
@@ -52,6 +53,7 @@ export interface IUserFromDB {
   updatedAt: string;
   __v?: number;
 }
+
 export interface ICodeReview {
   user: mongoose.Types.ObjectId;
   language: string;

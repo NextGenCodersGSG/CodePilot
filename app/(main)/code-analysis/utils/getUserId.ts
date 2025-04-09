@@ -12,7 +12,7 @@ export const getUserId = async () => {
 
 export const getUserData = async () => {
     try {
-      const response = await fetch("/api/auth/token");
+      const response = await fetch(`/api/auth/token`);
       const user = await response.json();
 
       const userData = user.token;
