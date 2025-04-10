@@ -163,3 +163,8 @@ export interface IZoom {
 }
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
+export interface IChartData {
+  name: string;
+  value: number;
+}
