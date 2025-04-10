@@ -14,5 +14,5 @@ const countLogsSchema = new Schema<ICountLogs>({
     counter: { type: Number, default: 0 } // Properly define counter
 });
 
-const CountLogs = mongoose.model<ICountLogs>('CountLogs', countLogsSchema);
+const CountLogs = mongoose.models.CountLogs || mongoose.model<ICountLogs>('CountLogs', countLogsSchema);
 export default CountLogs;

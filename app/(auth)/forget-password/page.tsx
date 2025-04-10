@@ -1,9 +1,9 @@
 "use client";
 
+import Logo from '@/components/logo/Logo';
 import ForgetPasswordForm from './components/forget-password-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { Code } from 'lucide-react';
 
 const page = () => {
     const containerVariants = {
@@ -26,10 +26,7 @@ const page = () => {
                     animate="visible"
                     variants={containerVariants}
                 >
-                    <div className="flex items-center justify-center gap-2 mb-8">
-                        <Code className="h-8 w-8 text-[#00406C]" />
-                        <span className="text-2xl font-bold text-[#F2F2F2]">CodePilot</span>
-                    </div>
+                    <Logo/>
 
                     <Card className="border-[#002945] bg-[#001523] shadow-lg">
                         <CardHeader className="space-y-1">

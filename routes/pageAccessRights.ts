@@ -5,7 +5,7 @@ const routeAccess = new Map<PageAccessName, PageAccessRight>([
   [
     "/code-analysis",
     {
-      roles: [Role.User, Role.Developer],
+      roles: [Role.User],
     },
   ],
   [

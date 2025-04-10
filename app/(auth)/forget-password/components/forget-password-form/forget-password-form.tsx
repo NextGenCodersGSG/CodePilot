@@ -34,8 +34,7 @@ const ForgetPasswordForm = () => {
                         >
                             {formik.isSubmitting ? (
                                 <Loader className="mr-3 h-6 w-6 animate-spin" />
-                            ) : "Forget Password"}
-
+                            ) : "Reset Password"}
                         </Button>
                     </motion.div>
                 </Form>
