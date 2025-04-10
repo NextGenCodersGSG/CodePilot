@@ -105,6 +105,7 @@ const fetchRecentUsers = async () => {
   }
 }
 
+
 // Fetch active users data
 const fetchUserLogs = async () => {
   const apiUrl = `${baseUrl}/api/logs`;

@@ -17,6 +17,7 @@ import { useState } from 'react';
 interface ActiveUserDisplayProps{
   recentUsers:ICountLogs[];
 }
+
 const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
   const [selectedTab, setSelectedTab] = useState("overview");
 
@@ -87,6 +88,7 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
               
             }
             >
+
             View All Users
           </Button>
         </CardHeader>

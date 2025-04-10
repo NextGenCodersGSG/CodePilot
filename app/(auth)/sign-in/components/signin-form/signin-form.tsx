@@ -44,11 +44,12 @@ const SignInForm = () => {
         >
           <Button
             className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61] mt-2"
-            type="submit" 
+            type="submit"
           >
             {formik.isSubmitting ? (
               <Loader className="mr-3 h-6 w-6 animate-spin" />
             ) : "Sign in"}
+
           </Button>
         </motion.div>
       </Form>
