@@ -12,8 +12,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
+interface ActiveUserDisplayProps{
+  recentUsers:ICountLogs[];
+}
 const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
+  const [selectedTab, setSelectedTab] = useState("overview");
+
+
+
   const deleteUser = async (userId: string) => {
     const response = await fetch(`/api/deleteUser/${userId}`, {
       method: 'DELETE',
@@ -54,7 +62,9 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
     }
   };
 
+
   return (
+
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -73,7 +83,9 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
             size="sm"
             className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
 
-            onClick={() => setSelectedTab("analytics")}
+            onClick={() => setSelectedTab("analytics")
+              
+            }
             >
             View All Users
           </Button>
