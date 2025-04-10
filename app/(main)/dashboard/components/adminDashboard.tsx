@@ -27,14 +27,6 @@ import { IUserDocument } from '@/DB/models/user.model';
 import { ICountLogs } from '@/DB/models/count-logs.model';
 import AdminDropdown from "./adminLogOut";
 
-interface Notification {
-  id: number;
-  type: string;
-  message: string;
-  time: string;
-  read: boolean;
-}
-
 interface DashboardProps {
   codeReviewsData: { name: string; reviews: number }[];
   userRolesData: { name: string; value: number }[];
