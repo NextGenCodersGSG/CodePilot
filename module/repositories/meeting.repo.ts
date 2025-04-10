@@ -63,16 +63,6 @@ export class MeetingRepository {
             })
             .lean();
     }
-
-    async findAllMeetings() {
-        return MeetingModel.find()
-            .populate({
-                path: 'zoomMeeting',
-                select: 'startUrl zoomId password',
-                options: { lean: true }
-            })
-            .lean();
-    }
 }
 
 export default new MeetingRepository();

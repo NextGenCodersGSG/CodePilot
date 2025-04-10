@@ -35,7 +35,7 @@ class MeetingService {
         const meeting = await meetingRepo.findMeetingById(meetingId);
 
         if (meeting.status != Status.PENDING) {
-            throw new Error("Only Pending Requests Can Be Approved");
+            throw new Error("Only Pending Request Approved");
         }
 
         if (!meeting) {
@@ -160,10 +160,6 @@ class MeetingService {
                 password: zoomMeeting.password
             };
         }
-    }
-    async getAllMeetings() {
-        const meetings = await meetingRepo.findAllMeetings();
-        return meetings;
     }
 }
 

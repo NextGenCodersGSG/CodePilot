@@ -1,38 +1,32 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { NavMain } from "@/components/sidebar/nav-main";
-import { NavProjects } from "@/components/sidebar/nav-projects";
-import { NavUser } from "@/components/sidebar/nav-user";
-import { TeamSwitcher } from "@/components/sidebar/team-switcher";
+import * as React from "react"
+import { NavMain } from "@/components/sidebar/nav-main"
+import { NavProjects } from "@/components/sidebar/nav-projects"
+import { NavUser } from "@/components/sidebar/nav-user"
+import { TeamSwitcher } from "@/components/sidebar/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail
-} from "@/components/ui/sidebar";
-import { useSidebar } from "@/providers/SidebarContext";
-import {
-  GalleryVerticalEnd,
-  LayoutDashboard,
-  BrainCircuit,
-  BookOpen,
-  Video
-} from "lucide-react";
+  SidebarRail,
+} from "@/components/ui/sidebar"
+import { useSidebar } from "@/providers/SidebarContext"
+import { GalleryVerticalEnd, LayoutDashboard, BugPlay, BrainCircuit, BookOpen, Video } from "lucide-react"
 
 export const data = {
   user: {
     name: "John Doe",
     email: "John@example.com",
-    avatar: "/profile.jpg"
+    avatar: "/profile.jpg",
   },
   teams: [
     {
       name: "NextGen Coders",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise"
-    }
+      plan: "Enterprise",
+    },
   ],
   navMain: [
     {
@@ -43,20 +37,8 @@ export const data = {
       items: [
         {
           title: "User Statistics",
-          url: "/dashboard"
-        }
-      ]
-    },
-    {
-      title: "Developer Meetings",
-      url: "#",
-      icon: Video,
-      isActive: true,
-      items: [
-        {
-          title: "Meetings List",
-          url: "/code-analysis/developer-dashboard"
-        }
+          url: "/dashboard",
+        },
       ]
     },
     {
@@ -66,13 +48,13 @@ export const data = {
       items: [
         {
           title: "Start Session",
-          url: "/code-analysis/book-meeting"
+          url: "/code-analysis/book-meeting",
         },
         {
           title: "Scheduled Meetings",
-          url: "/code-analysis/scheduled-meetings"
-        }
-      ]
+          url: "/code-analysis/scheduled-meetings",
+        },
+      ],
     },
     {
       title: "AI Models",
@@ -81,13 +63,13 @@ export const data = {
       items: [
         {
           title: "Genesis",
-          url: "#"
+          url: "#",
         },
         {
           title: "Explorer",
-          url: "#"
-        }
-      ]
+          url: "#",
+        },
+      ],
     },
     {
       title: "Documentation",
@@ -96,15 +78,15 @@ export const data = {
       items: [
         {
           title: "Get Started",
-          url: "/code-analysis/documentation"
+          url: "/code-analysis/documentation",
         },
         {
           title: "Integration",
-          url: "/code-analysis/documentation/integration"
-        }
-      ]
-    }
-  ]
+          url: "/code-analysis/documentation/integration",
+        },
+      ],
+    },
+  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -123,5 +105,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  );
+  )
 }

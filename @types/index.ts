@@ -139,7 +139,6 @@ export enum Status{
 export type MeetingStatus = `${Status}`;
 
 export interface IMeeting {
-  id?: string;
   title: string;
   description: string;
   scheduledAt: Date;
@@ -147,8 +146,12 @@ export interface IMeeting {
   status: Status; 
   userId: string;
   developerId?: string;
+  zoomMeetingId?:  string;
   requestedAt?: Date;
-  zoom: IZoom
+  startUrl?: string;
+  joinUrl?: string;
+  zoomId?: string;
+  password?: string;
 }
 
 export interface IZoom {
@@ -160,24 +163,3 @@ export interface IZoom {
 }
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
-
-export interface EmailTemplateProps {
-  link?: string;
-  title: string;
-  description: string;
-  secondary: string;
-  button?: string;
-}
-export interface IChartData {
-  name: string;
-  value: number;
-}
-// export interface IUsersRolesCount {
-//   name: string,
-//   value: number
-// }
-// export interface ISignsPerDay {
-//   name: string;
-//   new: number;
-// }
-
