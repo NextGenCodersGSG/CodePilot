@@ -4,6 +4,7 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
+  CircleUserRound,
   CreditCard,
   LogOut,
   Sparkles,
@@ -29,9 +30,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { Button } from "../ui/button"
 import { toast } from "sonner"
 import { redirect } from "next/navigation"
+import Link from "next/link"
 
 export function NavUser({
   user,
@@ -84,25 +85,20 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <Link href="/#pricing">
               <DropdownMenuItem className="cursor-pointer">
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem  className="cursor-pointer">
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
+              <Link href="/code-analysis/user-profile">
+                <DropdownMenuItem  className="cursor-pointer">
+                <CircleUserRound />
+                  Account
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">

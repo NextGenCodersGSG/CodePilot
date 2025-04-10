@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IAnalysis,  IProject, IUser } from "@/@types";
+import { IAnalysis,  IProject } from "@/@types";
 import { motion } from "framer-motion";
 import {  MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

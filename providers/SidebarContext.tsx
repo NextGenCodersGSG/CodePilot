@@ -1,8 +1,9 @@
 "use client";
-import { createContext, useContext, ReactNode, useCallback, useState } from "react";
+import { createContext, useContext, ReactNode, useCallback, useState, useEffect } from "react";
 import { IProject } from "@/@types";
 import { usePersistentDbState } from "@/hooks/usePersistentDbState";
 import { getUserId } from "@/app/(main)/code-analysis/utils/getUserId";
+import { usePersistentState } from "@/hooks/usePersistentState";
 
 interface IUserData {
   name: string;
@@ -36,7 +37,7 @@ const SidebarContext = createContext<{
 
 export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState<string>("");
-  const [userData, setUserData] = useState<IUserData>(initialUserData);
+  const [userData, setUserData] = usePersistentState<IUserData>("userData",initialUserData);
   const fetchProjects = useCallback(async (): Promise<IProject[]> => {
     setUserId(await getUserId() || "");
 
@@ -85,15 +86,11 @@ export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
     setUserId(userId);
   }
 
-  
-
   return (
     <SidebarContext.Provider value={{ sidebarProjects, addProject, loading, error ,addUserSession, setUserData, userData}}>
-
       {children}
     </SidebarContext.Provider>
   );
 };
 
 export const useSidebar = () => useContext(SidebarContext);
-

@@ -8,9 +8,12 @@ export function usePersistentState<T>(
   key: string,
   initialValue: T
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [data, setData] = useState<T>(
-    getFromLocalStorage<T>(key, initialValue)
-  );
+  const [data, setData] = useState<T>(initialValue);
+
+  useEffect(() => {
+    const stored = getFromLocalStorage<T>(key, initialValue);
+    setData(stored);
+  }, [key]);
 
   useEffect(() => {
     setToLocalStorage(key, data);
