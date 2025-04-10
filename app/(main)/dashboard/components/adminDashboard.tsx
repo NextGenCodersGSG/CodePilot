@@ -25,6 +25,7 @@ import UserLogs from './totalLogs';
 import TotalUsers from './totalUsers';
 import { IUserDocument } from '@/DB/models/user.model';
 import { ICountLogs } from '@/DB/models/count-logs.model';
+import AdminDropdown from "./adminLogOut";
 
 interface Notification {
   id: number;
@@ -98,14 +99,9 @@ export default function Dashboard({
                 <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B3B3B3]" />
               </div>
 
+              <AdminDropdown  />
 
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
-                  <span className="font-medium text-sm">AJ</span>
-                </div>
-                <span className="hidden md:inline-block">Admin User</span>
-                <ChevronDown className="h-4 w-4 text-[#B3B3B3]" />
-              </div>
+            
             </div>
           </div>
         </header>

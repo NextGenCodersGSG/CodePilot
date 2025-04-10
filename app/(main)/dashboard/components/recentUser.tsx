@@ -13,6 +13,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 
+interface ActiveUserDisplayProps {
+  recentUsers: ICountLogs[];
+}
+
 const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
   const deleteUser = async (userId: string) => {
     const response = await fetch(`/api/deleteUser/${userId}`, {
@@ -72,9 +76,8 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
             variant="outline"
             size="sm"
             className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-
-            onClick={() => setSelectedTab("analytics")}
-            >
+            onClick={() => { /* Your logic to view all users */ }}
+          >
             View All Users
           </Button>
         </CardHeader>
