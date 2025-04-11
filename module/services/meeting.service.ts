@@ -161,6 +161,10 @@ class MeetingService {
             };
         }
     }
+    async getAllMeetings() {
+        const meetings = await meetingRepo.findAllMeetings();
+        return meetings;
+    }
 }
 
 export default new MeetingService();

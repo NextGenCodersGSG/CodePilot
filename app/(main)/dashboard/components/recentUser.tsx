@@ -71,7 +71,7 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <Card className="bg-[#001523] border-[#002945]">
+      <Card className="bg-[#001523] border-[#002945] space-y-6">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Recent User Activity</CardTitle>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Search, Download,
+  FileText,
 } from "lucide-react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell,
@@ -53,6 +54,14 @@ export default function Dashboard({
 
   const handleExportCSV = () => {
     console.log("Exporting user data as CSV");
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    // Set the href to the API endpoint that generates the CSV file
+    link.href = "/api/export-csv/all-users";
+    // Specify the filename for the downloaded file
+    link.download = "users.csv";
+    // Programmatically trigger the download
+    link.click();
   };
 
   const filteredUsers = users.filter(
@@ -64,6 +73,44 @@ export default function Dashboard({
   const handleClosePopup = () => {
     setSearchQuery("");
   };
+
+  const handleExportProjectCSV=()=>{
+    console.log("Exporting Project data as CSV")
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    // Set the href to the API endpoint that generates the CSV file
+    link.href = "/api/export-csv/all-projects";
+    // Specify the filename for the downloaded file
+    link.download = "projects.csv";
+    // Programmatically trigger the download
+    link.click();
+
+}
+
+const handleExportZoomMeetingCSV=()=> {
+    console.log("Exporting meeting data as CSV")
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    // Set the href to the API endpoint that generates the CSV file
+    link.href = "/api/export-csv/all-meetings";
+    // Specify the filename for the downloaded file
+    link.download = "meetings.csv";
+    // Programmatically trigger the download
+    link.click();
+}
+
+const handleExportCodeReviewCSV =()=> {
+    console.log("Exporting ExportCode data as CSV")
+    // Create a temporary anchor element
+    const link = document.createElement("a");
+    // Set the href to the API endpoint that generates the CSV file
+    link.href = "/api/export-csv/all-reviews";
+    // Specify the filename for the downloaded file
+    link.download = "reviews.csv";
+    // Programmatically trigger the download
+    link.click();
+}
+
 
   return (
     <div className="min-h-screen bg-[#00111C] text-[#F2F2F2] relative">
@@ -234,6 +281,8 @@ export default function Dashboard({
                   </CardContent>
                 </Card>
               </motion.div>
+              <ActiveUserDisplay recentUsers={recentUsers} />
+
             </TabsContent>
 
             {/* Analytics Tab */}
@@ -321,12 +370,84 @@ export default function Dashboard({
   </div>
 </CardContent>
 </Card>
+<Card className="bg-[#001523] border-[#002945] mt-5 lg:col-span-2">
+                  <CardHeader>
+                    <CardTitle>Analytics Reports</CardTitle>
+                    <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="font-medium">Projects Report</h3>
+                            <p className="text-xs text-[#B3B3B3] mt-1">Detailed analysis of user code project</p>
+                          </div>
+                          <FileText className="h-5 w-5 text-[#00406C]" />
+                        </div>
+                        <div className="mt-auto pt-4">
+                          <Button
+                            onClick={handleExportProjectCSV}
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                          >
+                            <Download className="mr-2 h-4 w-4" />
+                            Download CSV
+                          </Button>
+                        </div>
+                      </div>
 
+                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="font-medium">Zoom Meeting</h3>
+                            <p className="text-xs text-[#B3B3B3] mt-1">Insights on meeting attendance and engagement</p>
+                          </div>
+                          <FileText className="h-5 w-5 text-[#00406C]" />
+                        </div>
+                        <div className="mt-auto pt-4">
+                          <Button
+                            onClick={handleExportZoomMeetingCSV}
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                          >
+                            <Download className="mr-2 h-4 w-4" />
+                            Download CSV
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="font-medium">Code Review Analytics</h3>
+                            <p className="text-xs text-[#B3B3B3] mt-1">AI code review usage statistics</p>
+                          </div>
+                          <FileText className="h-5 w-5 text-[#00406C]" />
+                        </div>
+                        <div className="mt-auto pt-4">
+                          <Button
+                            onClick={handleExportCodeReviewCSV}
+
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                          >
+                            <Download className="mr-2 h-4 w-4" />
+                            Download CSV
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             </TabsContent>
 
             <UserManagementCard users={users} />
-            <ActiveUserDisplay recentUsers={recentUsers} />
+            
           </Tabs>
         </main>
       </div>
