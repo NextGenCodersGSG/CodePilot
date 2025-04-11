@@ -2,10 +2,12 @@ import "server-only";
 import { cookies } from "next/headers";
 import {  UserRoles } from "../@types/index";
 import { generateToken,  TokenPayload,  verifyToken } from "./generateAndVerifyToken";
+import { ObjectId } from "mongoose";
 
-export async function createToken(userId: string, name:string, email: string, userRole: UserRoles, plan: string):Promise<string> {
+export async function createToken(userId: string | ObjectId, name:string, email: string, userRole: UserRoles, plan: string):Promise<string> {
     const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
-    const token = await generateToken({ userId, name, email, userRole, plan });
+    const stringUserId = userId.toString();
+    const token = await generateToken({ userId: stringUserId, name, email, userRole, plan });
 
     (await cookies()).set("auth-token", token, {
         httpOnly: true,
