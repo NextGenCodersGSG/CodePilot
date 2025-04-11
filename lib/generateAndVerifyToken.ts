@@ -10,6 +10,7 @@ export interface TokenPayload extends JwtPayload {
   name: string;
   email: string;
   userRole?: UserRoles;
+  plan: string;
 }
 
 export async function generateToken(
