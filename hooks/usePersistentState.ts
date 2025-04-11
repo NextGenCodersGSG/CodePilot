@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   getFromLocalStorage,
   setToLocalStorage,
@@ -7,7 +7,7 @@ import {
 export function usePersistentState<T>(
   key: string,
   initialValue: T
-): [T, React.Dispatch<React.SetStateAction<T>>] {
+): [T, Dispatch<SetStateAction<T>>] {
   const [data, setData] = useState<T>(initialValue);
 
   useEffect(() => {

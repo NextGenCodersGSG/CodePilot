@@ -32,19 +32,18 @@ export async function POST(request: NextRequest) {
     );
 
     // Return both user data and new token
-    return NextResponse.json(
-      { 
-        message: "Name updated successfully",
-        user: {
-          id: updatedUser._id,
-          name: updatedUser.name,
-          email: updatedUser.email,
-          plan: updatedUser.plan
-        },
-        newToken // Include new token in response
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      user: {
+        email: updatedUser.email,
+        name: updatedUser.name as string,
+        userId: updatedUser._id.toString(),
+        plan: updatedUser.plan,
+        userRole: updatedUser.role,
+        exp: Math.floor(Date.now() / 1000) + 86400, // Example expiration
+        iat: Math.floor(Date.now() / 1000),
+        avatar: "/profile.jpg"
+      }
+    },{status: 200});
 
   } catch (error: any) {
     console.error("Update failed:", error.message);

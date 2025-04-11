@@ -35,6 +35,8 @@ import { PlanCard } from "./plan-card";
 import { IUserData } from "./types";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import { useSidebar } from "@/providers/SidebarContext";
+import { IUserToken } from "@/@types";
 
 const mockUser = {
   email: "user@example.com",
@@ -95,13 +97,15 @@ const plans = [
   }
 ];
 
-export default function ProfilePage(userData: IUserData ) {
+export default function ProfilePage( ) {
   const [user, setUser] = useState(mockUser);
+  const { setUserData, userData } = useSidebar();
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameValue, setNameValue] = useState(userData.name);
   const [activeTab, setActiveTab] = useState("account");
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+ 
 
   const handleSaveName = async () => {
     setIsSaving(true);
@@ -124,6 +128,7 @@ export default function ProfilePage(userData: IUserData ) {
             ...prevUser,
             name: data.user.name
           }));
+          setUserData((prev: IUserToken) => ({...prev, name: data.user.name}));
           setNameValue(data.user.name); 
           setIsSaving(false);
           setIsEditingName(false);
