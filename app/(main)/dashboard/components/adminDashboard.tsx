@@ -10,7 +10,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell,
 } from "recharts";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
@@ -38,8 +38,16 @@ interface DashboardProps {
   activeUsers: number;
   totalUsers: number;
 }
-
-const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))"];
+const userActivityData = [
+  { name: "Mon", active: 845, new: 32 },
+  { name: "Tue", active: 932, new: 28 },
+  { name: "Wed", active: 901, new: 35 },
+  { name: "Thu", active: 934, new: 42 },
+  { name: "Fri", active: 1290, new: 58 },
+  { name: "Sat", active: 1130, new: 47 },
+  { name: "Sun", active: 1020, new: 39 },
+]
+const COLORS = ["#00406C", "#00A3E0", "#007B9E"];
 
 export default function Dashboard({
   codeReviewsData,
@@ -259,7 +267,7 @@ export default function Dashboard({
                             cy="50%"
                             labelLine={false}
                             outerRadius={80}
-                            fill="#8884d8"
+                            fill="#fff"
                             dataKey="value"
                             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                           >
@@ -269,9 +277,17 @@ export default function Dashboard({
                           </Pie>
                           <Tooltip
                             contentStyle={{
-                              backgroundColor: "#001A2C",
-                              borderColor: "#002945",
-                              color: "#F2F2F2",
+                              backgroundColor: "#002132", 
+                              borderColor: "#00A3E0",     
+                              color: "#F2F2F2",          
+                              fontSize: "14px",           
+                              borderRadius: "6px",        
+                            }}
+                            labelStyle={{
+                              color: "#00A3E0",           
+                            }}
+                            itemStyle={{
+                              color: "#F2F2F2",           
                             }}
                           />
                         </PieChart>
@@ -280,6 +296,114 @@ export default function Dashboard({
                   </CardContent>
                 </Card>
               </motion.div>
+            </TabsContent>
+
+            <TabsContent value="analytics" className="space-y-6">
+              <motion.div
+                className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="bg-[#001523] border-[#002945]">
+                  <CardHeader>
+                    <CardTitle>User Activity (Past Week)</CardTitle>
+                    <CardDescription className="text-[#B3B3B3]">Active users and new signups per day</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={userActivityData}
+                          margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                          }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
+                          <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
+                          <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
+                          <Tooltip
+                            contentStyle={{
+                              backgroundColor: "#001A2C",
+                              borderColor: "#002945",
+                              color: "#F2F2F2",
+                            }}
+                            labelStyle={{ color: "#F2F2F2" }}
+                          />
+                          <Legend />
+                          <Bar dataKey="new" name="New Signups" fill="#ffff" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                  </Card>
+                  <Card className="bg-[#001523] border-[#002945]">
+                      <CardHeader>
+                        <CardTitle>User Engagement Metrics</CardTitle>
+                        <CardDescription className="text-[#B3B3B3]">Detailed analytics on user engagement</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-6">
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-[#B3B3B3]">Average Session Duration</span>
+                              <span className="font-medium">12m 34s</span>
+                            </div>
+                            <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                              <div className="h-full bg-[#00406C] rounded-full" style={{ width: "68%" }}></div>
+                            </div>
+                            <p className="text-xs text-[#B3B3B3]">
+                              <span className="text-green-500">+8%</span> from last week
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-[#B3B3B3]">Messages per User</span>
+                              <span className="font-medium">18.2</span>
+                            </div>
+                            <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                              <div className="h-full bg-[#00406C] rounded-full" style={{ width: "75%" }}></div>
+                            </div>
+                            <p className="text-xs text-[#B3B3B3]">
+                              <span className="text-green-500">+12%</span> from last week
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-[#B3B3B3]">Code Reviews per User</span>
+                              <span className="font-medium">4.8</span>
+                            </div>
+                            <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                              <div className="h-full bg-[#00406C] rounded-full" style={{ width: "45%" }}></div>
+                            </div>
+                            <p className="text-xs text-[#B3B3B3]">
+                              <span className="text-green-500">+5%</span> from last week
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-[#B3B3B3]">User Retention Rate</span>
+                              <span className="font-medium">82%</span>
+                            </div>
+                            <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
+                              <div className="h-full bg-[#00406C] rounded-full" style={{ width: "82%" }}></div>
+                            </div>
+                            <p className="text-xs text-[#B3B3B3]">
+                              <span className="text-green-500">+3%</span> from last month
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card> 
+
+              </motion.div>
+
             </TabsContent>
 
             <UserManagementCard users={users} />
