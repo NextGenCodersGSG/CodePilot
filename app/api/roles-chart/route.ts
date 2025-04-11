@@ -8,9 +8,9 @@ export const GET = async () => {
     try {
         const usersRoles: IChartData[] = await ChartsService.getUsersRolesData();
         if(!usersRoles || usersRoles.length === 0) {
-            return NextResponse.json({roles: []}, {status: 400});
+            return NextResponse.json({userRolesData: []}, {status: 400});
         }
-        return NextResponse.json({roles: usersRoles}, {status: 200});
+        return NextResponse.json({userRolesData: usersRoles}, {status: 200});
     }
     catch(error) {
         if (error instanceof Error) {
