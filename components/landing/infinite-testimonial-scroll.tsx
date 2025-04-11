@@ -105,12 +105,12 @@ export function InfiniteTestimonialScroll() {
   }, [controls])
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-[50vh] mt-15 bg-gradient-to-b from-[#00111C] to-[#001A2C]">
       {/* Left fade effect */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none bg-gradient-to-r from-[#00111C] to-transparent" />
+      <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none" />
 
       {/* Right fade effect */}
-      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none bg-gradient-to-l from-[#00111C] to-transparent" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none" />
 
       {/* Scrolling container */}
       <div className="overflow-hidden">
