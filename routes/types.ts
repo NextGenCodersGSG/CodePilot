@@ -7,6 +7,7 @@ export type PageAccessName =
   | "/sign-up"
   | "/code-analysis"
   | "/dashboard"
+  | "/add-developers"
   | "/forbidden"
   | "/unauthorized"
   | "/already-signed-in"
