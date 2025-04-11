@@ -4,7 +4,7 @@ import { IZoom } from "@/@types/index";
 export class ZoomRepository {
     async createZoom(data: IZoom) {
         const zoomMeeting = await zoomModel.create({
-            meeting: data.meeting,
+            meeting: data.meetingId,
             zoomId: data.zoomId,
             joinUrl: data.joinUrl,
             startUrl: data.startUrl,

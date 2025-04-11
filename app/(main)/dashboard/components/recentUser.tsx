@@ -1,29 +1,28 @@
+"use client";
+
 import { ICountLogs } from '@/DB/models/count-logs.model';
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
-const ActiveUserDisplay = () => {
-  const [recentUsers, setRecentUsers] = useState<ICountLogs[]>([]);
-  const [users, setUsers] = useState<ICountLogs[]>([]);
-    const [selectedTab, setSelectedTab] = useState("overview")
-  
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('/api/recent-user');
-      const data = await response.json();
-      setRecentUsers(data.recentUsers);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+interface ActiveUserDisplayProps{
+  recentUsers:ICountLogs[];
+}
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
+  const [selectedTab, setSelectedTab] = useState("overview");
+
+
+
   const deleteUser = async (userId: string) => {
     const response = await fetch(`/api/deleteUser/${userId}`, {
       method: 'DELETE',
@@ -42,11 +41,9 @@ const ActiveUserDisplay = () => {
         const response = await deleteUser(user.id);
 
         if (response.ok) {
-          setUsers((prevUsers) => prevUsers.filter(u => u._id !== user._id));
           alert('User deleted successfully.');
         } else {
           const contentType = response.headers.get('Content-Type');
-
           let errorMessage = `Failed to delete user. Status: ${response.status}`;
 
           if (contentType && contentType.includes('application/json')) {
@@ -66,13 +63,15 @@ const ActiveUserDisplay = () => {
     }
   };
 
+
   return (
+
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <Card className="bg-[#001523] border-[#002945]">
+      <Card className="bg-[#001523] border-[#002945] space-y-6">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Recent User Activity</CardTitle>
@@ -84,8 +83,12 @@ const ActiveUserDisplay = () => {
             variant="outline"
             size="sm"
             className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-            onClick={() => setSelectedTab("analytics")}
+
+            onClick={() => setSelectedTab("analytics")
+              
+            }
             >
+
             View All Users
           </Button>
         </CardHeader>
@@ -102,7 +105,10 @@ const ActiveUserDisplay = () => {
               </thead>
               <tbody>
                 {recentUsers.map((user) => (
-                  <tr key={user._id as string} className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors">
+                  <tr
+                    key={user._id as string}
+                    className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors"
+                  >
                     <td>
                       <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
                         <span className="font-medium text-xs">
@@ -134,7 +140,7 @@ const ActiveUserDisplay = () => {
                         <DropdownMenuContent align="end" className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
                           <DropdownMenuItem
                             className="hover:bg-[#001A2C] cursor-pointer text-red-500"
-                            onClick={() => { handleDeleteUser(user) }}
+                            onClick={() => handleDeleteUser(user)}
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
                             Delete User

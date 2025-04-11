@@ -8,33 +8,40 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { defaultValue } from "./constants"
+import { defaultValue, notFoundValue } from "./constants"
 import LoadingSpinner from "@/components/spinner/LoadingSpinner"
+import { IProject } from "@/@types"
 
 interface IParams {
   params: Promise<{ slug: string }>
 }
 
 const Page = ({ params }: IParams) => {
-  const { sidebarProjects } = useSidebar();
+  const { sidebarProjects, loading  } = useSidebar();
   const [slug, setSlug] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-
+  const [project, setProject] = useState<IProject>(defaultValue);
   useEffect(() => {
     const loadData = async () => {
+
       try {
         const resolvedParams = await params;
-        setSlug(resolvedParams.slug);
+        const currentSlug = resolvedParams.slug;
+        setSlug(currentSlug);
 
-        if (sidebarProjects) {
-         setTimeout(() => {
-           setLoading(false);
-         }, 500);
+        if (sidebarProjects && sidebarProjects.length > 0) {
+          const foundProject = sidebarProjects.find(p => p.slug === currentSlug);
+          if (foundProject) {
+            setProject(foundProject);
+          } else {
+            setProject(notFoundValue);
+            setNotFound(true);
+          }
+        } else if (sidebarProjects && sidebarProjects.length === 0) {
+          setNotFound(true);
         }
       } catch (error) {
         console.error("Error resolving params:", error);
-        setLoading(false);
         setNotFound(true);
       }
     }
@@ -49,10 +56,7 @@ const Page = ({ params }: IParams) => {
       </motion.div>
     )
   }
-
-  const project = sidebarProjects.find((project) => project.slug === slug) || defaultValue;
-
-  // Helper function to get severity color
+  
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case "high":
@@ -66,7 +70,7 @@ const Page = ({ params }: IParams) => {
     }
   }
 
-  if (!project && notFound) {
+  if (project == notFoundValue && notFound) {
     return (
       <div className="container mx-auto p-6">
         <Card className="bg-[#001523] border-[#002945]">

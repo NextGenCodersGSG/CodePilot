@@ -7,9 +7,7 @@ export async function POST(req: NextRequest) {
   await connection();
   
   try {
-
     const body = await req.json();
-    
     const projectData = validateProjectData(body);
     const project = new projectModel(projectData);
     

@@ -43,6 +43,17 @@ export interface IUser {
   password: string;
 }
 
+export interface IUserFromDB {
+  _id: string;
+  name: string;
+  email: string;
+  role: UserRoles;      
+  password: string;
+  createdAt: string; 
+  updatedAt: string;
+  __v?: number;
+}
+
 export interface ICodeReview {
   user: mongoose.Types.ObjectId;
   language: string;
@@ -70,6 +81,7 @@ export interface IAnalysis {
 }
 
 interface Project {
+  userId:string;
   name: string;
   url: string;
 }
@@ -117,40 +129,39 @@ export interface EmailTemplateProps {
   button?: string;
 }
 
-export interface IMeeting {
-    title: string;
-    description: string;
-    adminId: mongoose.Types.ObjectId;
-    scheduledAt: Date
-    duration: number;
-}
 export enum Status{
   PENDING = 'PENDING', 
   APPROVED = 'APPROVED', 
   REJECTED = 'REJECTED', 
-  COMPLETED = 'COMPLETED'
+  CANCELED = 'CANCELED'
 }
 
 export type MeetingStatus = `${Status}`;
 
 export interface IMeeting {
+  id?: string;
   title: string;
   description: string;
-  adminId: mongoose.Types.ObjectId;
-  scheduledAt: Date
+  scheduledAt: Date;
   duration: number;
   status: Status; 
+  userId: string;
+  developerId?: string;
   requestedAt?: Date;
-  admin?:  mongoose.Schema.Types.ObjectId;
-  user?:  mongoose.Schema.Types.ObjectId;
-  zoomMeeting?: string;
+  zoom: IZoom
 }
 
 export interface IZoom {
-  meeting: mongoose.Schema.Types.ObjectId;
+  meetingId: string;
   zoomId:  string;
   joinUrl: string;
   startUrl: string;
   password: string;
 }
+
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
+export interface IChartData {
+  name: string;
+  value: number;
+}

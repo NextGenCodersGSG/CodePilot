@@ -9,6 +9,9 @@ import { createToken } from "@/lib/storeGetDelete";
 import { emailTemplate } from "@/lib/emailTemplate";
 import authRepo from "../repositories/auth.repo";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import { verifyToken } from "@/lib/generateAndVerifyToken";
+import { cookies } from "next/headers";
+import LogsRepository  from "../repositories/logs.repo";
 
 class AuthService {
   async signIn(data: ILogin) {
@@ -33,7 +36,7 @@ class AuthService {
     }
 
     console.log("Password matched, generating token...");
-    const token = await createToken(user.id, user.role);
+    const token = await createToken(user.id, user.name, user.email, user.role, user.plan);
 
     console.log("Token generated:", token);
 
@@ -99,6 +102,25 @@ class AuthService {
       throw new Error("Something went wrong, please try again later");
     }
     return newUser;
+  }
+  async logout() {
+
+    try {
+      const authToken: string = (await cookies()).get("auth-token")?.value || "";
+      if (!authToken) {
+        throw new Error("No token found");
+      }
+      const email: string  = (await verifyToken(authToken))?.email || "";
+      if (!email) {
+        throw new Error("Invalid token");
+      }
+      await LogsRepository.deleteUserFromLogs(email);
+      (await cookies()).delete("auth-token");
+      return "The user with email: ${email} has been logged out succefully";
+    } catch (error) {
+      console.error("Error deleting token cookie:", error);
+      throw new Error("Failed to logout");
+    }
   }
 }
 
