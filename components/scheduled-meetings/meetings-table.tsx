@@ -1,14 +1,13 @@
 "use client"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Clock, Loader2 } from "lucide-react"
 import { format } from "date-fns"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
-import { AnimatedTooltip } from "./animated-tooltip"
 import { Status } from "@/@types"
+import { motion, AnimatePresence } from "framer-motion"
 
-// Updated Meeting interface to match the new data structure
 interface Meeting {
   id: string
   description: string
@@ -37,7 +36,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
           label: "Confirmed",
           color: "bg-green-500/20 text-green-400 border-green-500/30",
         }
-      case  Status.REJECTED:
+      case Status.REJECTED:
         return {
           label: "Declined",
           color: "bg-red-500/20 text-red-400 border-red-500/30",
@@ -55,65 +54,218 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
     }
   }
 
+  // Animation variants
+  const tableContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  }
+
+  const tableRowVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    }),
+    exit: {
+      opacity: 0,
+      x: 20,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    hover: {
+      backgroundColor: "rgba(0, 26, 44, 0.5)",
+      transition: {
+        duration: 0.2,
+      },
+    },
+  }
+
+  // Mobile card variants
+  const mobileCardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.05,
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    }),
+    exit: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  }
+
   return (
-    <div className="rounded-md border border-[#002945] overflow-hidden">
-      <Table>
-        <TableHeader className="bg-[#001A2C]">
-          <TableRow className="border-b-[#002945] hover:bg-transparent">
-            <TableHead className="text-[#F2F2F2] font-medium">Meeting Details</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">Schedule</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">Status</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {meetings.map((meeting) => {
+    <>
+      {/* Desktop Table View (hidden on small screens) */}
+      <motion.div
+        className="hidden md:block overflow-x-auto rounded-lg border border-[#002945]"
+        variants={tableContainerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <table className="w-full">
+          <thead className="bg-[#001A2C] border-b border-[#002945]">
+            <tr>
+              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Meeting</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Date & Time</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Duration</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Status</th>
+              <th className="px-4 py-3 text-right text-sm font-medium text-[#B3B3B3]">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-[#001523] divide-y divide-[#002945]">
+            <AnimatePresence>
+              {meetings.map((meeting, index) => {
+                const scheduledDate = new Date(meeting.scheduledAt)
+                const isPast = scheduledDate < new Date()
+                const isActive =
+                  meeting.status !== Status.CANCELED &&
+                  meeting.status !== Status.REJECTED &&
+                  meeting.status !== Status.APPROVED
+                const statusDetails = getStatusDetails(meeting.status)
+
+                return (
+                  <motion.tr
+                    key={meeting.id}
+                    custom={index}
+                    variants={tableRowVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    whileHover="hover"
+                    className="hover:bg-[#001A2C]/50"
+                  >
+                    <td className="px-4 py-4">
+                      <div>
+                        <p className="font-medium text-[#F2F2F2]">{meeting.title}</p>
+                        <p className="text-sm text-[#B3B3B3] line-clamp-1">{meeting.description}</p>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
+                          <Calendar className="h-4 w-4 text-[#00406C]" />
+                          <span>{format(scheduledDate, "MMMM d, yyyy")}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-[#B3B3B3] mt-1">
+                          <Clock className="h-4 w-4 text-[#00406C]" />
+                          <span>{format(scheduledDate, "h:mm a")}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-[#F2F2F2]">{meeting.duration} minutes</td>
+                    <td className="px-4 py-4">
+                      <Badge variant="outline" className={cn("border", statusDetails.color)}>
+                        {statusDetails.label}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4 text-right">
+                      {isActive && !isPast ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-400 border-red-500/30 hover:bg-red-500/10 hover:text-red-300"
+                          onClick={() => onCancel(meeting.id)}
+                          disabled={meeting.status === Status.CANCELED || cancellingId === meeting.id}
+                        >
+                          {cancellingId === meeting.id ? (
+                            <>
+                              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                              Cancelling...
+                            </>
+                          ) : (
+                            "Cancel"
+                          )}
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          disabled
+                          className="opacity-50 border-[#002945] text-[#B3B3B3]"
+                        >
+                          {isPast ? "Past Meeting" : meeting.status}
+                        </Button>
+                      )}
+                    </td>
+                  </motion.tr>
+                )
+              })}
+            </AnimatePresence>
+          </tbody>
+        </table>
+      </motion.div>
+
+      {/* Mobile Card View (visible only on small screens) */}
+      <motion.div className="md:hidden space-y-4" variants={tableContainerVariants} initial="hidden" animate="visible">
+        <AnimatePresence>
+          {meetings.map((meeting, index) => {
             const scheduledDate = new Date(meeting.scheduledAt)
             const isPast = scheduledDate < new Date()
             const isActive =
-              meeting.status !== Status.CANCELED && meeting.status !== Status.REJECTED && meeting.status !== Status.APPROVED
+              meeting.status !== Status.CANCELED &&
+              meeting.status !== Status.REJECTED &&
+              meeting.status !== Status.APPROVED
             const statusDetails = getStatusDetails(meeting.status)
 
             return (
-              <TableRow
-                key={`tabular-meeting-${meeting.id}`}
-                className={cn("border-b-[#002945] bg-[#001523] hover:bg-[#001A2C]", !isActive && "opacity-70")}
+              <motion.div
+                key={meeting.id}
+                custom={index}
+                variants={mobileCardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="bg-[#001523] border border-[#002945] rounded-lg overflow-hidden"
               >
-                <TableCell className="font-medium text-[#F2F2F2]">
-                  <div className="font-semibold">{meeting.title}</div>
-                  <AnimatedTooltip
-                    content={<p className="text-sm p-1">{meeting.description}</p>}
-                    side="bottom"
-                    className="bg-[#00111C] border-[#002945]" // Darker background for better contrast
-                  >
-                    <div className="text-sm text-[#B3B3B3] max-w-[300px] truncate">{meeting.description}</div>
-                  </AnimatedTooltip>
-                </TableCell>
-                <TableCell className="text-[#F2F2F2]">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-[#00406C]" />
-                    <span className="text-sm">{format(scheduledDate, "MMM d, yyyy")}</span>
+                <div className="p-4 border-b border-[#002945]">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-[#F2F2F2]">{meeting.title}</h3>
+                    <Badge variant="outline" className={cn("border ml-2", statusDetails.color)}>
+                      {statusDetails.label}
+                    </Badge>
                   </div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Clock className="h-4 w-4 text-[#00406C]" />
-                    <span className="text-sm">
-                      {format(scheduledDate, "h:mm a")} ({meeting.duration} min)
-                    </span>
+                  <p className="text-sm text-[#B3B3B3] mb-3">{meeting.description}</p>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
+                      <Calendar className="h-4 w-4 text-[#00406C]" />
+                      <span>{format(scheduledDate, "MMMM d, yyyy")}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
+                      <Clock className="h-4 w-4 text-[#00406C]" />
+                      <span>{format(scheduledDate, "h:mm a")}</span>
+                    </div>
+                    <div className="text-sm text-[#F2F2F2]">Duration: {meeting.duration} minutes</div>
                   </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline" className={cn("border", statusDetails.color)}>
-                    {statusDetails.label}
-                  </Badge>
-                </TableCell>
-                <TableCell>
+                </div>
+
+                <div className="p-3 bg-[#001A2C] flex justify-end">
                   {isActive && !isPast ? (
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-red-400 border-red-500/30 hover:bg-red-500/10 hover:text-red-300 cursor-pointer"
+                      className="text-red-400 border-red-500/30 hover:bg-red-500/10 hover:text-red-300"
                       onClick={() => onCancel(meeting.id)}
-                      disabled={cancellingId === meeting.id}
+                      disabled={meeting.status === Status.CANCELED || cancellingId === meeting.id}
                     >
                       {cancellingId === meeting.id ? (
                         <>
@@ -121,21 +273,20 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                           Cancelling...
                         </>
                       ) : (
-                        "Cancel"
+                        "Cancel Meeting"
                       )}
                     </Button>
                   ) : (
                     <Button variant="outline" size="sm" disabled className="opacity-50 border-[#002945] text-[#B3B3B3]">
-                      {isPast ? "Past meeting" : meeting.status.toLowerCase()}
+                      {isPast ? "Past Meeting" : meeting.status}
                     </Button>
                   )}
-                </TableCell>
-              </TableRow>
+                </div>
+              </motion.div>
             )
           })}
-        </TableBody>
-      </Table>
-    </div>
+        </AnimatePresence>
+      </motion.div>
+    </>
   )
 }
-

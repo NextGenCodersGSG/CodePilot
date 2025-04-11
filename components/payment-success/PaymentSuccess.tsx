@@ -7,9 +7,33 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { useState, useEffect } from "react";
+import { useSearchParams } from 'next/navigation'
 
 export default function PaymentSuccessPage() {
-  // Animation variants
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
+  const plan = searchParams.get('plan');
+  
+  useEffect(() => {
+    const  changeUserPlan = async () => {
+      console.log(userId, plan);
+      const response = await fetch(`/api/users/update-plan`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({userId: userId, plan: plan}),
+      });
+      const result = (await response).json();
+      
+      const message = (await result).message;
+      console.log(message);
+      
+      console.log(userId, plan);
+    }
+    changeUserPlan()
+  },[userId, plan]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

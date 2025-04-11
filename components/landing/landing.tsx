@@ -13,6 +13,7 @@ import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 import ShinyText from "@/components/ui/ShinyText/shiny-text"
 import BillingSection from "./billing"
 import Header from "@/components/header/Header"
+import Link from "next/link"
 
 
 function useInView(threshold = 0.1) {
@@ -115,12 +116,16 @@ export default function LandingPage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6,delay:0.2, ease: "easeInOut" }}
                 >
-                  <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-                    Start for free
-                  </Button>
-                  <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-[#002945] bg-[#001A2C] hover:bg-[#002945] text-[#F2F2F2]">
-                    Learn more
+                  <Link href="/sign-in">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
+                      Start for free
                     </Button>
+                  </Link>
+                  <Link href="/code-analysis/documentation">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-[#002945] bg-[#001A2C] hover:bg-[#002945] text-[#F2F2F2]">
+                      Learn more
+                    </Button>
+                  </Link>
                 </motion.div>
                 <motion.div 
                   className="flex items-center gap-2 text-sm text-[#B3B3B3]"
@@ -339,16 +344,20 @@ export default function LandingPage() {
                     Join thousands of developers who are shipping better code faster with CodePilot.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-                      Start your free trial
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="cursor-pointer w-full sm:w-auto border-[#002945] bg-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                    >
-                      Schedule a demo
-                    </Button>
+                    <Link href="/sign-in">
+                      <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
+                        Start your free trial
+                      </Button>
+                    </Link>
+                    <Link href="/code-analysis/book-meeting">
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="cursor-pointer w-full sm:w-auto border-[#002945] bg-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                      >
+                        Schedule a demo
+                      </Button>
+                    </Link>
                   </div>
                 </div>
                 <motion.div
