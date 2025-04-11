@@ -14,6 +14,7 @@ import ShinyText from "@/components/ui/ShinyText/shiny-text"
 import BillingSection from "./billing"
 import Header from "@/components/header/Header"
 import Link from "next/link"
+import { InfiniteTestimonialScroll } from "./infinite-testimonial-scroll"
 
 
 function useInView(threshold = 0.1) {
@@ -225,104 +226,7 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="py-20 bg-gradient-to-b dark: from-[#00111C] via-[#00111C]/95 dark:to-[#001A2C] ">
-          <div className="container px-4 md:px-6 mx-auto">
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#F2F2F2]">
-                Loved by Developers
-              </h2>
-              <p className="mt-4 text-lg text-[#B3B3B3] md:w-3/4 mx-auto">
-                See what our users have to say about how CodePilot has improved their development workflow.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-              ref={testimonialsSection.ref}
-              variants={containerVariants}
-              initial="hidden"
-              animate={testimonialsSection.controls}
-            >
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4 mb-4">
-                      <Image
-                        src="/profile.jpg"
-                        width={60}
-                        height={60}
-                        alt="User avatar"
-                        className="rounded-full"
-                      />
-                      <div>
-                        <h3 className="font-semibold text-[#F2F2F2]">Sarah Johnson</h3>
-                        <p className="text-sm text-[#B3B3B3]">Senior Developer at TechCorp</p>
-                      </div>
-                    </div>
-                    <p className="text-[#B3B3B3]">
-                      "CodePilot has cut our code review time in half. The AI catches issues I would have missed, and
-                      the performance suggestions have made our app noticeably faster."
-                    </p>
-                  </CardContent>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4 mb-4">
-                      <Image
-                        src="/profile.jpg"
-                        width={60}
-                        height={60}
-                        alt="User avatar"
-                        className="rounded-full"
-                      />
-                      <div>
-                        <h3 className="font-semibold text-[#F2F2F2]">Michael Chen</h3>
-                        <p className="text-sm text-[#B3B3B3]">Lead Engineer at StartupX</p>
-                      </div>
-                    </div>
-                    <p className="text-[#B3B3B3]">
-                      "As a startup, we don't have the resources for extensive QA. CodePilot acts like an extra team
-                      member, catching bugs before they reach production."
-                    </p>
-                  </CardContent>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4 mb-4">
-                      <Image
-                        src="/profile.jpg"
-                        width={60}
-                        height={60}
-                        alt="User avatar"
-                        className="rounded-full"
-                      />
-                      <div>
-                        <h3 className="font-semibold text-[#F2F2F2]">Alex Rodriguez</h3>
-                        <p className="text-sm text-[#B3B3B3]">Freelance Developer</p>
-                      </div>
-                    </div>
-                    <p className="text-[#B3B3B3]">
-                      "The security scanning feature has saved me multiple times. It found vulnerabilities I completely
-                      overlooked and provided clear guidance on how to fix them."
-                    </p>
-                  </CardContent>
-                </MotionCard>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
+        <InfiniteTestimonialScroll/>
         {/* Pricing Section */}
         <BillingSection/>
         {/* CTA Section */}
