@@ -21,6 +21,7 @@ import { useSidebar } from "@/providers/SidebarContext";
 import { selectElement } from "./constants";
 import { getUserData } from "./utils/getUserId";
 import { getGreeting } from "./utils/greetings";
+import Head from "next/head";
 
 export default function Page() {
   const [username, setUsername] = useState("John");
@@ -157,88 +158,104 @@ export default function Page() {
   const greeting = getGreeting();
 
   return (
-    <section className={`px-4 py-8 ${isSent? "mt-auto" : "my-auto"}`}>
-      <div className="mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, x: -70 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className={`mb-10 ${isSent? "hidden" : "block"}`}
-          exit={{ opacity: 0, x: -70 }}
-        >
-          <h1 className="text-3xl lg:text-4xl xl:text-5xl my-4 font-bold">
-            {greeting}, {username}.
-          </h1>
-          <h2 className="text-lg md:text-xl lg:text-2xl my-4 font-bold text-gray-500">
-            What Can I Help You With Today?
-          </h2>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeIn" }}
-          className="relative"
-        >
-          <AnalysisResults analysis={analysis}/>
+    <><Head>
+      <title>Code Analysis - Enhance Your Code Quality</title>
+      <meta
+        name="description"
+        content="Analyze your code to identify performance issues, security vulnerabilities, and bugs. Get comprehensive analysis and insights." />
+      <meta name="keywords" content="code analysis, software development, programming, performance issues, security analysis" />
+      <meta name="NextGenCoders" content="codepilot" />
+
+      {/* Open Graph Meta Tags for social media sharing */}
+      <meta property="og:title" content="Code Analysis - Enhance Your Code Quality" />
+      <meta
+        property="og:description"
+        content="Use our tool to analyze your code, uncover performance issues, and improve your software quality." />
+      <meta property="og:image" content="/CodePilotLogo.png" /> 
+      <meta property="og:url" content="/" />
+      <meta property="og:type" content="website" />
+
+    </Head>
+    <section className={`px-4 py-8 ${isSent ? "mt-auto" : "my-auto"}`}>
+        <div className="mx-auto text-center">
           <motion.div
-            layout 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }} 
-            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
+            initial={{ opacity: 0, x: -70 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={`mb-10 ${isSent ? "hidden" : "block"}`}
+            exit={{ opacity: 0, x: -70 }}
           >
-            <textarea
-              onChange={handleTypedMessage}
-              className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-white ${styles.textarea}`}
-              placeholder="What's on your mind?"
-              autoFocus
-              value={code}
-              ref={areaRef}
-            />
-            <div className="flex justify-between mt-4">
-              <Select value={language} onValueChange={handleSelectedLanguage}>
-                <SelectTrigger className="w-[180px] rounded-xl bg-input cursor-pointer">
-                  <SelectValue placeholder="Select Language" />
-                </SelectTrigger>
-                <SelectContent className="rounded-2xl">
-                  <SelectGroup className="cursor-pointer">
-                    <SelectLabel>Languages</SelectLabel>
-                    { selectElement.map((item, index) => (
-                      <SelectItem key={`select-element-${index}`} className="cursor-pointer" value={item}>{item}</SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Button
-                disabled={isEmpty || loading}
-                className={`rounded-full w-12 h-12 ${
-                  isEmpty ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-                }`}
-                onClick={analyzeCode}
-              >
-                {loading ? (
-                  <LoadingSpinner />
-                ) : (
-                  <MoveUp size={24} strokeWidth={3} />
-                )}
-              </Button>
-            </div>
+            <h1 className="text-3xl lg:text-4xl xl:text-5xl my-4 font-bold">
+              {greeting}, {username}.
+            </h1>
+            <h2 className="text-lg md:text-xl lg:text-2xl my-4 font-bold text-gray-500">
+              What Can I Help You With Today?
+            </h2>
           </motion.div>
-        </motion.div>
 
-        {error && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="mt-4 text-red-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeIn" }}
+            className="relative"
           >
-            Error: {error}
+            <AnalysisResults analysis={analysis} />
+            <motion.div
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }}
+              className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
+            >
+              <textarea
+                onChange={handleTypedMessage}
+                className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-white ${styles.textarea}`}
+                placeholder="What's on your mind?"
+                autoFocus
+                value={code}
+                ref={areaRef} />
+              <div className="flex justify-between mt-4">
+                <Select value={language} onValueChange={handleSelectedLanguage}>
+                  <SelectTrigger className="w-[180px] rounded-xl bg-input cursor-pointer">
+                    <SelectValue placeholder="Select Language" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-2xl">
+                    <SelectGroup className="cursor-pointer">
+                      <SelectLabel>Languages</SelectLabel>
+                      {selectElement.map((item, index) => (
+                        <SelectItem key={`select-element-${index}`} className="cursor-pointer" value={item}>{item}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Button
+                  disabled={isEmpty || loading}
+                  className={`rounded-full w-12 h-12 ${isEmpty ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                  onClick={analyzeCode}
+                >
+                  {loading ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <MoveUp size={24} strokeWidth={3} />
+                  )}
+                </Button>
+              </div>
+            </motion.div>
           </motion.div>
-        )}
 
-      </div>
-    </section>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="mt-4 text-red-500"
+            >
+              Error: {error}
+            </motion.div>
+          )}
+
+        </div>
+      </section></>
   );
 }
