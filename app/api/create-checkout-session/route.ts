@@ -14,7 +14,7 @@ const PLAN_PRICE_MAP: { [key: string]: string | undefined } = {
 
 export async function POST(request: NextRequest) {
   try {
-    const { planId } = await request.json();
+    const { planId, userId } = await request.json();
     const priceId = PLAN_PRICE_MAP[planId];
 
     if (!priceId) {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
-      success_url: `${process.env.NEXT_PUBLIC_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.NEXT_PUBLIC_URL}/payment-success?userId=${userId}&plan=${planId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}#pricing`,
       metadata: { planId },
     });

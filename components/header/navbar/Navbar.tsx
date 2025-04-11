@@ -148,45 +148,46 @@ export default function Navbar() {
     <header className="flex justify-center p-4 max-h-[100px]">
       <Menu setActive={setActive}>
        <Logo width={50} height={50} className="mr-auto" textDirection="Row" />
-        <MenuItem setActive={setActive} active={active} item="Home">
-          <ProductItem
-            title="Home"
-            description="Go to Home"
-            href="/"
-            Icon={Home}
-          />
-        </MenuItem>
-
-        <MenuItem setActive={setActive} active={active} item="Sections">
-          <ProductItem
-            title="Features"
-            description="Explore our features"
-            href="#features"
-            Icon={Star}
-            
-          />
-          <Separator />
-          <ProductItem
-            title="Testimonials"
-            description="Read what others say"
-            href="#testimonials"
-            Icon={Quote}
-          />
-          <Separator />
-          <ProductItem
-            title="Pricing"
-            description="View our pricing plans"
-            href="#pricing"
-            Icon={ShoppingBag}
-          />
-          <Separator />
-          <ProductItem
-            title="Get Started"
-            description="Start your journey"
-            href="#get-started"
-            Icon={UserPlus}
-          />
-        </MenuItem>
+        <div className="hidden md:flex gap-10 ">
+          <MenuItem setActive={setActive} active={active} item="Home">
+            <ProductItem
+              title="Home"
+              description="Go to Home"
+              href="/"
+              Icon={Home}
+            />
+          </MenuItem>
+          <MenuItem setActive={setActive} active={active} item="Sections">
+            <ProductItem
+              title="Features"
+              description="Explore our features"
+              href="#features"
+              Icon={Star}
+          
+            />
+            <Separator />
+            <ProductItem
+              title="Testimonials"
+              description="Read what others say"
+              href="#testimonials"
+              Icon={Quote}
+            />
+            <Separator />
+            <ProductItem
+              title="Pricing"
+              description="View our pricing plans"
+              href="#pricing"
+              Icon={ShoppingBag}
+            />
+            <Separator />
+            <ProductItem
+              title="Get Started"
+              description="Start your journey"
+              href="#get-started"
+              Icon={UserPlus}
+            />
+          </MenuItem>
+        </div>
 
         {
           isLoading ? (

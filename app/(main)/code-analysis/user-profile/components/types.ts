@@ -6,6 +6,5 @@ export interface IUserData{
     userId: string
     userRole: string;
     avatar?: string
-    plan?: string
-
+    plan: string
 } 

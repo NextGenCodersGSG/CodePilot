@@ -15,6 +15,7 @@ import { motion, useAnimation, type Variants } from "framer-motion";
 import { loadStripe } from "@stripe/stripe-js";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import { toast } from "../ui/sonner";
+import { getUserData } from "@/app/(main)/code-analysis/utils/getUserId";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
@@ -93,12 +94,22 @@ export default function BillingSection() {
     INITIAL_LOADING_STATE
   );
   const [token, setToken] = useState<string | null>(null);
-
+  const [user, setUser] = useState<{email:string,
+    exp:number,
+    iat: number,
+    name: string,
+    userId: string,
+    userRole: string
+  }>();
   useEffect(() => {
     async function fetchToken() {
       const response = await fetch("/api/auth/token");
       const data = await response.json();
       setToken(data.token);
+
+      const user = await getUserData();
+      console.log(user);
+      setUser(user);
     }
 
     fetchToken();
@@ -107,7 +118,7 @@ export default function BillingSection() {
   const handleCheckout = async (planId: PlanId) => {
     if (!token) {
       console.log("user must be logged in to subscribe!");
-      toast("You must be logged in to subscribe!");
+      toast.warning("You must be logged in to subscribe!");
       return;
     }
     setIsLoading((prev) => ({ ...prev, [planId]: true }));
@@ -118,7 +129,8 @@ export default function BillingSection() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          planId
+          planId,
+          userId: user?.userId,
         })
       });
 

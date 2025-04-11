@@ -30,7 +30,7 @@ const useSignup = () => {
                 return;
             }
             resetForm();
-            toast.success("Account Created Successfully");
+            toast.success("Account Created Successfully", {duration: 1200});
             setTimeout(() => {
                 redirect("/sign-in")
             }, 1000)

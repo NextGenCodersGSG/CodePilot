@@ -116,9 +116,9 @@ export default function ProfilePage(userData: IUserData ) {
   };
 
   const getVisiblePlans = () => {
-    if (user.plan === "starter") {
+    if (userData.plan === "starter") {
       return plans.filter((plan) => plan.id === "pro" || plan.id === "team");
-    } else if (user.plan === "pro") {
+    } else if (userData.plan === "pro") {
       return plans.filter((plan) => plan.id === "team");
     }
     return [];
@@ -184,7 +184,7 @@ export default function ProfilePage(userData: IUserData ) {
                   <p className="text-sm text-[#B3B3B3] mb-3">{userData.email}</p>
 
                     <Badge className="bg-[#00406C] hover:bg-[#003A61] mb-4">
-                      {user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}{" "}
+                      {userData?.plan?.charAt(0).toUpperCase() + userData?.plan?.slice(1)} {" "}
                       Plan
                     </Badge>
                 </div>
@@ -354,27 +354,27 @@ export default function ProfilePage(userData: IUserData ) {
                           <div>
                             <div className="flex items-center gap-2">
                               <Badge className="bg-[#00406C] hover:bg-[#003A61]">
-                                {user.plan.charAt(0).toUpperCase() +
-                                  user.plan.slice(1)}
+                                {userData.plan.charAt(0).toUpperCase() +
+                                  userData.plan.slice(1)}
                               </Badge>
                               <span className="text-sm text-[#B3B3B3]">
-                                {user.plan === "starter"
+                                {userData.plan === "starter"
                                   ? "$0/month"
-                                  : user.plan === "pro"
+                                  : userData.plan === "pro"
                                   ? "$20/month"
                                   : "$50/month"}
                               </span>
                             </div>
                             <p className="text-sm mt-2">
-                              {user.plan === "starter"
+                              {userData.plan === "starter"
                                 ? "Basic features for individual developers"
-                                : user.plan === "pro"
+                                : userData.plan === "pro"
                                 ? "Advanced features for professional developers"
                                 : "Collaboration features for development teams"}
                             </p>
                           </div>
 
-                          {user.plan === "team" && (
+                          {userData.plan === "team" && (
                             <div className="flex items-center gap-2 bg-[#003356]/30 text-[#F2F2F2] px-3 py-1.5 rounded-md">
                               <CheckCircle className="h-4 w-4 text-green-500" />
                               <span className="text-sm">
@@ -387,13 +387,13 @@ export default function ProfilePage(userData: IUserData ) {
                     </div>
 
                     {/* Upgrade options */}
-                    {(user.plan === "starter" || user.plan === "pro") && (
+                    {(userData.plan === "starter" || userData.plan === "pro") && (
                       <div className="space-y-4">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
                           <h3 className="text-lg font-medium">
                             Upgrade Options
                           </h3>
-                          {user.plan === "pro" && (
+                          {userData.plan === "pro" && (
                             <p className="text-sm text-[#B3B3B3]">
                               The Team plan is well-suited for team
                               collaboration
@@ -406,7 +406,7 @@ export default function ProfilePage(userData: IUserData ) {
                             <PlanCard
                               key={plan.id}
                               plan={plan}
-                              currentPlan={user.plan}
+                              currentPlan={userData.plan}
                             />
                           ))}
                         </div>
@@ -421,7 +421,7 @@ export default function ProfilePage(userData: IUserData ) {
                     <CardTitle>Billing History</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {user.plan === "starter" ? (
+                    {userData.plan === "starter" ? (
                       <div className="text-center py-6">
                         <p className="text-[#B3B3B3]">
                           No billing history available on the Starter plan
@@ -432,41 +432,14 @@ export default function ProfilePage(userData: IUserData ) {
                         <div className="bg-[#001A2C] border border-[#002945] rounded-lg p-4 flex justify-between items-center">
                           <div>
                             <p className="font-medium">
-                              {user.plan.charAt(0).toUpperCase() +
-                                user.plan.slice(1)}{" "}
+                              {userData.plan.charAt(0).toUpperCase() +
+                                userData.plan.slice(1)}{" "}
                               Plan - Monthly
-                            </p>
-                            <p className="text-sm text-[#B3B3B3]">
-                              Apr 1, 2023
                             </p>
                           </div>
                           <div className="text-right">
                             <p className="font-medium">
-                              {user.plan === "pro" ? "$29.00" : "$99.00"}
-                            </p>
-                            <Badge
-                              variant="outline"
-                              className="border-green-500 text-green-500"
-                            >
-                              Paid
-                            </Badge>
-                          </div>
-                        </div>
-
-                        <div className="bg-[#001A2C] border border-[#002945] rounded-lg p-4 flex justify-between items-center">
-                          <div>
-                            <p className="font-medium">
-                              {user.plan.charAt(0).toUpperCase() +
-                                user.plan.slice(1)}{" "}
-                              Plan - Monthly
-                            </p>
-                            <p className="text-sm text-[#B3B3B3]">
-                              Mar 1, 2023
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-medium">
-                              {user.plan === "pro" ? "$29.00" : "$99.00"}
+                              {userData.plan === "pro" ? "$20.00" : "$50.00"}
                             </p>
                             <Badge
                               variant="outline"
