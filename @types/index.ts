@@ -7,29 +7,31 @@ export interface IBug {
   }
   
 export interface IPerformance {
-    issue: string;
-    severity: string;
-    solution: string;
-  }
-  
+  issue: string;
+  severity: string;
+  solution: string;
+}
+
 export interface ISecurity {
-    fix: string;
-    severity: string;
-    vulnerability: string;
-  }
+  fix: string;
+  severity: string;
+  vulnerability: string;
+}
 
 export interface IAnalysis {
-  performance_issues?: IPerformance[];
-  security_issues?: ISecurity[];
-  bugs?: IBug[];
-  description?: string;
-  overall_suggestions?: string[];
+  title: string;
+  slug: string;
+  performance_issues: IPerformance[];
+  security_issues: ISecurity[];
+  bugs: IBug[];
+  description: string;
+  overall_suggestions: string[];
 }
 
 export enum Role {
   User = "user",
   Admin = "admin",
-  Guest = "guest"
+  Developer = "developer"
 }
 
 export type UserRoles = `${Role}`;
@@ -37,8 +39,19 @@ export type UserRoles = `${Role}`;
 export interface IUser {
   name: string;
   email: string;
-  role: UserRoles; 
+  role: UserRoles;
   password: string;
+}
+
+export interface IUserFromDB {
+  _id: string;
+  name: string;
+  email: string;
+  role: UserRoles;      
+  password: string;
+  createdAt: string; 
+  updatedAt: string;
+  __v?: number;
 }
 
 export interface ICodeReview {
@@ -48,7 +61,7 @@ export interface ICodeReview {
   createdAt: Date;
 }
 
-export interface IAIReviewResponse{
+export interface IAIReviewResponse {
   review: mongoose.Types.ObjectId;
   description: string;
   performanceIssues: String;
@@ -57,4 +70,98 @@ export interface IAIReviewResponse{
   overallSuggestions: String;
 }
 
+export interface IAnalysis {
+  title: string;
+  slug: string;
+  performance_issues: IPerformance[];
+  security_issues: ISecurity[];
+  bugs: IBug[];
+  description: string;
+  overall_suggestions: string[];
+}
+
+interface Project {
+  userId:string;
+  name: string;
+  url: string;
+}
+
+export type IProject = Project & IAnalysis;
+
+export interface ILogin extends Pick<IUser, 'email' | 'password'> { }
+
+export type PlanId = 'free' | 'pro' | 'team';
+
+export interface Plan {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  id: PlanId;
+}
+
+export interface CreateCheckoutSessionRequest {
+  plan: PlanId;
+}
+
+export interface CreateCheckoutSessionResponse {
+  sessionId?: string;
+  message?: string;
+  error?: string;
+}
+
+export interface StripeWebhookEvent {
+  id: string;
+  object: string;
+  api_version: string;
+  data: {
+    object: any;
+  };
+  type: string;
+  created: number;
+}
+
+export interface EmailTemplateProps {
+  link?: string;
+  title: string;
+  description: string;
+  secondary: string;
+  button?: string;
+}
+
+export enum Status{
+  PENDING = 'PENDING', 
+  APPROVED = 'APPROVED', 
+  REJECTED = 'REJECTED', 
+  CANCELED = 'CANCELED'
+}
+
+export type MeetingStatus = `${Status}`;
+
+export interface IMeeting {
+  id?: string;
+  title: string;
+  description: string;
+  scheduledAt: Date;
+  duration: number;
+  status: Status; 
+  userId: string;
+  developerId?: string;
+  requestedAt?: Date;
+  zoom: IZoom
+}
+
+export interface IZoom {
+  meetingId: string;
+  zoomId:  string;
+  joinUrl: string;
+  startUrl: string;
+  password: string;
+}
+
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
+export interface IChartData {
+  name: string;
+  value: number;
+}

@@ -5,6 +5,7 @@ import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constant";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const useSignin = () => {
   const handleSignin = async (
@@ -14,7 +15,7 @@ const useSignin = () => {
   ) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/auth/sign-in`,
+        `/api/auth/sign-in`,
         {
           method: "POST",
           headers: {
@@ -23,13 +24,27 @@ const useSignin = () => {
           body: JSON.stringify(values),
         }
       );
+      
       const data = await response.json();
+      
       if (!response.ok) {
         toast.error(`${data.error}`);
         return;
       }
+
       resetForm();
       toast.success("Signin successful");
+      localStorage.setItem("auth-token", data.token);
+      const role: string = data.role;
+
+      setTimeout(() => {
+        if(role === 'admin') {
+          redirect("/dashboard");
+        }
+        else {
+          redirect("/code-analysis");
+        }
+      }, 500);
     } catch (error: any) {
       toast.error(`Signin error: ${error.message}`);
     } finally {

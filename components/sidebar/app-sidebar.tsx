@@ -1,43 +1,38 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  BookOpen,
-  BrainCircuit,
-  BugPlay,
-  FlaskConical,
-  GalleryVerticalEnd,
-  LayoutDashboard,
-  LucideProps,
-  ShieldCheck,
-  SquareTerminal,
-} from "lucide-react"
-
-import { NavMain } from "@/components/sidebar/nav-main"
-import { NavProjects } from "@/components/sidebar/nav-projects"
-import { NavUser } from "@/components/sidebar/nav-user"
-import { TeamSwitcher } from "@/components/sidebar/team-switcher"
+import * as React from "react";
+import { NavMain } from "@/components/sidebar/nav-main";
+import { NavProjects } from "@/components/sidebar/nav-projects";
+import { NavUser } from "@/components/sidebar/nav-user";
+import { TeamSwitcher } from "@/components/sidebar/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
+  SidebarRail
+} from "@/components/ui/sidebar";
+import { useSidebar } from "@/providers/SidebarContext";
+import {
+  GalleryVerticalEnd,
+  LayoutDashboard,
+  BrainCircuit,
+  BookOpen,
+  Video
+} from "lucide-react";
 
-// This is sample data.
-const initialData = {
+export const data = {
   user: {
     name: "John Doe",
     email: "John@example.com",
-    avatar: "/profile.jpg",
+    avatar: "/profile.jpg"
   },
   teams: [
     {
       name: "NextGen Coders",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
+      plan: "Enterprise"
+    }
   ],
   navMain: [
     {
@@ -48,24 +43,36 @@ const initialData = {
       items: [
         {
           title: "User Statistics",
-          url: "/code-analysis/dashboard",
-        },
+          url: "/dashboard"
+        }
       ]
     },
     {
-      title: "Live Debugging",
+      title: "Developer Meetings",
       url: "#",
-      icon: BugPlay,
+      icon: Video,
+      isActive: true,
+      items: [
+        {
+          title: "Meetings List",
+          url: "/code-analysis/developer-dashboard"
+        }
+      ]
+    },
+    {
+      title: "Meetings",
+      url: "#",
+      icon: Video,
       items: [
         {
           title: "Start Session",
-          url: "#",
+          url: "/code-analysis/book-meeting"
         },
         {
-          title: "History Log",
-          url: "#",
-        },
-      ],
+          title: "Scheduled Meetings",
+          url: "/code-analysis/scheduled-meetings"
+        }
+      ]
     },
     {
       title: "AI Models",
@@ -74,13 +81,13 @@ const initialData = {
       items: [
         {
           title: "Genesis",
-          url: "#",
+          url: "#"
         },
         {
           title: "Explorer",
-          url: "#",
-        },
-      ],
+          url: "#"
+        }
+      ]
     },
     {
       title: "Documentation",
@@ -88,42 +95,20 @@ const initialData = {
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
-          url: "#",
-        },
-        {
           title: "Get Started",
-          url: "#",
+          url: "/code-analysis/documentation"
         },
         {
-          title: "API Reference",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "AI Debugging Lab",
-      url: "#",
-      icon: FlaskConical,
-    },
-    {
-      name: "Security & Compliance",
-      url: "#",
-      icon: ShieldCheck,
-    },
-    {
-      name: "Code Optimization",
-      url: "#",
-      icon: SquareTerminal,
-    },
-  ],
+          title: "Integration",
+          url: "/code-analysis/documentation/integration"
+        }
+      ]
+    }
+  ]
 };
 
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [data,setData]= React.useState(initialData);
+  const { sidebarProjects, loading, userData } = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -131,12 +116,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={sidebarProjects} loading={loading} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

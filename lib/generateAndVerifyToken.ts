@@ -5,8 +5,10 @@ import { UserRoles } from "@/@types";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
-interface TokenPayload extends JwtPayload {
+export interface TokenPayload extends JwtPayload {
   userId: string;
+  name: string;
+  email: string;
   userRole?: UserRoles;
 }
 
@@ -25,13 +27,13 @@ export async function generateToken(
   return token;
 }
 
-export async function verifyToken(token: string | undefined = "") {
+export async function verifyToken(token: string | undefined = "") : Promise<TokenPayload | null>{
   try {
     const { payload } = await jwtVerify(token, encodedKey, {
       algorithms: ["HS256"],
     });
-    return payload;
+    return payload as TokenPayload;
   } catch (error) {
-    console.log("Failed to verify session");
+    return null
   }
 }
