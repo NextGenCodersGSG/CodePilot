@@ -58,6 +58,24 @@ class UserService {
       
         return updatedUser;
       }
+
+      async changePassword(
+        userId: string,
+        oldPassword: string,
+        newPassword: string
+      ): Promise<void> {
+        // Input validation
+        if (!userId || typeof userId !== "string") {
+          throw new Error("Invalid user ID");
+        }
+    
+        if (newPassword.length < 8) {
+          throw new Error("New password must be at least 8 characters");
+        }
+    
+        // Call repository method
+        await userRepo.changePassword(userId, oldPassword, newPassword);
+      }
 }
 
 export default new UserService();

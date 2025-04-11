@@ -1,5 +1,6 @@
 import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { Role } from "@/@types/index";
+import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 
 export class UserRepository {
   async findUserById(id: string, role: Role): Promise<IUserDocument | null> {
@@ -27,6 +28,7 @@ export class UserRepository {
     console.log("Update result:", result);
     return result;
   }
+  
   async updateUserProfile(userId: string, updateData: Partial<IUserDocument>) {
     console.log(`Updating user ${userId} with:`, updateData);
     return userModel.findByIdAndUpdate(
@@ -34,6 +36,24 @@ export class UserRepository {
       { $set: updateData },
       { new: true, runValidators: true }
     );
+  }
+
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    // Find user by ID
+    const user = await userModel.findById(userId);
+    if (!user) throw new Error("User not found");
+
+    // Verify old password
+    const isMatch = await comparePassword(oldPassword, user.password);
+    if (!isMatch) throw new Error("Invalid current password");
+
+    // Hash new password and update
+    user.password = await hashPassword(newPassword);
+    await user.save();
   }
 }
 

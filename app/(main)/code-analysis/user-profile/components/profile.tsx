@@ -512,6 +512,7 @@ export default function ProfilePage() {
               toast.success("Password changed successfully", { duration: 2000 });
             }}
             onCancel={() => setShowPasswordDialog(false)}
+            userId={userData.userId}
           />
         </DialogContent>
       </Dialog>

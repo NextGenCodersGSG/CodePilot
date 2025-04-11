@@ -12,9 +12,10 @@ import { Eye, EyeOff } from "lucide-react"
 interface PasswordChangeFormProps {
   onSuccess: () => void
   onCancel: () => void
+  userId: string
 }
 
-export function PasswordChangeForm({ onSuccess, onCancel }: PasswordChangeFormProps) {
+export function PasswordChangeForm({ onSuccess, onCancel, userId }: PasswordChangeFormProps) {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -30,7 +31,7 @@ export function PasswordChangeForm({ onSuccess, onCancel }: PasswordChangeFormPr
 
     
     if (!currentPassword || !newPassword || !confirmPassword) {
-      setError("All fields are required")
+      setError("All fields are required");
       return
     }
 
@@ -44,11 +45,22 @@ export function PasswordChangeForm({ onSuccess, onCancel }: PasswordChangeFormPr
       return
     }
 
-    // Simulate API call
     setIsLoading(true)
     try {
-      // In a real app, you would call an API endpoint here
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const response = await fetch("/api/users/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId ,currentPassword, newPassword }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        setError(data.error || "Failed to change password. Please try again.")
+        return
+      }
+
       onSuccess()
     } catch (err) {
       setError("Failed to change password. Please try again.")
