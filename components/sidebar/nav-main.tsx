@@ -1,4 +1,5 @@
 "use client"
+
 import { ChevronRight, type LucideIcon } from "lucide-react"
 import {
   Collapsible,
@@ -18,6 +19,7 @@ import {
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { getUserData } from "@/app/(main)/code-analysis/utils/getUserId"
+import { AnimatePresence, motion } from "framer-motion"
 
 export function NavMain({
   items,
@@ -35,6 +37,7 @@ export function NavMain({
 }) {
   const [userRole, setUserRole] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const getUser = async () => {
@@ -48,7 +51,16 @@ export function NavMain({
       }
     };
     getUser();
-  }, []);
+    
+    // Initialize open state based on active items
+    const initialOpenState: Record<string, boolean> = {};
+    items.forEach(item => {
+      if (item.isActive) {
+        initialOpenState[item.title] = true;
+      }
+    });
+    setOpenItems(initialOpenState);
+  }, [items]);
 
   const shouldShowItem = (url: string) => {
     if (isLoading) return false;
@@ -58,17 +70,17 @@ export function NavMain({
       return userRole === "admin";
     }
     
-    // Admins and Developers can see this (Admin's wont be able to see the whole page but it makes sense to give him this)
+    // Admins and Developers can see this
     if (url === "/code-analysis/developer-dashboard") {
       return userRole === "admin" || userRole === "developer";
     }
     
-    // Only Visible for the user due to meetings booking.
+    // Only Visible for the user due to meetings booking
     if (url === "/code-analysis/book-meeting" || url === "/code-analysis/scheduled-meetings") {
       return userRole === "user";
     }
 
-    // All other links that hasn't been checked for are globally visible.
+    // All other links that haven't been checked are globally visible
     return true;
   };
 
@@ -85,6 +97,13 @@ export function NavMain({
     return true;
   });
 
+  const handleToggleCollapsible = (title: string) => {
+    setOpenItems(prev => ({
+      ...prev,
+      [title]: !prev[title]
+    }));
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -93,7 +112,8 @@ export function NavMain({
           <Collapsible
             key={item.title}
             asChild
-            defaultOpen={item.isActive}
+            open={openItems[item.title]}
+            onOpenChange={() => handleToggleCollapsible(item.title)}
             className="group/collapsible cursor-pointer"
           >
             <SidebarMenuItem>
@@ -108,19 +128,45 @@ export function NavMain({
               </CollapsibleTrigger>
               {item.items && item.items.length > 0 && (
                 <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {item.items
-                      .filter(subItem => shouldShowItem(subItem.url))
-                      .map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <Link href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
-                  </SidebarMenuSub>
+                  <AnimatePresence mode="wait">
+                    {openItems[item.title] && (
+                      <motion.div
+                        key={`content-${item.title}`}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <SidebarMenuSub>
+                          {item.items
+                            .filter((subItem) => shouldShowItem(subItem.url))
+                            .map((subItem, index) => (
+                              <motion.div
+                                key={subItem.title}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -10 }}
+                                transition={{
+                                  delay: openItems[item.title] ? index * 0.1 : 0,
+                                  duration: 0.2,
+                                  type: "spring",
+                                  stiffness: 300,
+                                  damping: 24,
+                                }}
+                              >
+                                <SidebarMenuSubItem>
+                                  <SidebarMenuSubButton asChild>
+                                    <Link href={subItem.url}>
+                                      <span>{subItem.title}</span>
+                                    </Link>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              </motion.div>
+                            ))}
+                        </SidebarMenuSub>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </CollapsibleContent>
               )}
             </SidebarMenuItem>
@@ -128,5 +174,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  );
+  )
 }
