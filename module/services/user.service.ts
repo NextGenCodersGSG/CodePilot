@@ -35,6 +35,29 @@ class UserService {
         // Call repository method to update the user's plan
         return await userRepo.updateUserPlan(userId, normalizedPlan);
     }
+
+    async updateUserName(userId: string, newName: string) {
+        // Input validation
+        if (!userId || typeof userId !== 'string') {
+          throw new Error("Invalid user ID");
+        }
+        
+        const trimmedName = newName.trim();
+        if (!trimmedName || trimmedName.length < 3) {
+          throw new Error("Name must be at least 3 characters");
+        }
+      
+        // Update via repository
+        const updatedUser = await userRepo.updateUserProfile(userId, { 
+          name: trimmedName 
+        });
+      
+        if (!updatedUser) {
+          throw new Error("User not found");
+        }
+      
+        return updatedUser;
+      }
 }
 
 export default new UserService();

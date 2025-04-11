@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import { string } from "yup";
 
 export interface IBug {
-    correction: string;
-    error: string;
-    severity: string;
-  }
-  
+  correction: string;
+  error: string;
+  severity: string;
+}
+
 export interface IPerformance {
   issue: string;
   severity: string;
@@ -47,9 +48,9 @@ export interface IUserFromDB {
   _id: string;
   name: string;
   email: string;
-  role: UserRoles;      
+  role: UserRoles;
   password: string;
-  createdAt: string; 
+  createdAt: string;
   updatedAt: string;
   __v?: number;
 }
@@ -81,16 +82,16 @@ export interface IAnalysis {
 }
 
 interface Project {
-  userId:string;
+  userId: string;
   name: string;
   url: string;
 }
 
 export type IProject = Project & IAnalysis;
 
-export interface ILogin extends Pick<IUser, 'email' | 'password'> { }
+export interface ILogin extends Pick<IUser, "email" | "password"> {}
 
-export type PlanId = 'free' | 'pro' | 'team';
+export type PlanId = "free" | "pro" | "team";
 
 export interface Plan {
   name: string;
@@ -129,11 +130,11 @@ export interface EmailTemplateProps {
   button?: string;
 }
 
-export enum Status{
-  PENDING = 'PENDING', 
-  APPROVED = 'APPROVED', 
-  REJECTED = 'REJECTED', 
-  CANCELED = 'CANCELED'
+export enum Status {
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  CANCELED = "CANCELED"
 }
 
 export type MeetingStatus = `${Status}`;
@@ -144,24 +145,35 @@ export interface IMeeting {
   description: string;
   scheduledAt: Date;
   duration: number;
-  status: Status; 
+  status: Status;
   userId: string;
   developerId?: string;
   requestedAt?: Date;
-  zoom: IZoom
+  zoom: IZoom;
 }
 
 export interface IZoom {
   meetingId: string;
-  zoomId:  string;
+  zoomId: string;
   joinUrl: string;
   startUrl: string;
   password: string;
 }
 
-export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+export interface ILogin extends Pick<IUser, "email" | "password"> {}
 
 export interface IChartData {
   name: string;
   value: number;
+}
+
+export interface IUserToken {
+  email: string;
+  exp: number;
+  iat: number;
+  name: string;
+  plan: string;
+  userId: string;
+  userRole: string;
+  avatar: string;
 }

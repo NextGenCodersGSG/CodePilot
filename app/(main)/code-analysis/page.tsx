@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IAnalysis,  IProject } from "@/@types";
+import { IAnalysis,  IProject, IUserToken } from "@/@types";
 import { motion } from "framer-motion";
 import {  MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -43,6 +43,7 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
   const {addProject, addUserSession, setUserData} = useSidebar();
+
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setIsEmpty(value.trim() === "");
@@ -136,11 +137,7 @@ export default function Page() {
       const user = await getUserData();
       const displayName = user.name?.split(" ")[0];
       console.log(user);
-      const userData = {
-        name: user.name || "Unknown",
-        email: user.email || "Unknown",
-      }
-      setUserData(userData);
+      setUserData(user as IUserToken);
       setUsername(displayName || "Unknown");
       setPageLoading(false);
     } 
