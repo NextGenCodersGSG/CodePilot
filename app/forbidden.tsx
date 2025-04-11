@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Lock, LayoutDashboard, Home, Code, X } from "lucide-react"
+import { Lock, LayoutDashboard, Home, Code, X, LogIn } from "lucide-react"
 import { useState, useEffect } from "react"
 import Logo from "@/components/logo/Logo"
 
@@ -142,13 +142,18 @@ export default function Forbidden() {
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants}>
+        {/* <motion.div variants={itemVariants}>
           <p className="text-[#B3B3B3] max-w-md mb-8">
             You don't have sufficient permissions to access this resource. Please contact your administrator for access.
           </p>
-        </motion.div>
+        </motion.div> */}
+<motion.div variants={itemVariants}>
+  <p className="text-[#B3B3B3] max-w-md mb-8">
+    You must be logged in to access this resource. Please sign in to continue.
+  </p>
+</motion.div>
 
-        <motion.div variants={itemVariants}>
+        {/* <motion.div variants={itemVariants}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
@@ -163,8 +168,33 @@ export default function Forbidden() {
               </Button>
             </motion.div>
           </div>
-        </motion.div>
+        </motion.div> */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
+             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                asChild
+                className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+              >
+                <Link href="/" className="flex items-center gap-2">
+                  <Home className="h-4 w-4" />
+                  Go Home
+                </Link>
+              </Button>
+            </motion.div> 
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                asChild
+                className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+              >
+                <Link href="/sign-in" className="flex items-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Link>
+              </Button>
+            </motion.div> 
+            </div>
         <Logo/>
       </motion.div>
 

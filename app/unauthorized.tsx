@@ -151,7 +151,7 @@ export default function Unauthorized() {
 
         <motion.div variants={itemVariants}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 asChild
                 className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
@@ -161,8 +161,8 @@ export default function Unauthorized() {
                   Go Home
                 </Link>
               </Button>
-            </motion.div>
-
+            </motion.div> */}
+{/* 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
@@ -174,7 +174,24 @@ export default function Unauthorized() {
                   Sign In
                 </Link>
               </Button>
-            </motion.div>
+            </motion.div> */}
+                    <motion.div variants={itemVariants}>
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                          <Button
+                            variant="outline"
+                            asChild
+                            className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                          >
+                            <Link href="/" className="flex items-center gap-2">
+                              <Home className="h-4 w-4" />
+                              Go Home
+                            </Link>
+                          </Button>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+            
           </div>
         </motion.div>
 
