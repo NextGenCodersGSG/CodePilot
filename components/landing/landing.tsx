@@ -1,7 +1,6 @@
 "use client"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
 import { useEffect, useRef } from "react"
@@ -15,66 +14,11 @@ import BillingSection from "./billing"
 import Header from "@/components/header/Header"
 import Link from "next/link"
 import { InfiniteTestimonialScroll } from "./infinite-testimonial-scroll"
-
-
-function useInView(threshold = 0.1) {
-  const controls = useAnimation()
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible")
-        }
-      },
-      { threshold },
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
-      }
-    }
-  }, [controls, threshold])
-
-  return { ref, controls }
-}
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12,
-    },
-  },
-}
-
-const MotionCard = motion(Card);
+import CTASection from "./cta-section"
+import { HorizontalScrollFeatures } from "./horizontal-scroll-features"
 
 export default function LandingPage() {
 
-  const featuresSection = useInView()
-  const testimonialsSection = useInView()
   return (
     <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
       <Header/>
@@ -151,140 +95,14 @@ export default function LandingPage() {
         </section>
         </BackgroundBeamsWithCollision>
         {/* Features Section */}
-        <section id="features" className="py-20 bg-gradient-to-b dark: from-[#002945] dark:to-[#00111C]/95">
-          <div className="container px-4 md:px-6 mx-auto">
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                Powerful Features for Developers
-              </h2>
-              <p className="mt-4 text-lg text-[#B3B3B3] md:w-3/4 mx-auto">
-                CodePilot helps you write code, find bugs faster, and ship with confidence.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="grid gap-8 md:grid-cols-2 lg:grid-cols-4"
-              ref={featuresSection.ref}
-              variants={containerVariants}
-              initial="hidden"
-              animate={featuresSection.controls}
-            >
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <Code className="h-10 w-10 text-[#00406C] mb-2" />
-                    <CardTitle className="text-[#F2F2F2]">Syntax Analysis</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
-                      Identify syntax errors, code smells, and style issues before they cause problems.
-                    </CardDescription>
-                  </CardHeader>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <Zap className="h-10 w-10 text-[#00406C] mb-2" />
-                    <CardTitle className="text-[#F2F2F2]">Error Detection</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
-                      Catch runtime errors and logical bugs with AI-powered static analysis.
-                    </CardDescription>
-                  </CardHeader>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <Shield className="h-10 w-10 text-[#00406C] mb-2" />
-                    <CardTitle className="text-[#F2F2F2]">Security Scanning</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
-                      Identify security vulnerabilities and get recommendations to fix them.
-                    </CardDescription>
-                  </CardHeader>
-                </MotionCard>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <MotionCard className="bg-[#001523] border-[#002945]">
-                  <CardHeader>
-                    <BarChart className="h-10 w-10 text-[#00406C] mb-2" />
-                    <CardTitle className="text-[#F2F2F2]">Performance Insights</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
-                      Get suggestions to optimize your code for better performance and efficiency.
-                    </CardDescription>
-                  </CardHeader>
-                </MotionCard>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+        <HorizontalScrollFeatures/>
 
         {/* Testimonials Section */}
         <InfiniteTestimonialScroll/>
         {/* Pricing Section */}
         <BillingSection/>
         {/* CTA Section */}
-        <section id="get-started" className="py-20">
-          <div className="container px-4 md:px-6 mx-auto">
-            <motion.div
-              className=" rounded-lg bg-[#001A2C] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-[#002945]"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#F2F2F2]">
-                    Ready to write better code?
-                  </h2>
-                  <p className="text-lg text-[#B3B3B3]">
-                    Join thousands of developers who are shipping better code faster with CodePilot.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link href="/sign-in">
-                      <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-                        Start your free trial
-                      </Button>
-                    </Link>
-                    <Link href="/code-analysis/book-meeting">
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="cursor-pointer w-full sm:w-auto border-[#002945] bg-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                      >
-                        Schedule a demo
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-                <motion.div
-                  className="relative hidden lg:block"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Image
-                    src="/profile.jpg"
-                    width={600}
-                    height={400}
-                    alt="CodePilot in action"
-                    className="rounded-lg"
-                  />
-                </motion.div>
-              </div>
-              <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-[#00406C]/10 blur-3xl"></div>
-              <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[#00406C]/10 blur-3xl"></div>
-            </motion.div>
-          </div>
-        </section>
+        <CTASection/>
       </main>
     </div>
   )

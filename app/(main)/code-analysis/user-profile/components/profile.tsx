@@ -97,7 +97,7 @@ const plans = [
   }
 ];
 
-export default function ProfilePage( ) {
+export default function ProfilePage() {
   const [user, setUser] = useState(mockUser);
   const { setUserData, userData } = useSidebar();
   const [isEditingName, setIsEditingName] = useState(false);
