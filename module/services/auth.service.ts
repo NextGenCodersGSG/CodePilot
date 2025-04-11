@@ -1,17 +1,17 @@
 import { ILogin, IUser, Role } from "@/@types";
-import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
-import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/generateAndVerifyToken";
-import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
-import { connection } from "@/DB/connection";
-import { createToken } from "@/lib/storeGetDelete";
-import { emailTemplate } from "@/lib/emailTemplate";
 import crypto from "crypto";
 import xss from "xss";
 import UserRepository from "../repositories/auth.repo";
+import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
+import { connection } from "@/DB/connection";
 import EmailService from "./email.service";
+import { createToken } from "@/lib/storeGetDelete";
+import { emailTemplate } from "@/lib/emailTemplate";
 import authRepo from "../repositories/auth.repo";
-import  LogsRepository  from "../repositories/countLogs.repo";
+import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import { verifyToken } from "@/lib/generateAndVerifyToken";
+import { cookies } from "next/headers";
+import LogsRepository  from "../repositories/logs.repo";
 
 class AuthService {
   async signIn(data: ILogin) {
@@ -114,7 +114,7 @@ class AuthService {
       if (!email) {
         throw new Error("Invalid token");
       }
-      await LogsRepository.deleteUserFromCounts(email);
+      await LogsRepository.deleteUserFromLogs(email);
       (await cookies()).delete("auth-token");
       return "The user with email: ${email} has been logged out succefully";
     } catch (error) {

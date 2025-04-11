@@ -1,20 +1,22 @@
 import { IChartData, ICodeReview, IUser, IUserFromDB } from "@/@types";
 import CodeReviewRepo  from "@/module/repositories/reviews.repo";
-import getDayFromISO from "@/lib/getDayFromISO";
 import { convertToChartData } from "@/lib/convertToChartData";
+import dayFromISO from "@/lib/getDayFromISO";
 import  UserRepository  from "../repositories/user.repo";
+
 class ChartsService {
     async getReviewsData() {
         const reviews: ICodeReview[] = await CodeReviewRepo.getAllReviews();
         const reviewsPerDay:{ [key: string]: number }= {};
     
         reviews.forEach((review) => {
-            const day = getDayFromISO(review.createdAt);
+            const day = dayFromISO(review.createdAt);
             reviewsPerDay[day] = (reviewsPerDay[day] || 0) + 1;
         });
         const chartData: IChartData[] =  convertToChartData(reviewsPerDay, "reviews");
         return chartData;
     }
+
     async getUsersRolesData() {
         const users: IUser[] = await UserRepository.findAllUsers();
         const usersRoles: { [key: string]: number }= {};
@@ -24,11 +26,12 @@ class ChartsService {
         const chartData: IChartData[] = convertToChartData(usersRoles, "value");
         return chartData;
     }
+
     async getSignsData() {
         const users: IUserFromDB[] = await UserRepository.findAllUsers();
         const usersSignsperDay: {[key: string]: number} = {};
         users.map((user) => {
-            const day = getDayFromISO(new Date(user.createdAt));
+            const day = dayFromISO(new Date(user.createdAt));
             usersSignsperDay[day] = (usersSignsperDay[day] || 0) + 1;
         })
         const chartData: IChartData[] = convertToChartData(usersSignsperDay, "value");
