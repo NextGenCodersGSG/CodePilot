@@ -22,9 +22,10 @@ import TotalUsers from './totalUsers';
 import AdminDropdown from "./adminLogOut";
 import { IUserDocument } from '@/DB/models/user.model';
 import { ICountLogs } from '@/DB/models/count-logs.model';
-import { IChartData } from "@/@types";
+import { IChartData, IUser } from "@/@types";
 import Head from "next/head";
 import UserMetrics from "./userMetrics";
+import { redirect, useRouter } from "next/navigation";
 
 interface DashboardProps {
   codeReviewsData: IChartData[];
@@ -76,7 +77,7 @@ export default function Dashboard({
     setSearchQuery("");
   };
 
-  const handleExportProjectCSV=()=>{
+  const handleExportProjectCSV = () => {
     console.log("Exporting Project data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
@@ -87,9 +88,9 @@ export default function Dashboard({
     // Programmatically trigger the download
     link.click();
 
-}
+  }
 
-const handleExportZoomMeetingCSV=()=> {
+  const handleExportZoomMeetingCSV = () => {
     console.log("Exporting meeting data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
@@ -99,9 +100,9 @@ const handleExportZoomMeetingCSV=()=> {
     link.download = "meetings.csv";
     // Programmatically trigger the download
     link.click();
-}
+  }
 
-const handleExportCodeReviewCSV =()=> {
+  const handleExportCodeReviewCSV = () => {
     console.log("Exporting ExportCode data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
@@ -111,8 +112,10 @@ const handleExportCodeReviewCSV =()=> {
     link.download = "reviews.csv";
     // Programmatically trigger the download
     link.click();
-}
-
+  }
+  const AddDeveloper = () => {
+    redirect('/add-developers');
+  }
 
   return (
     <>
@@ -221,27 +224,31 @@ const handleExportCodeReviewCSV =()=> {
                     ))}
                   </TabsList>
 
-                  {selectedTab === "users" && (
-                    <Button onClick={handleExportCSV} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
-                      <Download className="mr-2 h-4 w-4" />
-                      Export CSV
-                    </Button>
-                  )}
-                </div>
+                {selectedTab === "users" ? (
+                  <Button onClick={handleExportCSV} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer ">
+                    <Download className="mr-2 h-4 w-4" />
+                    Export CSV
+                  </Button>
+                ) : selectedTab === "overview" ? (
+                  <Button onClick={AddDeveloper} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer ">
+                    Add Developer
+                  </Button>
+                ) : null}
+              </div>
+              {/* Overview Tab */}
+              <TabsContent value="overview" className="space-y-6">
 
-                {/* Overview Tab */}
-                <TabsContent value="overview" className="space-y-6">
-                  <motion.div
-                    className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <TotalUsers totalUsers={totalUsers} />
-                    <UserLogs activeUsers={activeUsers} />
-                    <ProjectsDashboard totalProject={totalProject} />
-                    <AIReviewDashboard totalAIReviews={totalAIReviews} />
-                  </motion.div>
+                <motion.div
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <TotalUsers totalUsers={totalUsers} />
+                  <UserLogs activeUsers={activeUsers} />
+                  <ProjectsDashboard totalProject={totalProject} />
+                  <AIReviewDashboard totalAIReviews={totalAIReviews} />
+                </motion.div>
 
                   <motion.div
                     className="grid grid-cols-1 gap-4 lg:grid-cols-3"
@@ -331,34 +338,34 @@ const handleExportCodeReviewCSV =()=> {
                       </CardContent>
                     </Card>
 
-                    <UserMetrics/>
-                    <Card className="bg-[#001523] border-[#002945] mt-5 lg:col-span-2">
-                      <CardHeader>
-                        <CardTitle>Analytics Reports</CardTitle>
-                        <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
-                            <div className="flex items-start justify-between mb-4">
-                              <div>
-                                <h3 className="font-medium">Projects Report</h3>
-                                <p className="text-xs text-[#B3B3B3] mt-1">Detailed analysis of user code project</p>
-                              </div>
-                              <FileText className="h-5 w-5 text-[#00406C]" />
+                  <UserMetrics />
+                  <Card className="bg-[#001523] border-[#002945] mt-5 lg:col-span-2">
+                    <CardHeader>
+                      <CardTitle>Analytics Reports</CardTitle>
+                      <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                          <div className="flex items-start justify-between mb-4">
+                            <div>
+                              <h3 className="font-medium">Projects Report</h3>
+                              <p className="text-xs text-[#B3B3B3] mt-1">Detailed analysis of user code project</p>
                             </div>
-                            <div className="mt-auto pt-4">
-                              <Button
-                                onClick={handleExportProjectCSV}
-                                variant="outline"
-                                size="sm"
-                                className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                              >
-                                <Download className="mr-2 h-4 w-4" />
-                                Download CSV
-                              </Button>
-                            </div>
+                            <FileText className="h-5 w-5 text-[#00406C]" />
                           </div>
+                          <div className="mt-auto pt-4">
+                            <Button
+                              onClick={handleExportProjectCSV}
+                              variant="outline"
+                              size="sm"
+                              className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                            >
+                              <Download className="mr-2 h-4 w-4" />
+                              Download CSV
+                            </Button>
+                          </div>
+                        </div>
 
                           <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
                             <div className="flex items-start justify-between mb-4">
