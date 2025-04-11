@@ -84,7 +84,7 @@ export const data = {
           url: "https://platform.openai.com/docs/models/gpt-4-turbo"
         },
         {
-          title: "OpenAi Docs",
+          title: "OpenAI Docs",
           url: "https://platform.openai.com/docs/quickstart?api-mode=responses"
         }
       ]
