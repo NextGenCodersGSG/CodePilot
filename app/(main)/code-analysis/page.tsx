@@ -1,7 +1,8 @@
 "use client";
-
+import AnalysisItem from "@/components/analysis-item/AnalysisItem";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import styles from "./textarea.module.css";
 import {
   Select,
@@ -12,36 +13,30 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IAnalysis,  IProject } from "@/@types";
+import { IBug, IPerformance, ISecurity } from "@/@types";
 import { motion } from "framer-motion";
-import {  MoveUp } from "lucide-react";
+import { Hammer, MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AnalysisResults from "@/components/analysis-results/AnalysisResults";
-import { useSidebar } from "@/providers/SidebarContext";
-import { selectElement } from "./constants";
-import { getUserData } from "./utils/getUserId";
-import { getGreeting } from "./utils/greetings";
+
 
 export default function Page() {
-  const [username, setUsername] = useState("John");
+  const [user, _] = useState("John");
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("TypeScript");
-  const [analysis, setAnalysis] = useState<IAnalysis>({
-    title: "",
-    slug: "",
-    performance_issues: [],
-    security_issues: [],
-    bugs: [],
-    description: "",
-    overall_suggestions: []
-  });
+  const [analysis, setAnalysis] = useState<{
+    performance_issues?: IPerformance[];
+    security_issues?: ISecurity[];
+    bugs?: IBug[];
+    description?: string;
+    overall_suggestions?: string[];
+  }>({});
   const areaRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
-  const {addProject, addUserSession, setUserData} = useSidebar();
+
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setIsEmpty(value.trim() === "");
@@ -64,22 +59,6 @@ export default function Page() {
     } 
   }
 
-  //TODO: This should be used from the utils/getUserId.ts but it doesn't work for some reason.
-  const getUserId = async () => {
-    try {
-      const response = await fetch("/api/auth/token");
-      const user = await response.json();
-
-      const userId = user.token.userId as string;
-      addUserSession(userId);
-      console.log(userId);
-      
-      return userId;
-    } catch (error) {
-      console.error("Error fetching user ID:", error);
-    }
-  }
-
   const analyzeCode = async () => {
     try {
       setIsSent(true);
@@ -98,23 +77,9 @@ export default function Page() {
         throw new Error(errorData.error || "Analysis failed");
       }
 
-      const data : IAnalysis = await response.json();
+      const data = await response.json();
       setAnalysis(data);
-
-      const newProject : IProject = {
-        userId: await getUserId() || "",
-        name: data.title || "Untitled Project",
-        url: `/code-analysis/${data.slug}`,
-        title: data.title || "Untitled Project",
-        slug: data.slug,
-        performance_issues: data.performance_issues,
-        security_issues: data.security_issues,
-        bugs: data.bugs,
-        description: data.description,
-        overall_suggestions: data.overall_suggestions,
-      }
-      addProject(newProject);
-      
+      console.log(data);
     } catch (error) {
       console.error("Error analyzing code:", error);
       setError(
@@ -125,37 +90,22 @@ export default function Page() {
     }
   };
 
+  const selectElement = [
+    "TypeScript",
+    "JavaScript",
+    "React",
+    "Python",
+    "Java",
+    "C#",
+    "Rust",
+  ]
+
   const handleSelectedLanguage = (value: string) => {
     setLanguage(value);
   };
-
   useEffect(() => {
-    const  loadUserId = async () => {
-      setPageLoading(true);
-      const user = await getUserData();
-      const displayName = user.name?.split(" ")[0];
-      console.log(user);
-      const userData = {
-        name: user.name || "Unknown",
-        email: user.email || "Unknown",
-      }
-      setUserData(userData);
-      setUsername(displayName || "Unknown");
-      setPageLoading(false);
-    } 
-    
-    loadUserId();
-  }, []);
-
-  if(pageLoading){
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
-        <LoadingSpinner className="h-10 w-10"/>
-      </div>
-    )
-  }
-  const greeting = getGreeting();
-
+    console.log(language);
+  }, [language]);
   return (
     <section className={`px-4 py-8 ${isSent? "mt-auto" : "my-auto"}`}>
       <div className="mx-auto text-center">
@@ -167,7 +117,7 @@ export default function Page() {
           exit={{ opacity: 0, x: -70 }}
         >
           <h1 className="text-3xl lg:text-4xl xl:text-5xl my-4 font-bold">
-            {greeting}, {username}.
+            Hi, {user}.
           </h1>
           <h2 className="text-lg md:text-xl lg:text-2xl my-4 font-bold text-gray-500">
             What Can I Help You With Today?
@@ -186,12 +136,12 @@ export default function Page() {
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }} 
-            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
+            className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-5 w-full mt-5"
           >
             <textarea
               onChange={handleTypedMessage}
               className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-white ${styles.textarea}`}
-              placeholder="What's on your mind?"
+              placeholder="What’s on your mind?"
               autoFocus
               value={code}
               ref={areaRef}

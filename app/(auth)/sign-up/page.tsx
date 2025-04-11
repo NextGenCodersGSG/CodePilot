@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import SignUpForm from "./components/signup-form";
-import Logo from "@/components/logo/Logo";
 
 export default function SignupPage() {
   const containerVariants = {
@@ -36,7 +35,10 @@ export default function SignupPage() {
         animate="visible"
         variants={containerVariants}
       >
-        <Logo className="-mt-5"/>
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <Code className="h-8 w-8 text-[#00406C]" />
+          <span className="text-2xl font-bold text-[#F2F2F2]">CodePilot</span>
+        </div>
 
         <Card className="border-[#002945] bg-[#001523] shadow-lg">
           <CardHeader className="space-y-1">
@@ -63,6 +65,9 @@ export default function SignupPage() {
               transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
               className="w-full"
             >
+              <Button className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61]">
+                Create account
+              </Button>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

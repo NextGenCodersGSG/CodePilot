@@ -2,10 +2,9 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { motion, Variants } from "framer-motion"
+import { motion,Variants } from "framer-motion"
 import { Code, Home, ArrowLeft, FileQuestion } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Logo from "@/components/logo/Logo"
 
 export default function NotFound() {
   const router = useRouter()
@@ -111,34 +110,13 @@ export default function NotFound() {
         </motion.h1>
 
         <motion.p className="text-xl text-[#B3B3B3] mb-8" variants={itemVariants}>
-          The code path you're looking for doesn't exist or has been moved.
+          The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </motion.p>
 
-        <motion.div className="mb-12 mx-auto max-w-lg" variants={codeBlockVariants}>
-          <div className="bg-[#001523] border border-[#002945] rounded-lg p-4 text-left relative overflow-hidden">
-            <div className="flex items-center gap-2 mb-3 text-[#B3B3B3] text-sm">
-              <span className="h-3 w-3 rounded-full bg-red-500"></span>
-              <span className="h-3 w-3 rounded-full bg-yellow-500"></span>
-              <span className="h-3 w-3 rounded-full bg-green-500"></span>
-              <span className="ml-2">404-error.js</span>
-            </div>
-            <pre className="text-sm text-[#F2F2F2] overflow-x-auto">
-              <code>
-                {`// Error: Path not found
-function findPath(route) {
-  try {
-    const path = lookupRoute(route);
-    if (!path) {
-      throw new Error('404: Route not found');
-    }
-    return path;
-  } catch (error) {
-    console.error('Navigation failed:', error);
-    return redirectTo('/');
-  }
-}`}
-              </code>
-            </pre>
+        <motion.div className="mb-12 mx-auto max-w-lg text-center" variants={codeBlockVariants}>
+          <div className="bg-[#001523] border border-[#002945] rounded-lg p-6 relative overflow-hidden">
+            <h2 className="text-2xl text-[#F2F2F2] font-bold"> Not all those who wander are lost.  </h2>
+            <p className="text-[#B3B3B3] mt-1">J.R.R. Tolkien</p>
             <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-[#00406C]/10 blur-xl"></div>
           </div>
         </motion.div>
@@ -160,7 +138,10 @@ function findPath(route) {
           </Button>
         </motion.div>
 
-        <Logo/>
+        <motion.div className="mt-12 flex items-center justify-center gap-2 text-[#B3B3B3]" variants={itemVariants}>
+          <Code className="h-5 w-5 text-[#00406C]" />
+          <span className="text-lg font-medium">CodePilot</span>
+        </motion.div>
       </motion.div>
     </div>
   )

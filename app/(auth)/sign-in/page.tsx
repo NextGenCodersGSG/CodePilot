@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Code } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import SignInForm from "./components/signin-form";
-import Logo from "@/components/logo/Logo";
 
 export default function LoginPage() {
   const containerVariants = {
@@ -35,7 +35,10 @@ export default function LoginPage() {
         animate="visible"
         variants={containerVariants}
       >
-        <Logo className="-mt-5"/>
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <Code className="h-8 w-8 text-[#00406C]" />
+          <span className="text-2xl font-bold text-[#F2F2F2]">CodePilot</span>
+        </div>
 
         <Card className="border-[#002945] bg-[#001523] shadow-lg">
           <CardHeader className="space-y-1">

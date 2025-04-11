@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import Logo from "@/components/logo/Logo"
 
 export default function Error({
   error,
@@ -272,7 +271,10 @@ export default function Error({
           </AnimatePresence>
         </motion.div>
 
-        <Logo/>
+        <motion.div className="mt-12 flex items-center justify-center gap-2 text-[#B3B3B3]" variants={itemVariants}>
+          <Code className="h-5 w-5 text-[#00406C]" />
+          <span className="text-lg font-medium">CodePilot</span>
+        </motion.div>
       </motion.div>
     </div>
   )
