@@ -24,6 +24,7 @@ import { IUserDocument } from '@/DB/models/user.model';
 import { ICountLogs } from '@/DB/models/count-logs.model';
 import { IChartData } from "@/@types";
 import Head from "next/head";
+import UserMetrics from "./userMetrics";
 
 interface DashboardProps {
   codeReviewsData: IChartData[];
@@ -323,67 +324,7 @@ const handleExportCodeReviewCSV =()=> {
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-[#001523] border-[#002945]">
-                    <CardHeader>
-                      <CardTitle>User Engagement Metrics</CardTitle>
-                      <CardDescription className="text-[#B3B3B3]">Detailed analytics on user engagement</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[#B3B3B3]">Average Session Duration</span>
-                            <span className="font-medium">12m 34s</span>
-                          </div>
-                          <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                            <div className="h-full bg-[#00406C] rounded-full" style={{ width: "68%" }}></div>
-                          </div>
-                          <p className="text-xs text-[#B3B3B3]">
-                            <span className="text-green-500">+8%</span> from last week
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[#B3B3B3]">Messages per User</span>
-                            <span className="font-medium">18.2</span>
-                          </div>
-                          <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                            <div className="h-full bg-[#00406C] rounded-full" style={{ width: "75%" }}></div>
-                          </div>
-                          <p className="text-xs text-[#B3B3B3]">
-                            <span className="text-green-500">+12%</span> from last week
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[#B3B3B3]">Code Reviews per User</span>
-                            <span className="font-medium">4.8</span>
-                          </div>
-                          <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                            <div className="h-full bg-[#00406C] rounded-full" style={{ width: "45%" }}></div>
-                          </div>
-                          <p className="text-xs text-[#B3B3B3]">
-                            <span className="text-green-500">+5%</span> from last week
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-[#B3B3B3]">User Retention Rate</span>
-                            <span className="font-medium">82%</span>
-                          </div>
-                          <div className="h-2 w-full bg-[#001A2C] rounded-full overflow-hidden">
-                            <div className="h-full bg-[#00406C] rounded-full" style={{ width: "82%" }}></div>
-                          </div>
-                          <p className="text-xs text-[#B3B3B3]">
-                            <span className="text-green-500">+3%</span> from last month
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <UserMetrics/>
                   <Card className="bg-[#001523] border-[#002945] mt-5 lg:col-span-2">
                     <CardHeader>
                       <CardTitle>Analytics Reports</CardTitle>
