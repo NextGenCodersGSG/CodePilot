@@ -34,6 +34,9 @@ import { PasswordChangeForm } from "./password-change-form";
 import { PlanCard } from "./plan-card";
 import { IUserData } from "./types";
 import { toast } from "sonner";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import { useSidebar } from "@/providers/SidebarContext";
+import { IUserToken } from "@/@types";
 
 const mockUser = {
   email: "user@example.com",
@@ -42,7 +45,6 @@ const mockUser = {
   avatar: "/profile.jpg"
 };
 
-// Plan data
 const plans = [
   {
     id: "starter",
@@ -95,18 +97,47 @@ const plans = [
   }
 ];
 
-export default function ProfilePage(userData: IUserData ) {
+export default function ProfilePage() {
   const [user, setUser] = useState(mockUser);
+  const { setUserData, userData } = useSidebar();
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameValue, setNameValue] = useState(userData.name);
   const [activeTab, setActiveTab] = useState("account");
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+ 
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
+    setIsSaving(true);
     if (nameValue.trim()) {
-      setUser({ ...user, name: nameValue });
-      setIsEditingName(false);
-      toast.success("Password changed successfully", { duration: 2000 });
+      try {
+        const response = await fetch("/api/users/update-name", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            userId: userData.userId,
+            newName: nameValue
+          }),
+        });
+  
+        const data = await response.json();
+        if (!response.ok) {
+          toast.error(data.error || "Update failed", { duration: 2000 });
+        } else {
+          setUser(prevUser => ({
+            ...prevUser,
+            name: data.user.name
+          }));
+          setUserData((prev: IUserToken) => ({...prev, name: data.user.name}));
+          setNameValue(data.user.name); 
+          setIsSaving(false);
+          setIsEditingName(false);
+          toast.success("Username updated successfully", { duration: 2000 });
+        }
+  
+      } catch (error) {
+        toast.error("Network error occurred", { duration: 2000 });
+      }
     }
   };
 
@@ -276,7 +307,13 @@ export default function ProfilePage(userData: IUserData ) {
                                   onClick={handleSaveName}
                                   className="bg-[#00406C] hover:bg-[#003A61] cursor-pointer"
                                 >
-                                  <Save className="h-4 w-4" />
+                                  {
+                                    isSaving
+                                    ? 
+                                    <LoadingSpinner/> 
+                                    :
+                                    <Save className="h-4 w-4" />
+                                  }
                                 </Button>
                                 <Button
                                   size="icon"
