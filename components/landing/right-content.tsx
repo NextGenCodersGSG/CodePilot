@@ -64,7 +64,7 @@ export default function RightContent() {
       {features.map((feature, index) => (
         <motion.div
           key={index}
-          className="mb-8 bg-[#001A2C]/50 p-4 rounded-lg border-r-4 border-[#00BFFF] backdrop-blur-sm hover:bg-[#001A2C] transition-all duration-300 hover:shadow-lg hover:shadow-[#00BFFF]/20"
+          className="mb-8 bg-muted/50 p-4 rounded-lg border-r-4 border-lighted backdrop-blur-sm hover:bg-muted transition-all duration-300 hover:shadow-lg hover:shadow-lighted/20"
           variants={itemVariants}
           custom={index}
           whileHover={{
@@ -72,8 +72,8 @@ export default function RightContent() {
             transition: { type: "spring", stiffness: 300, damping: 15 },
           }}
         >
-          <h3 className="text-xl font-semibold text-[#00BFFF] mb-2">{feature.title}</h3>
-          <p className="text-[#E0E0E0] text-sm">{feature.description}</p>
+          <h3 className="text-xl font-semibold text-lighted mb-2">{feature.title}</h3>
+          <p className="text-foreground text-sm">{feature.description}</p>
         </motion.div>
       ))}
     </motion.div>

@@ -46,7 +46,7 @@ export default function SplineLoader() {
   }, [])
 
   return (
-    <div id="spline-container" className="w-full h-full">
+    <div id="spline-container" className="w-full h-full bg-background">
       {isVisible && (
         <Suspense fallback={<SplineLoading />}>
           <Spline

@@ -78,7 +78,7 @@ export default function LeftContent() {
       animate={isInView ? "visible" : "hidden"}
     >
       <motion.h2
-        className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#F2F2F2] to-[#00BFFF] bg-clip-text text-transparent"
+        className="text-3xl font-bold mb-4 bg-gradient-to-r from-foreground to-lighted bg-clip-text text-transparent"
         variants={itemVariants}
       >
         Hi there, I&apos;m Code Pilot
@@ -93,7 +93,7 @@ export default function LeftContent() {
       <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap" className="w-fit">
         <Link
           href="/code-analysis"
-          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#00406C] to-[#0077CC] text-[#F2F2F2] rounded-md font-medium transition-all duration-300 shadow-lg shadow-[#00406C]/30 group"
+          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-lighted text-foreground rounded-md font-medium transition-all duration-300 shadow-lg shadow-primary/30 group"
         >
           Start Chatting
           <motion.span

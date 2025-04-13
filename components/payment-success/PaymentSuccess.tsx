@@ -99,7 +99,7 @@ export default function PaymentSuccessPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <motion.div
         className="w-full max-w-md text-center"
         variants={containerVariants}
@@ -109,7 +109,7 @@ export default function PaymentSuccessPage() {
         {/* Success Icon with Animations */}
         <motion.div className="relative mx-auto mb-8 flex justify-center">
           <motion.div
-            className="absolute -inset-10 rounded-full bg-gradient-to-r from-[#00406C]/30 to-[#003A61]/30 blur-xl"
+            className="absolute -inset-10 rounded-full bg-gradient-to-r from-primary/30 to-secondary/30 blur-xl"
             variants={pulseVariants as Variants}
             initial="initial"
             animate="animate"
@@ -121,13 +121,13 @@ export default function PaymentSuccessPage() {
             animate="animate"
           >
             <motion.div
-              className="absolute -inset-4 rounded-full bg-gradient-to-r from-[#00406C] to-[#003A61] opacity-20 blur-md"
+              className="absolute -inset-4 rounded-full bg-gradient-to-r from-primary to-secondary opacity-20 blur-md"
               variants={spinVariants}
               initial="initial"
               animate="animate"
             />
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#00406C]">
-              <PartyPopper className="h-10 w-10 text-[#F2F2F2]" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary">
+              <PartyPopper className="h-10 w-10 text-foreground" />
             </div>
           </motion.div>
         </motion.div>
@@ -136,31 +136,31 @@ export default function PaymentSuccessPage() {
         <motion.div variants={itemVariants}>
           <div className="mb-2 flex items-center justify-center gap-2">
             <CheckCircle className="h-6 w-6 text-green-500" />
-            <h2 className="text-2xl font-bold text-[#F2F2F2]">
+            <h2 className="text-2xl font-bold text-foreground">
               Payment Successful!
             </h2>
           </div>
-          <h1 className="mb-4 text-4xl font-bold text-[#F2F2F2]">Yaaay! 🎉</h1>
+          <h1 className="mb-4 text-4xl font-bold text-foreground">Yaaay! 🎉</h1>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <Card className="border-[#002945] bg-[#001523] shadow-lg">
+          <Card className="border-accent bg-sidebar shadow-lg">
             <CardContent className="p-6">
               <TextGenerateEffect
                 words="Welcome to the CodePilot family! We're thrilled to have you on board. Your journey to better code starts now."
-                className="mb-6 text-[#B3B3B3]"
+                className="mb-6 text-muted-foreground"
               />
 
-              <div className="mb-6 rounded-lg bg-[#001A2C] p-4">
+              <div className="mb-6 rounded-lg bg-muted p-4">
                 <div className="flex items-start gap-3">
                   <div className="mt-1 rounded-full bg-green-500/20 p-1">
                     <CheckCircle className="h-4 w-4 text-green-500" />
                   </div>
                   <div>
-                    <p className="text-sm text-[#F2F2F2]">
+                    <p className="text-sm text-foreground">
                       Your subscription is now active
                     </p>
-                    <p className="text-xs text-[#B3B3B3]">
+                    <p className="text-xs text-muted-foreground">
                       You now have full access to all CodePilot features
                     </p>
                   </div>
@@ -170,7 +170,7 @@ export default function PaymentSuccessPage() {
               <div className="flex flex-col gap-3">
                 <Button
                   asChild
-                  className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]"
+                  className="w-full bg-primary hover:bg-secondary text-foreground"
                 >
                   <Link
                     href="/sign-in"
@@ -183,7 +183,7 @@ export default function PaymentSuccessPage() {
                 <Button
                   asChild
                   variant="outline"
-                  className="w-full border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2]"
+                  className="w-full border-accent hover:bg-muted text-muted-foreground hover:text-foreground"
                 >
                   <Link href="/">Return to Home</Link>
                 </Button>
@@ -194,9 +194,9 @@ export default function PaymentSuccessPage() {
 
         <motion.div
           variants={itemVariants}
-          className="mt-8 flex items-center justify-center gap-2 text-[#B3B3B3]"
+          className="mt-8 flex items-center justify-center gap-2 text-muted-foreground"
         >
-          <Code className="h-5 w-5 text-[#00406C]" />
+          <Code className="h-5 w-5 text-primary" />
           <span className="text-lg font-medium">CodePilot</span>
         </motion.div>
       </motion.div>

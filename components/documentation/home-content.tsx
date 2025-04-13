@@ -3,9 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import Link from "next/link"
 import { 
-  ArrowRight, Code, FileCode, Zap, Shield, 
-  BarChart, Lightbulb, CheckCircle, Star,
-  SquareChevronRight
+  ArrowRight, FileCode, Zap, Shield, 
+  BarChart, Lightbulb, CheckCircle, SquareChevronRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -18,10 +17,6 @@ export function HomeContent() {
     target: containerRef,
     offset: ["start start", "end start"]
   })
-  
-  // Transform values for parallax effects
-  const headerY = useTransform(scrollYProgress, [0, 0.5], [0, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
   
   const workflowSteps = [
     {

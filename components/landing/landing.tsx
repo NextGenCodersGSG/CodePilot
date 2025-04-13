@@ -20,7 +20,7 @@ import { HorizontalScrollFeatures } from "./horizontal-scroll-features"
 export default function LandingPage() {
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header/>
       <main className="flex-1">
         {/* Hero Section */}

@@ -207,7 +207,7 @@ export default function Page() {
             >
               <textarea
                 onChange={handleTypedMessage}
-                className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-white ${styles.textarea}`}
+                className={`p-4 resize-none rounded-3xl w-full focus:outline-0 bg-sidebar text-foreground ${styles.textarea}`}
                 placeholder="What's on your mind?"
                 autoFocus
                 value={code}

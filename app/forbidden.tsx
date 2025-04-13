@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Lock, LayoutDashboard, Home, Code, X, LogIn } from "lucide-react"
+import { Lock, Home, X, LogIn } from "lucide-react"
 import { useState, useEffect } from "react"
 import Logo from "@/components/logo/Logo"
 
@@ -76,7 +76,7 @@ export default function Forbidden() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4 relative overflow-hidden">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
       {/* Background animated elements */}
       {isClient && (
         <>
@@ -93,7 +93,7 @@ export default function Forbidden() {
             }}
           />
           <motion.div
-            className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[#003A61]/10 blur-3xl"
+            className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.3, 0.1, 0.3],
@@ -116,20 +116,20 @@ export default function Forbidden() {
         {/* Lock Icon with Animations */}
         <motion.div className="relative mx-auto mb-8 flex justify-center">
           <motion.div
-            className="absolute -inset-10 rounded-full bg-gradient-to-r from-amber-500/20 to-[#00406C]/20 blur-xl"
+            className="absolute -inset-10 rounded-full bg-gradient-to-r from-amber-500/20 to-primary/20 blur-xl"
             variants={pulseVariants}
             initial="initial"
             animate="animate"
           />
           <motion.div className="relative" variants={lockVariants} initial="initial" animate="animate">
             <motion.div
-              className="absolute -inset-4 rounded-full bg-gradient-to-r from-amber-500/30 to-[#00406C]/30 opacity-20 blur-md"
+              className="absolute -inset-4 rounded-full bg-gradient-to-r from-amber-500/30 to-primary/30 opacity-20 blur-md"
               variants={lockShakeVariants}
               initial="initial"
               animate="animate"
             />
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#00406C]">
-              <Lock className="h-10 w-10 text-[#F2F2F2]" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary">
+              <Lock className="h-10 w-10 text-foreground" />
             </div>
           </motion.div>
         </motion.div>
@@ -138,43 +138,19 @@ export default function Forbidden() {
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-center gap-2 mb-4">
             <X className="h-5 w-5 text-amber-400" />
-            <h1 className="text-4xl font-bold tracking-tight text-[#F2F2F2]">Access Forbidden</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">Access Forbidden</h1>
           </div>
-        </motion.div>
-
-        {/* <motion.div variants={itemVariants}>
-          <p className="text-[#B3B3B3] max-w-md mb-8">
-            You don't have sufficient permissions to access this resource. Please contact your administrator for access.
-          </p>
-        </motion.div> */}
-<motion.div variants={itemVariants}>
-  <p className="text-[#B3B3B3] max-w-md mb-8">
-    You must be logged in to access this resource. Please sign in to continue.
-  </p>
-</motion.div>
-
-        {/* <motion.div variants={itemVariants}>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <p className="text-muted-foreground max-w-md mb-8">
+              You must be logged in to access this resource. Please sign in to continue.
+            </p>
+          </motion.div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                variant="outline"
                 asChild
-                className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
-              >
-                <Link href="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" />
-                  Go Home
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </motion.div> */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-
-             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                asChild
-                className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                className="bg-primary hover:bg-secondary text-foreground cursor-pointer w-full sm:w-auto"
               >
                 <Link href="/" className="flex items-center gap-2">
                   <Home className="h-4 w-4" />
@@ -186,7 +162,7 @@ export default function Forbidden() {
               <Button
                 variant="outline"
                 asChild
-                className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                className="border-accent hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer w-full sm:w-auto"
               >
                 <Link href="/sign-in" className="flex items-center gap-2">
                   <LogIn className="h-4 w-4" />

@@ -155,7 +155,7 @@
   --primary-foreground: #F2F2F2; /* Off-white text */
   --secondary: #003A61; /* Medium-light blue */
   --secondary-foreground: #F2F2F2; /* Off-white text */
-
+  --lighted: #0077CC
   /* Muted and Accent Colors */
   --muted: #001A2C; /* Dark navy blue */
   --muted-foreground: #B3B3B3; /* Light gray text */

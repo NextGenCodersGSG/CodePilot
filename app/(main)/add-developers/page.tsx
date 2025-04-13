@@ -53,7 +53,7 @@ const Page = () => {
                 <meta name="twitter:creator" content="@NextGenCoders" />
             </Head>
 
-            <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
+            <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
                 <motion.div
                     className="w-full max-w-md"
                     initial="hidden"
@@ -62,14 +62,14 @@ const Page = () => {
                 >
                     <Logo />
 
-                    <Card className="border-[#002945] bg-[#001523] shadow-lg">
+                    <Card className="border-accent bg-sidebar shadow-lg">
                         <CardHeader className="space-y-1">
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.4, ease: "easeOut" }}
                             >
-                                <CardTitle className="text-2xl font-bold text-[#F2F2F2]">
+                                <CardTitle className="text-2xl font-bold text-foreground">
                                     Add Developer
                                 </CardTitle>
                             </motion.div>

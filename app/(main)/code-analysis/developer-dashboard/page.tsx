@@ -64,29 +64,29 @@ const MeetingsPage = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h1 className="text-3xl font-bold text-[#F2F2F2] flex items-center">
-            <Calendar className="mr-2 h-8 w-8 text-[#00406C]" />
+          <h1 className="text-3xl font-bold text-foreground flex items-center">
+            <Calendar className="mr-2 h-8 w-8 text-primary" />
             Developer Meetings
           </h1>
-          <p className="text-[#B3B3B3] mt-2">Manage and review all scheduled meetings with users</p>
+          <p className="text-muted-foreground mt-2">Manage and review all scheduled meetings with users</p>
         </motion.div>
 
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="bg-[#001A2C] rounded-lg px-4 py-2 border border-[#002945]"
+            className="bg-muted rounded-lg px-4 py-2 border border-accent"
           >
-            <p className="text-sm text-[#B3B3B3]">
-              <span className="font-medium text-[#F2F2F2]">{meetings.length}</span> meetings assigned
+            <p className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">{meetings.length}</span> meetings assigned
             </p>
           </motion.div>
       </div>
 
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <Loader2 className="h-8 w-8 text-[#00406C] animate-spin" />
-          <span className="ml-2 text-[#B3B3B3]">Loading meetings...</span>
+          <Loader2 className="h-8 w-8 text-primary animate-spin" />
+          <span className="ml-2 text-muted-foreground">Loading meetings...</span>
         </div>
       ) : error ? (
         <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-md">{error}</div>

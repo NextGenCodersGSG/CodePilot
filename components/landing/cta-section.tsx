@@ -9,7 +9,7 @@ const CTASection = () => {
     <section id="get-started" className="py-20">
     <div className="container px-4 md:px-6 mx-auto">
       <motion.div
-        className=" rounded-lg bg-[#001A2C] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-[#002945]"
+        className=" rounded-lg bg-muted p-8 md:p-12 lg:p-16 relative overflow-hidden border border-accent"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -17,7 +17,7 @@ const CTASection = () => {
       >
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#F2F2F2]">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground">
               Ready to write better code?
             </h2>
             <p className="text-lg text-[#B3B3B3]">
@@ -25,7 +25,7 @@ const CTASection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/sign-in">
-                <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
+                <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-foreground">
                   Start your free trial
                 </Button>
               </Link>
@@ -33,7 +33,7 @@ const CTASection = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="cursor-pointer w-full sm:w-auto border-[#002945] bg-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                  className="cursor-pointer w-full sm:w-auto border-accent bg-accent hover:bg-muted hover:text-foreground"
                 >
                   Schedule a demo
                 </Button>
@@ -50,14 +50,14 @@ const CTASection = () => {
             <Image
               src="/CTASection.jpg"
               alt="CodePilot in action"
-              className="rounded-lg border-2 border-[#002945]"
+              className="rounded-lg border-2 border-accent"
               width={800}
               height={500}
             />
           </motion.div>
         </div>
-        <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-[#00406C]/10 blur-3xl"></div>
-        <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[#00406C]/10 blur-3xl"></div>
+        <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl"></div>
+        <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl"></div>
       </motion.div>
     </div>
   </section>
