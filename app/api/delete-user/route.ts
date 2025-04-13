@@ -1,5 +1,6 @@
 
 import { connection } from '@/DB/connection';
+import countLogsService from '@/module/services/countLogs.service';
 import userService from '@/module/services/user.service';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -10,7 +11,6 @@ export async function DELETE(request: NextRequest) {
     const userId = body.userId;
     console.log("userId is: ", userId);
     
-    // Validate presence
     if (!userId) {
       return NextResponse.json(
         { error: 'User ID is required' },
@@ -18,10 +18,8 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-
-    // Execute deletion
     const deletedId = await userService.deleteUser(userId);
-    console.log(deletedId);
+    await countLogsService.deleteUserFromLogs(userId);
     
     return NextResponse.json(
       { 
@@ -31,7 +29,7 @@ export async function DELETE(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
-    // Handle specific errors
+
     if (error.message === 'Invalid user ID') {
         console.log("from the endpoint", error);
           
@@ -44,7 +42,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Generic error handling
     console.error('Deletion error:', error);
     return NextResponse.json(
       { 
