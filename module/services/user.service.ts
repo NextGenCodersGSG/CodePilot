@@ -76,6 +76,22 @@ class UserService {
         // Call repository method
         await userRepo.changePassword(userId, oldPassword, newPassword);
       }
+
+      async deleteUser(userId: string): Promise<string> {
+        // Validate input
+        if (!userId || typeof userId !== 'string') {
+          throw new Error('Invalid user ID');
+        }
+    
+        // Delete user
+        const deletedUser = await userRepo.deleteUser(userId);
+        
+        if (!deletedUser) {
+          throw new Error('User not found');
+        }
+    
+        return deletedUser._id.toString();
+      }
 }
 
 export default new UserService();

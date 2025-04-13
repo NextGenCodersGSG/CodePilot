@@ -1,6 +1,7 @@
 import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { Role } from "@/@types/index";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
+import { ObjectId } from 'mongodb';
 
 export class UserRepository {
   async findUserById(id: string, role: Role): Promise<IUserDocument | null> {
@@ -54,6 +55,10 @@ export class UserRepository {
     // Hash new password and update
     user.password = await hashPassword(newPassword);
     await user.save();
+  }
+
+  async deleteUser(userId: string): Promise<IUserDocument | null> {
+    return userModel.findByIdAndDelete(userId);
   }
 }
 

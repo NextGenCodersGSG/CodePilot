@@ -20,8 +20,7 @@ export default async function Page() {
     activeUsers,
     totalUsers,
   } = await fetchAllData();
-
-
+  
   return (
     <>
       <Head>
