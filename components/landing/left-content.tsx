@@ -85,7 +85,7 @@ export default function LeftContent() {
       </motion.h2>
 
       <motion.p className="text-[#E0E0E0] mb-6 text-lg" variants={itemVariants}>
-      m your intelligent coding companion, here to make your development journey smoother and smarter.
+      I&apos;m your intelligent coding companion, here to make your development journey smoother and smarter.
       With real-time analysis, I guide you through writing cleaner, faster, and bug-free code.
       Whether you're just starting or deep into production, I&apos;ve got your back—every line of the way.
       </motion.p>

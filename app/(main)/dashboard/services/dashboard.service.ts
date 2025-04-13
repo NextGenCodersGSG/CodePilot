@@ -1,6 +1,5 @@
 import { IChartData } from "@/@types";
 import projectModel from "@/DB/models/projects.model";
-import { NextResponse } from "next/server";
 const baseUrl = process.env.NEXT_PUBLIC_URL;
 
 export const fetchAllData = async () => {

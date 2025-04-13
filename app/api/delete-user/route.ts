@@ -1,46 +1,57 @@
-import { NextResponse } from 'next/server';
-import { ObjectId } from 'mongodb';
+
 import { connection } from '@/DB/connection';
-import userModel from '@/DB/models/user.model';
+import userService from '@/module/services/user.service';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(req: Request) {
-    try {
-        const body = await req.json();
-        const userIdFromBody = body.userId;
-
-        // Validate userId
-        if (!userIdFromBody || typeof userIdFromBody !== 'string') {
-            return NextResponse.json({ message: "Invalid user ID in body" }, { status: 400 });
-        }
-
-        let userId: ObjectId;
-        try {
-            userId = new ObjectId(userIdFromBody);
-        } catch (error) {
-            return NextResponse.json({ message: "Invalid User ID format" }, { status: 400 });
-        }
-
-        await connection();
-
-        const deletedUser = await userModel.findByIdAndDelete(userId);
-
-        if (!deletedUser) {
-            return NextResponse.json({ message: "User not found" }, { status: 404 });
-        }
-
-        return NextResponse.json({ 
-            message: "User deleted successfully",
-            deletedId: deletedUser._id.toString()
-        }, { status: 200 });
-
-    } catch (error) {
-        console.error("Error deleting user:", error);
-        return NextResponse.json(
-            { 
-                error: 'Internal Server Error',
-                details: error instanceof Error ? error.message : 'Unknown error'
-            },
-            { status: 500 }
-        );
+export async function DELETE(request: NextRequest) {
+    await connection();
+  try {
+    const body = await request.json();
+    const userId = body.userId;
+    console.log("userId is: ", userId);
+    
+    // Validate presence
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'User ID is required' },
+        { status: 400 }
+      );
     }
+
+
+    // Execute deletion
+    const deletedId = await userService.deleteUser(userId);
+    console.log(deletedId);
+    
+    return NextResponse.json(
+      { 
+        message: 'User deleted successfully',
+        deletedId
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    // Handle specific errors
+    if (error.message === 'Invalid user ID') {
+        console.log("from the endpoint", error);
+          
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
+
+    if (error.message === 'User not found') {
+      console.log(error);
+      
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Generic error handling
+    console.error('Deletion error:', error);
+    return NextResponse.json(
+      { 
+        error: 'Internal Server Error',
+        details: error.message || 'Unknown error'
+      },
+      { status: 500 }
+    );
+  }
 }

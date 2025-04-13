@@ -10,7 +10,6 @@ const testimonials = [
     id: 1,
     name: "Sarah Johnson",
     role: "Senior Developer at TechCorp",
-    image: "/placeholder.svg?height=60&width=60",
     content:
       "CodePilot has cut our code review time in half. The AI catches issues I would have missed, and the performance suggestions have made our app noticeably faster.",
   },
@@ -121,7 +120,7 @@ export function InfiniteTestimonialScroll() {
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4 mb-4">
                     <Image
-                      src={testimonial.image || "/profile.jpg"}
+                      src={"/profile.jpg"}
                       width={60}
                       height={60}
                       alt={`${testimonial.name} avatar`}

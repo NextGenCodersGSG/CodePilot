@@ -11,44 +11,64 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal, Trash2, AlertTriangle, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { getUserId } from '../../code-analysis/utils/getUserId';
 
 interface ActiveUserDisplayProps {
   recentUsers: ICountLogs[];
 }
 
+  const INITIAL_USER = { 
+  id: "",
+  name: "",
+  email: ""
+}
+
 const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
-  const [selectedTab, setSelectedTab] = useState("overview");
+  const [_, setSelectedTab] = useState("overview");
   const [deleteConfirmation, setDeleteConfirmation] = useState<{
     isOpen: boolean;
-    user: ICountLogs | null;
+    user: { 
+      id:  string,
+      name: string,
+      email: string
+    };
     isDeleting: boolean;
   }>({
     isOpen: false,
-    user: null,
+    user: INITIAL_USER,
     isDeleting: false
   });
 
+  useEffect(() => {
+    if (recentUsers.some(user => !user?._id)) {
+      console.warn("Invalid user data detected in recentUsers");
+    }
+  }, [recentUsers]);
+
   const deleteUser = async (userId: string) => {
-    console.log(userId);
-    
+    console.log("Deleting user with ID:", userId);
     const response = await fetch(`/api/delete-user`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId }),
     });
     return response;
   };
 
-  const handleDeleteUser = async (user: ICountLogs) => {
-   
+  const handleDeleteUser = (user: ICountLogs) => {
+    if (!user?._id) {
+      toast.error("Invalid user data");
+      return;
+    }
+    
     setDeleteConfirmation({
       isOpen: true,
-      user,
+      user: { 
+        id: user._id as string,
+        name: user.name,
+        email: user.email
+      },
       isDeleting: false
     });
   };
@@ -56,14 +76,14 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
   const confirmDelete = async () => {
     if (!deleteConfirmation.user) return;
     
+    setDeleteConfirmation(prev => ({ ...prev, isDeleting: true }));
     try {
-      setDeleteConfirmation(prev => ({ ...prev, isDeleting: true }));
       const response = await deleteUser(deleteConfirmation.user.id);
 
       if (response.ok) {
         toast.success(`User "${deleteConfirmation.user.name}" deleted successfully`);
         // Close the confirmation dialog
-        setDeleteConfirmation({ isOpen: false, user: null, isDeleting: false });
+        setDeleteConfirmation({ isOpen: false, user: INITIAL_USER , isDeleting: false });
       } else {
         const contentType = response.headers.get('Content-Type');
         let errorMessage = `Failed to delete user. Status: ${response.status}`;
@@ -85,8 +105,12 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
     }
   };
 
+  useEffect(()=> {
+
+  },[])
+
   const cancelDelete = () => {
-    setDeleteConfirmation({ isOpen: false, user: null, isDeleting: false });
+    setDeleteConfirmation({ isOpen: false, user: INITIAL_USER, isDeleting: false });
   };
 
   return (
@@ -173,14 +197,6 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
               Recent users and their activity on the platform
             </CardDescription>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-            onClick={() => setSelectedTab("analytics")}
-          >
-            View All Users
-          </Button>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -190,7 +206,6 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
                   <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Icon</th>
                   <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Name</th>
                   <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Email</th>
-                  <th className="px-4 py-3 text-right font-medium text-[#B3B3B3]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -215,28 +230,6 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
                     </td>
                     <td>
                       <div className="text-xs text-[#B3B3B3]">{user.email}</div>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-[#B3B3B3] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-[#001523] border-[#002945] text-[#F2F2F2]">
-                          <DropdownMenuItem
-                            className="hover:bg-[#001A2C] cursor-pointer text-red-500"
-                            onClick={() => handleDeleteUser(user)}
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete User
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
                     </td>
                   </tr>
                 ))}

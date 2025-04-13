@@ -5,7 +5,7 @@ import CountLogs from "@/DB/models/count-logs.model";
 export async function GET(req: NextRequest) {
   await connection();
   try {
-    const recentUsers = await CountLogs.find().sort({ counter: -1 }).limit(10); // Get recent users
+    const recentUsers = await CountLogs.find().sort({ counter: -1 }).limit(5); // Get recent users
 
     return NextResponse.json({ recentUsers });
   } catch (error) {

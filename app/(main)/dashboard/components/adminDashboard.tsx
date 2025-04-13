@@ -160,15 +160,14 @@ export default function Dashboard({
             {searchQuery && (
               <motion.div
                 className="fixed inset-0 flex items-center justify-center z-50 bg-black/35"
-                
               >
                 <motion.div
-                 initial={{ opacity: 0, scale: 0.95 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 exit={{ opacity: 0, scale: 0.95 }}
-                 transition={{ duration: 0.3 }}
-                 onClick={handleClosePopup}
-                 className="flex items-center justify-center w-full"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={handleClosePopup}
+                  className="flex items-center justify-center w-full"
                 >
                   <Card
                     className="bg-[#001523] border-[#002945] w-full max-w-2xl max-h-[80vh] overflow-y-auto"
