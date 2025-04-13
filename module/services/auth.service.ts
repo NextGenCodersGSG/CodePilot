@@ -11,7 +11,7 @@ import authRepo from "../repositories/auth.repo";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
 import { verifyToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
-import LogsRepository  from "../repositories/logs.repo";
+import countLogsService from "./countLogs.service";
 
 class AuthService {
   async signIn(data: ILogin) {
@@ -110,11 +110,11 @@ class AuthService {
       if (!authToken) {
         throw new Error("No token found");
       }
-      const email: string  = (await verifyToken(authToken))?.email || "";
-      if (!email) {
+      const id: string  = (await verifyToken(authToken))?.id || "";
+      if (!id) {
         throw new Error("Invalid token");
       }
-      await LogsRepository.deleteUserFromLogs(email);
+      await countLogsService.deleteUserFromLogs(id);
       (await cookies()).delete("auth-token");
       return "The user with email: ${email} has been logged out succefully";
     } catch (error) {
