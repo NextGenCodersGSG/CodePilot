@@ -39,7 +39,7 @@ interface DashboardProps {
   totalUsers: number;
 }
 
-const COLORS = ["#00406C", "#00A3E0", "#007B9E"];
+const COLORS = ["primary", "#00A3E0", "#007B9E"];
 
 export default function Dashboard({
   codeReviewsData,
@@ -263,12 +263,12 @@ export default function Dashboard({
                         <div className="h-80">
                           <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={codeReviewsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
-                              <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke="accent" />
+                              <XAxis dataKey="name" stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <YAxis stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
                               <Tooltip
-                                contentStyle={{ backgroundColor: "#001A2C", borderColor: "#002945", color: "#F2F2F2" }}
-                                labelStyle={{ color: "#F2F2F2" }} />
+                                contentStyle={{ backgroundColor: "muted", borderColor: "accent", color: "foreground" }}
+                                labelStyle={{ color: "foreground" }} />
                               <Legend />
                               <Line type="monotone" dataKey="reviews" name="Code Reviews" stroke="#fff" activeDot={{ r: 8 }} strokeWidth={2} />
                             </LineChart>
@@ -300,9 +300,9 @@ export default function Dashboard({
                                 ))}
                               </Pie>
                               <Tooltip
-                                contentStyle={{ backgroundColor: "#002132", borderColor: "#00A3E0", color: "#F2F2F2", fontSize: "14px", borderRadius: "6px" }}
+                                contentStyle={{ backgroundColor: "#002132", borderColor: "#00A3E0", color: "foreground", fontSize: "14px", borderRadius: "6px" }}
                                 labelStyle={{ color: "#00A3E0" }}
-                                itemStyle={{ color: "#F2F2F2" }} />
+                                itemStyle={{ color: "foreground" }} />
                             </PieChart>
                           </ResponsiveContainer>
                         </div>
@@ -325,10 +325,10 @@ export default function Dashboard({
                         <div className="h-80">
                           <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={userActivityData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
-                              <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <Tooltip contentStyle={{ backgroundColor: "#001A2C", borderColor: "#002945", color: "#F2F2F2" }} labelStyle={{ color: "#F2F2F2" }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke="accent" />
+                              <XAxis dataKey="name" stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <YAxis stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <Tooltip contentStyle={{ backgroundColor: "muted", borderColor: "accent", color: "foreground" }} labelStyle={{ color: "foreground" }} />
                               <Legend />
                               <Bar dataKey="value" name="New Signups" fill="#ffffff" />
                             </BarChart>

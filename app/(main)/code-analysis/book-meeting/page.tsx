@@ -72,7 +72,7 @@ const BookMeetingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-foreground py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-background py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div
         className="absolute top-20 right-20 w-64 h-64 rounded-full bg-primary/10 blur-3xl"

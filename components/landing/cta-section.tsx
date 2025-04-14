@@ -20,7 +20,7 @@ const CTASection = () => {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground">
               Ready to write better code?
             </h2>
-            <p className="text-lg text-[#B3B3B3]">
+            <p className="text-lg text-muted-foreground">
               Join thousands of developers who are shipping better code faster with CodePilot.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

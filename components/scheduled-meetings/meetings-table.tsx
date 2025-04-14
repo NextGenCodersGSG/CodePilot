@@ -131,7 +131,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
               <th className="px-4 py-3 text-right text-sm font-medium text-muted-foreground">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-[#001523] divide-y divide-accent">
+          <tbody className="bg-card divide-y divide-accent">
             <AnimatePresence>
               {meetings.map((meeting, index) => {
                 const scheduledDate = new Date(meeting.scheduledAt)
@@ -234,7 +234,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="bg-[#001523] border border-accent rounded-lg overflow-hidden"
+                className="bg-card border border-accent rounded-lg overflow-hidden"
               >
                 <div className="p-4 border-b border-accent">
                   <div className="flex justify-between items-start mb-2">

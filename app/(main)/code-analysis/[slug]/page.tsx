@@ -66,7 +66,7 @@ const Page = ({ params }: IParams) => {
       case "low":
         return "bg-blue-500 hover:bg-blue-600"
       default:
-        return "bg-primary hover:bg-[#003A61]"
+        return "bg-primary hover:bg-secondary"
     }
   }
 

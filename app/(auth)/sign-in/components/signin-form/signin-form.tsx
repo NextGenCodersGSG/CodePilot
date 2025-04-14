@@ -47,7 +47,7 @@ const SignInForm = () => {
             type="submit"
           >
             {formik.isSubmitting ? (
-              <Loader className=" mr-3 h-6 w-6 animate-spin text-background" />
+              <Loader className=" mr-3 h-6 w-6 animate-spin text-white" />
             ) : <span className="text-white">Sign in</span>}
 
           </Button>

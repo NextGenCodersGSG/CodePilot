@@ -27,7 +27,7 @@ export function PlanCard({ plan, currentPlan }: PlanCardProps) {
       <Card className={`${plan.color} ${plan.borderColor} relative overflow-hidden h-full`}>
         {plan.recommended && (
           <div className="absolute top-8 right-3">
-            <div className="bg-[#00406C] text-[#F2F2F2] text-xs font-bold px-5 py-1 transform rotate-45 translate-x-[30%] translate-y-[-30%] shadow-blue-500/10 shadow-lg">
+            <div className="bg-primary text-foreground text-xs font-bold px-5 py-1 transform rotate-45 translate-x-[30%] translate-y-[-30%] shadow-blue-500/10 shadow-lg">
               RECOMMENDED
             </div>
           </div>
@@ -35,10 +35,10 @@ export function PlanCard({ plan, currentPlan }: PlanCardProps) {
 
         <CardHeader>
           <CardTitle>{plan.name}</CardTitle>
-          <CardDescription className="text-[#B3B3B3]">{plan.description}</CardDescription>
+          <CardDescription className="text-muted-foreground">{plan.description}</CardDescription>
           <div className="mt-2">
             <span className="text-3xl font-bold">{plan.price}</span>
-            <span className="text-[#B3B3B3] ml-1">/month</span>
+            <span className="text-muted-foreground ml-1">/month</span>
           </div>
         </CardHeader>
 
@@ -52,8 +52,8 @@ export function PlanCard({ plan, currentPlan }: PlanCardProps) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <CheckCircle className="h-5 w-5 text-[#00406C] mt-0.5 flex-shrink-0" />
-                <span className="text-[#F2F2F2]">{feature}</span>
+                <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <span className="text-foreground">{feature}</span>
               </motion.li>
             ))}
           </ul>
@@ -62,8 +62,8 @@ export function PlanCard({ plan, currentPlan }: PlanCardProps) {
         <CardFooter>
           <Button
             className={`cursor-pointer ${plan.recommended
-              ? "w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]"
-              : "w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"}`}
+              ? "w-full bg-primary hover:bg-secondary text-foreground"
+              : "w-full border-accent hover:bg-muted hover:text-foreground"}`}
             variant={plan.recommended ? "default" : "outline"}
           >
             {isCurrentPlan ? "Current Plan" : "Upgrade"}

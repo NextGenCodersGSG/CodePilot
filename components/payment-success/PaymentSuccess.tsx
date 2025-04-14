@@ -209,7 +209,7 @@ export default function PaymentSuccessPage() {
               className="fixed h-3 w-3 rounded-full"
               style={{
                 backgroundColor:
-                  i % 3 === 0 ? "#00406C" : i % 3 === 1 ? "#F2F2F2" : "#003A61",
+                  i % 3 === 0 ? "primary" : i % 3 === 1 ? "foreground" : "secondary",
                 top: `${Math.random() * -10}%`,
                 left: `${Math.random() * 100}%`
               }}

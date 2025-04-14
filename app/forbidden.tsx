@@ -129,7 +129,7 @@ export default function Forbidden() {
               animate="animate"
             />
             <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary">
-              <Lock className="h-10 w-10 text-foreground" />
+              <Lock className="h-10 w-10 text-white" />
             </div>
           </motion.div>
         </motion.div>
@@ -150,7 +150,7 @@ export default function Forbidden() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 asChild
-                className="bg-primary hover:bg-secondary text-foreground cursor-pointer w-full sm:w-auto"
+                className="bg-primary hover:bg-secondary text-white cursor-pointer w-full sm:w-auto"
               >
                 <Link href="/" className="flex items-center gap-2">
                   <Home className="h-4 w-4" />
@@ -209,7 +209,7 @@ export default function Forbidden() {
               key={`symbol-${i}`}
               className="fixed text-xs font-mono opacity-20"
               style={{
-                color: i % 2 === 0 ? "#f59e0b" : "#00406C",
+                color: i % 2 === 0 ? "#f59e0b" : "primary",
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
               }}

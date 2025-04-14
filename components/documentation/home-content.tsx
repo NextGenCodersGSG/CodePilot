@@ -94,7 +94,7 @@ export function HomeContent() {
         <h2 className="text-3xl font-bold mb-8 inline-block border-b-2 border-primary pb-2">Key Features</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
           <motion.div custom={0} variants={featureAnimation}>
-            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg">
+            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg h-full">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/50 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
               <CardHeader className="space-y-1">
                 <div className="p-2 w-fit rounded-lg bg-primary/10 mb-2 group-hover:bg-primary/20 transition-colors">
@@ -123,7 +123,7 @@ export function HomeContent() {
           </motion.div>
 
           <motion.div custom={1} variants={featureAnimation}>
-            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg">
+            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg h-full">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/50 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
               <CardHeader className="space-y-1">
                 <div className="p-2 w-fit rounded-lg bg-primary/10 mb-2 group-hover:bg-primary/20 transition-colors">
@@ -152,7 +152,7 @@ export function HomeContent() {
           </motion.div>
 
           <motion.div custom={2} variants={featureAnimation}>
-            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg">
+            <Card className="border-2 overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg h-full">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/50 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
               <CardHeader className="space-y-1">
                 <div className="p-2 w-fit rounded-lg bg-primary/10 mb-2 group-hover:bg-primary/20 transition-colors">

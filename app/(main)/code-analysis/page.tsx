@@ -147,7 +147,7 @@ export default function Page() {
 
   if(pageLoading){
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
         <LoadingSpinner className="h-10 w-10"/>
       </div>
     )
@@ -234,7 +234,7 @@ export default function Page() {
                   {loading ? (
                     <LoadingSpinner />
                   ) : (
-                    <MoveUp size={24} strokeWidth={3} />
+                    <MoveUp size={24} strokeWidth={3} className="text-white" />
                   )}
                 </Button>
               </div>

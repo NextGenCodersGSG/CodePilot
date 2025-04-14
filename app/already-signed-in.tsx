@@ -73,11 +73,11 @@ export default function AlreadySignedIn() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4 relative overflow-hidden">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
       {isClient && (
         <>
           <motion.div
-            className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-[#00406C]/10 blur-3xl"
+            className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -89,7 +89,7 @@ export default function AlreadySignedIn() {
             }}
           />
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-[#003A61]/10 blur-3xl"
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.4, 0.2, 0.4],
@@ -112,31 +112,31 @@ export default function AlreadySignedIn() {
         {/* Success Icon with Animations */}
         <motion.div className="relative mx-auto mb-8 flex justify-center">
           <motion.div
-            className="absolute -inset-10 rounded-full bg-gradient-to-r from-[#00406C]/30 to-[#003A61]/30 blur-xl"
+            className="absolute -inset-10 rounded-full bg-gradient-to-r from-primary/30 to-secondary/30 blur-xl"
             variants={pulseVariants as Variants}
             initial="initial"
             animate="animate"
           />
           <motion.div className="relative" variants={floatVariants as Variants} initial="initial" animate="animate">
             <motion.div
-              className="absolute -inset-4 rounded-full bg-gradient-to-r from-[#00406C] to-[#003A61] opacity-20 blur-md"
+              className="absolute -inset-4 rounded-full bg-gradient-to-r from-primary to-secondary opacity-20 blur-md"
               variants={spinVariants}
               initial="initial"
               animate="animate"
             />
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#00406C]">
-              <CheckCircle className="h-10 w-10 text-[#F2F2F2]" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary">
+              <CheckCircle className="h-10 w-10 text-foreground" />
             </div>
           </motion.div>
         </motion.div>
 
         {/* Content */}
         <motion.div variants={itemVariants}>
-          <h1 className="text-4xl font-bold tracking-tight text-[#F2F2F2] mb-4">Already Signed In</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground mb-4">Already Signed In</h1>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[#B3B3B3] max-w-md mb-8">
+          <p className="text-muted-foreground max-w-md mb-8">
             You are already signed in to your account. You don't need to sign in again.
           </p>
         </motion.div>
@@ -146,7 +146,7 @@ export default function AlreadySignedIn() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 asChild
-                className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                className="bg-primary hover:bg-secondary text-white cursor-pointer w-full sm:w-auto"
               >
                 <Link href="/code-analysis" className="flex items-center gap-2">
                   <FileCode className="h-4 w-4" />
@@ -159,7 +159,7 @@ export default function AlreadySignedIn() {
               <Button
                 variant="outline"
                 asChild
-                className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                className="border-accent hover:bg-muted text-foreground hover:text-foreground cursor-pointer w-full sm:w-auto"
               >
                 <Link href="/" className="flex items-center gap-2">
                   <Home className="h-4 w-4" />
@@ -181,7 +181,7 @@ export default function AlreadySignedIn() {
               key={i}
               className="fixed h-2 w-2 rounded-full"
               style={{
-                backgroundColor: i % 2 === 0 ? "#00406C" : "#003A61",
+                backgroundColor: i % 2 === 0 ? "primary" : "secondary",
                 opacity: 0.3,
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,

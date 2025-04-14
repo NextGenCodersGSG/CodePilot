@@ -79,13 +79,13 @@ export function PasswordChangeForm({ onSuccess, onCancel, userId }: PasswordChan
             type={showCurrentPassword ? "text" : "password"}
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] pr-10"
+            className="bg-muted border-accent text-foreground pr-10"
           />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-full px-3 text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer"
+            className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground cursor-pointer"
             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
           >
             {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -101,13 +101,13 @@ export function PasswordChangeForm({ onSuccess, onCancel, userId }: PasswordChan
             type={showNewPassword ? "text" : "password"}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] pr-10"
+            className="bg-muted border-accent text-foreground pr-10"
           />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-full px-3 text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer"
+            className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground cursor-pointer"
             onClick={() => setShowNewPassword(!showNewPassword)}
           >
             {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -123,13 +123,13 @@ export function PasswordChangeForm({ onSuccess, onCancel, userId }: PasswordChan
             type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] pr-10"
+            className="bg-muted border-accent text-foreground pr-10"
           />
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-full px-3 text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer"
+            className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-foreground cursor-pointer"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
             {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -140,10 +140,10 @@ export function PasswordChangeForm({ onSuccess, onCancel, userId }: PasswordChan
       {error && <div className="text-red-500 text-sm">{error}</div>}
 
       <DialogFooter>
-        <Button type="button" variant="outline" onClick={onCancel} className="border-[#002945] hover:bg-[#001A2C] cursor-pointer">
+        <Button type="button" variant="outline" onClick={onCancel} className="border-accent hover:bg-muted cursor-pointer">
           Cancel
         </Button>
-        <Button type="submit" disabled={isLoading} className="bg-[#00406C] hover:bg-[#003A61] cursor-pointer">
+        <Button type="submit" disabled={isLoading} className="bg-primary hover:bg-secondary cursor-pointer">
           {isLoading ? "Changing..." : "Change Password"}
         </Button>
       </DialogFooter>

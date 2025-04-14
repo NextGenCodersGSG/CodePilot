@@ -12,10 +12,10 @@ export default function BadgeCover() {
       transition={{ duration: 0.3}}
       whileHover={{ scale: 1.05 }}
     >
-      <Code className="h-4 w-4 text-[#F2F2F2] mr-2" />
-      <span className="text-sm font-medium text-[#F2F2F2]">Powered by</span>
-      <Zap className="h-4 w-4 text-[#F2F2F2] mx-1" />
-      <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#F2F2F2] to-[#00BFFF]">
+      <Code className="h-4 w-4 text-foreground mr-2" />
+      <span className="text-sm font-medium text-foreground">Powered by</span>
+      <Zap className="h-4 w-4 text-foreground mx-1" />
+      <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-[#00BFFF]">
         CodePilot
       </span>
     </motion.div>

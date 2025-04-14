@@ -123,13 +123,13 @@ const ScheduledMeetingsPage = () => {
   if (isLoading) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center min-h-[60vh] bg-[#00111C] text-[#F2F2F2]"
+        className="flex flex-col items-center justify-center min-h-[60vh] bg-background text-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <Loader2 className="h-12 w-12 animate-spin text-[#00406C] mb-4" />
-        <p className="text-lg text-[#B3B3B3]">Loading your scheduled meetings...</p>
+        <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+        <p className="text-lg text-muted-foreground">Loading your scheduled meetings...</p>
       </motion.div>
     )
   }
@@ -137,7 +137,7 @@ const ScheduledMeetingsPage = () => {
   if (error) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center min-h-[60vh] bg-[#00111C] text-[#F2F2F2]"
+        className="flex flex-col items-center justify-center min-h-[60vh] bg-background text-foreground"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
@@ -147,7 +147,7 @@ const ScheduledMeetingsPage = () => {
         <p className="text-lg text-red-400">{error}</p>
         <Button
           variant="outline"
-          className="mt-4 border-[#002945] text-[#F2F2F2] hover:bg-[#001A2C]"
+          className="mt-4 border-accent text-foreground hover:bg-muted"
           onClick={() => window.location.reload()}
         >
           Try Again
@@ -159,7 +159,7 @@ const ScheduledMeetingsPage = () => {
   if (meetings.length === 0) {
     return (
       <motion.div
-        className="container mx-auto px-4 py-8 bg-[#00111C] text-[#F2F2F2]"
+        className="container mx-auto px-4 py-8 bg-background text-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -172,17 +172,17 @@ const ScheduledMeetingsPage = () => {
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="w-full bg-[#001523] border-[#002945]">
+          <Card className="w-full bg-card border-accent">
             <CardContent className="flex flex-col items-center justify-center py-12">
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <Calendar className="h-16 w-16 text-[#00406C] mb-4" />
+                <Calendar className="h-16 w-16 text-primary mb-4" />
               </motion.div>
               <motion.p
-                className="text-xl font-medium mb-2 text-[#F2F2F2]"
+                className="text-xl font-medium mb-2 text-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
@@ -190,7 +190,7 @@ const ScheduledMeetingsPage = () => {
                 No meetings scheduled
               </motion.p>
               <motion.p
-                className="text-[#B3B3B3]"
+                className="text-muted-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -205,7 +205,7 @@ const ScheduledMeetingsPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#00111C] text-[#F2F2F2]">
+    <div className="container mx-auto px-4 py-8 bg-background text-foreground">
       <motion.div
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
         initial={{ opacity: 0, y: -10 }}
@@ -217,14 +217,14 @@ const ScheduledMeetingsPage = () => {
         <Tabs
           value={viewMode}
           onValueChange={(value) => setViewMode(value as "cards" | "table")}
-          className="bg-[#001A2C] rounded-lg p-1"
+          className="bg-muted rounded-lg p-1"
         >
           <TabsList className="bg-transparent">
             <TabsTrigger
               value="cards"
               className={cn(
-                "flex items-center gap-2 text-[#B3B3B3] cursor-pointer",
-                viewMode === "cards" ? "bg-[#00406C] text-[#F2F2F2]" : "hover:text-[#F2F2F2]",
+                "flex items-center gap-2 text-muted-foreground cursor-pointer",
+                viewMode === "cards" ? "bg-primary text-foreground" : "hover:text-foreground",
               )}
             >
               <LayoutGrid className="h-4 w-4" />
@@ -233,8 +233,8 @@ const ScheduledMeetingsPage = () => {
             <TabsTrigger
               value="table"
               className={cn(
-                "flex items-center gap-2 text-[#B3B3B3] cursor-pointer",
-                viewMode === "table" ? "bg-[#00406C] text-[#F2F2F2]" : "hover:text-[#F2F2F2]",
+                "flex items-center gap-2 text-muted-foreground cursor-pointer",
+                viewMode === "table" ? "bg-primary text-foreground" : "hover:text-foreground",
               )}
             >
               <LayoutList className="h-4 w-4" />
@@ -351,26 +351,26 @@ const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProp
 
   return (
     <motion.div variants={cardVariants} whileHover="hover" layout>
-      <Card className="bg-[#001523] border-[#002945] overflow-hidden relative h-full">
+      <Card className="bg-card border-accent overflow-hidden relative h-full">
         {/* Status badge positioned at top right */}
         <Badge variant="outline" className={cn("absolute top-2 right-2 border z-10", statusDetails.color)}>
           {statusDetails.label}
         </Badge>
-        <CardHeader className="pb-1 pt-3 px-4 border-b border-[#002945]">
-          <CardTitle className="text-2xl text-[#F2F2F2]">{meeting.title}</CardTitle>
+        <CardHeader className="pb-1 pt-3 px-4 border-b border-accent">
+          <CardTitle className="text-2xl text-foreground">{meeting.title}</CardTitle>
         </CardHeader>
 
         <CardContent className="pt-3 pb-2 px-4">
           <div className="space-y-3">
-            <p className="text-sm text-[#B3B3B3] line-clamp-2">{meeting.description}</p>
+            <p className="text-sm text-muted-foreground line-clamp-2">{meeting.description}</p>
 
             <div className="flex flex-col space-y-2">
-              <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
-                <Calendar className="h-4 w-4 text-[#00406C]" />
+              <div className="flex items-center gap-2 text-sm text-foreground">
+                <Calendar className="h-4 w-4 text-primary" />
                 <span>{format(scheduledDate, "EEEE, MMMM d, yyyy")}</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
-                <Clock className="h-4 w-4 text-[#00406C]" />
+              <div className="flex items-center gap-2 text-sm text-foreground">
+                <Clock className="h-4 w-4 text-primary" />
                 <span>
                   {format(scheduledDate, "h:mm a")} • {meeting.duration} minutes
                 </span>
@@ -379,7 +379,7 @@ const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProp
           </div>
         </CardContent>
 
-        <CardFooter className="pt-2 pb-3 px-4 border-t border-[#002945] bg-[#001A2C] flex justify-center mt-auto">
+        <CardFooter className="pt-2 pb-3 px-4 border-t border-accent bg-muted flex justify-center mt-auto">
           {isActive && !isPast ? (
             <Button
               variant="outline"
@@ -397,7 +397,7 @@ const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProp
               )}
             </Button>
           ) : (
-            <Button variant="outline" disabled className="w-full opacity-50 border-[#002945] text-[#B3B3B3]">
+            <Button variant="outline" disabled className="w-full opacity-50 border-accent text-muted-foreground">
               {isPast ? "Past Meeting" : meeting.status}
             </Button>
           )}
