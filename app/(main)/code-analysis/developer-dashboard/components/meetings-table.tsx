@@ -71,22 +71,22 @@ export function MeetingsTable({
   };
 
   return (
-    <div className="rounded-md border border-[#002945] overflow-hidden">
+    <div className="rounded-md border border-accent overflow-hidden">
       <Table>
-        <TableHeader className="bg-[#001A2C]">
+        <TableHeader className="bg-muted">
           <TableRow>
-            <TableHead className="text-[#F2F2F2] font-medium">Title</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">
+            <TableHead className="text-foreground font-medium">Title</TableHead>
+            <TableHead className="text-foreground font-medium">
               Description
             </TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">
+            <TableHead className="text-foreground font-medium">
               Date & Time
             </TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">
+            <TableHead className="text-foreground font-medium">
               Duration
             </TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">Status</TableHead>
-            <TableHead className="text-[#F2F2F2] font-medium">
+            <TableHead className="text-foreground font-medium">Status</TableHead>
+            <TableHead className="text-foreground font-medium">
               Actions
             </TableHead>
           </TableRow>
@@ -100,9 +100,9 @@ export function MeetingsTable({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.3 }}
-                className="bg-[#001523] hover:bg-[#001A2C] border-b border-[#002945] last:border-0"
+                className="bg-card hover:bg-muted border-b border-accent last:border-0"
               >
-                <TableCell className="font-medium text-[#F2F2F2]">
+                <TableCell className="font-medium text-foreground">
                   {meeting.title}
                 </TableCell>
                 <TableCell>
@@ -111,17 +111,17 @@ export function MeetingsTable({
                       <p className="text-sm p-1">{meeting.description}</p>
                     }
                     side="bottom"
-                    className="bg-[#00111C] border-[#002945]"
+                    className="bg-background border-accent"
                   >
-                    <div className="text-sm text-[#B3B3B3] max-w-[300px] truncate">
+                    <div className="text-sm text-muted-foreground max-w-[300px] truncate">
                       {meeting.description}
                     </div>
                   </AnimatedTooltip>
                 </TableCell>
-                <TableCell className="text-[#B3B3B3]">
+                <TableCell className="text-muted-foreground">
                   {formatDate(meeting.scheduledAt)}
                 </TableCell>
-                <TableCell className="text-[#B3B3B3]">
+                <TableCell className="text-muted-foreground">
                   {meeting.duration} min
                 </TableCell>
                 <TableCell>

@@ -76,7 +76,7 @@ export default function Unauthorized() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4 relative overflow-hidden">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
       {/* Background animated elements */}
       {isClient && (
         <>
@@ -93,7 +93,7 @@ export default function Unauthorized() {
             }}
           />
           <motion.div
-            className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[#003A61]/10 blur-3xl"
+            className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-3xl"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.3, 0.1, 0.3],
@@ -116,20 +116,20 @@ export default function Unauthorized() {
         {/* Warning Icon with Animations */}
         <motion.div className="relative mx-auto mb-8 flex justify-center">
           <motion.div
-            className="absolute -inset-10 rounded-full bg-gradient-to-r from-red-500/20 to-[#00406C]/20 blur-xl"
+            className="absolute -inset-10 rounded-full bg-gradient-to-r from-red-500/20 to-primary/20 blur-xl"
             variants={pulseVariants}
             initial="initial"
             animate="animate"
           />
           <motion.div className="relative" variants={shieldVariants} initial="initial" animate="animate">
             <motion.div
-              className="absolute -inset-4 rounded-full bg-gradient-to-r from-red-500/30 to-[#00406C]/30 opacity-20 blur-md"
+              className="absolute -inset-4 rounded-full bg-gradient-to-r from-red-500/30 to-primary/30 opacity-20 blur-md"
               variants={warningVariants}
               initial="initial"
               animate="animate"
             />
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#00406C]">
-              <ShieldAlert className="h-10 w-10 text-[#F2F2F2]" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary">
+              <ShieldAlert className="h-10 w-10 text-white" />
             </div>
           </motion.div>
         </motion.div>
@@ -138,12 +138,12 @@ export default function Unauthorized() {
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-center gap-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-red-400" />
-            <h1 className="text-4xl font-bold tracking-tight text-[#F2F2F2]">Unauthorized Access</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">Unauthorized Access</h1>
           </div>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-[#B3B3B3] max-w-md mb-8">
+          <p className="text-muted-foreground max-w-md mb-8">
             You don't have permission to access this page. Please contact your administrator if you believe this is an
             error.
           </p>
@@ -151,37 +151,13 @@ export default function Unauthorized() {
 
         <motion.div variants={itemVariants}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                asChild
-                className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
-              >
-                <Link href="/" className="flex items-center gap-2">
-                  <Home className="h-4 w-4" />
-                  Go Home
-                </Link>
-              </Button>
-            </motion.div> */}
-{/* 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="outline"
-                asChild
-                className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
-              >
-                <Link href="/sign-in" className="flex items-center gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Sign In
-                </Link>
-              </Button>
-            </motion.div> */}
                     <motion.div variants={itemVariants}>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                           <Button
                             variant="outline"
                             asChild
-                            className="border-[#002945] hover:bg-[#001A2C] text-[#B3B3B3] hover:text-[#F2F2F2] cursor-pointer w-full sm:w-auto"
+                            className="border-accent hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer w-full sm:w-auto"
                           >
                             <Link href="/" className="flex items-center gap-2">
                               <Home className="h-4 w-4" />
@@ -232,7 +208,7 @@ export default function Unauthorized() {
               key={`symbol-${i}`}
               className="fixed text-xs font-mono opacity-20"
               style={{
-                color: i % 2 === 0 ? "#ef4444" : "#00406C",
+                color: i % 2 === 0 ? "#ef4444" : "primary",
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
               }}

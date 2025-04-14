@@ -20,7 +20,7 @@ import { HorizontalScrollFeatures } from "./horizontal-scroll-features"
 export default function LandingPage() {
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#00111C] text-[#F2F2F2]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header/>
       <main className="flex-1">
         {/* Hero Section */}
@@ -40,14 +40,14 @@ export default function LandingPage() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="mb-1"
                 >
-                  <Badge className="transition duration-200 cursor-default mb-2 bg-[#003356] text-[#F2F2F2] hover:bg-[#003A61]">AI-Powered Code Review</Badge>
+                  <Badge className="transition duration-200 cursor-default mb-2 bg-[#003356] text-foreground hover:bg-secondary">AI-Powered Code Review</Badge>
                 </motion.div>
                 <div>
                   <ContainerTextFlip words={["Write Better", "Write Smarter","Develop Faster"]} />
                   <TextGenerateEffect duration={0.6} className="text-4xl md:text-5xl font-bold tracking-tighter -mt-3" words="Code with AI-Driven Insights"/>
                 </div>
                   <motion.p 
-                    className="text-lg text-[#B3B3B3] md:text-xl"
+                    className="text-lg text-muted-foreground md:text-xl"
                     initial={{ opacity: 0, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6,delay:0.2, ease: "easeInOut" }}
@@ -62,23 +62,23 @@ export default function LandingPage() {
                   transition={{ duration: 0.6,delay:0.2, ease: "easeInOut" }}
                 >
                   <Link href="/sign-in">
-                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-foreground">
                       Start for free
                     </Button>
                   </Link>
                   <Link href="/code-analysis/documentation">
-                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-[#002945] bg-[#001A2C] hover:bg-[#002945] text-[#F2F2F2]">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-accent bg-muted hover:bg-accent text-foreground">
                       Learn more
                     </Button>
                   </Link>
                 </motion.div>
                 <motion.div 
-                  className="flex items-center gap-2 text-sm text-[#B3B3B3]"
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4,delay:0.4, ease: "easeInOut" }}
                 >
-                  <CheckCircle className="h-4 w-4 text-[#00406C]" />
+                  <CheckCircle className="h-4 w-4 text-primary" />
                   <ShinyText text="No credit card required" disabled={false} speed={5} className='' />
                 </motion.div>
               </motion.div>

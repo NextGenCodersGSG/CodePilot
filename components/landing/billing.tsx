@@ -161,7 +161,7 @@ export default function BillingSection() {
   return (
     <section
       id="pricing"
-      className="py-20 bg-gradient-to-b from-[#001A2C] via-[#001A2C]/95 to-[#00111C]"
+      className="py-20 bg-gradient-to-b from-muted via-muted/95 to-foreground"
     >
       <div className="container px-4 md:px-6 mx-auto">
         <motion.div
@@ -170,10 +170,10 @@ export default function BillingSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#F2F2F2]">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground">
             Simple, Transparent Pricing
           </h2>
-          <p className="mt-4 text-lg text-[#B3B3B3] md:w-3/4 mx-auto">
+          <p className="mt-4 text-lg text-muted-foreground md:w-3/4 mx-auto">
             Choose the plan that's right for you or your team. All plans include
             a 14-day free trial.
           </p>
@@ -187,36 +187,36 @@ export default function BillingSection() {
           animate={pricingSection.controls}
         >
           <motion.div variants={itemVariants}>
-            <MotionCard className="bg-[#001523] border-[#002945] h-full">
+            <MotionCard className="bg-card border-accent h-full">
               <CardHeader>
-                <CardTitle className="text-[#F2F2F2]">Starter</CardTitle>
+                <CardTitle className="text-foreground">Starter</CardTitle>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold text-[#F2F2F2]">$0</span>
-                  <span className="text-[#B3B3B3] ml-1">/month</span>
+                  <span className="text-4xl font-bold text-foreground">$0</span>
+                  <span className="text-muted-foreground ml-1">/month</span>
                 </div>
-                <CardDescription className="mt-2 text-[#B3B3B3]">
+                <CardDescription className="mt-2 text-muted-foreground">
                   Perfect for individual developers and small projects.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Up to 5 projects</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Up to 5 projects</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">
                       Basic syntax analysis
                     </span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Error detection</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Error detection</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Community support</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Community support</span>
                   </li>
                 </ul>
               </CardContent>
@@ -225,7 +225,7 @@ export default function BillingSection() {
                   variant="outline"
                   onClick={() => handleCheckout("starter")}
                   disabled={isLoading.starter}
-                  className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
+                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-foreground"
                 >
                   {isLoading.starter ? <LoadingSpinner /> : "Get started"}
                 </Button>
@@ -234,46 +234,46 @@ export default function BillingSection() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <MotionCard className="bg-[#001523] border-[#00406C] h-full">
+            <MotionCard className="bg-card border-primary h-full">
               <CardHeader>
-                <CardTitle className="text-[#F2F2F2]">Pro</CardTitle>
+                <CardTitle className="text-foreground">Pro</CardTitle>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold text-[#F2F2F2]">$20</span>
-                  <span className="text-[#B3B3B3] ml-1">/month</span>
+                  <span className="text-4xl font-bold text-foreground">$20</span>
+                  <span className="text-muted-foreground ml-1">/month</span>
                 </div>
-                <CardDescription className="mt-2 text-[#B3B3B3]">
+                <CardDescription className="mt-2 text-muted-foreground">
                   For professional developers who need more power.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Unlimited projects</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Unlimited projects</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">
                       Advanced syntax analysis
                     </span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">
                       Error detection & fixes
                     </span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Security scanning</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Security scanning</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Performance insights</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Performance insights</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Email support</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Email support</span>
                   </li>
                 </ul>
               </CardContent>
@@ -281,7 +281,7 @@ export default function BillingSection() {
                 <Button
                   onClick={() => handleCheckout("pro")}
                   disabled={isLoading.pro}
-                  className="cursor-pointer w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]"
+                  className="cursor-pointer w-full bg-primary hover:bg-secondary text-foreground"
                 >
                   {isLoading.starter ? <LoadingSpinner /> : "Get started"}
                 </Button>
@@ -290,51 +290,51 @@ export default function BillingSection() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <MotionCard className="bg-[#001523] border-[#002945] h-full">
+            <MotionCard className="bg-card border-accent h-full">
               <CardHeader>
-                <CardTitle className="text-[#F2F2F2]">Team</CardTitle>
+                <CardTitle className="text-foreground">Team</CardTitle>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold text-[#F2F2F2]">$50</span>
-                  <span className="text-[#B3B3B3] ml-1">/month</span>
+                  <span className="text-4xl font-bold text-foreground">$50</span>
+                  <span className="text-muted-foreground ml-1">/month</span>
                 </div>
-                <CardDescription className="mt-2 text-[#B3B3B3]">
+                <CardDescription className="mt-2 text-muted-foreground">
                   For teams that need collaboration and advanced features.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Everything in Pro</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Everything in Pro</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">
                       Up to 10 team members
                     </span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Team collaboration</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Team collaboration</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Custom rule sets</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Custom rule sets</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">API access</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">API access</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-[#00406C]" />
-                    <span className="text-[#F2F2F2]">Priority support</span>
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="text-foreground">Priority support</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter className="mt-auto">
                 <Button
                   variant="outline"
-                  className="cursor-pointer w-full border-[#002945] hover:bg-[#002945] hover:text-[#F2F2F2]"
+                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-foreground"
                   onClick={() => handleCheckout("team")}
                   disabled={isLoading.team}
                 >

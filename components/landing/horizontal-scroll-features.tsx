@@ -97,7 +97,7 @@ export function HorizontalScrollFeatures() {
         />
       ))}
       
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-gradient-to-b from-[#002945] via-[#00111C] to-[#00111C]">
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-gradient-to-b from-accent via-background to-background">
         <div className="w-full h-full flex flex-col">
           {/* Full-screen horizontal scrolling features */}
           <div className="flex-1 overflow-hidden w-full">
@@ -115,11 +115,11 @@ export function HorizontalScrollFeatures() {
                   }}
                   transition={{ duration: 0.4 }}
                 >
-                  <Card className="bg-[#001523] border-[#002945] w-full h-4/5 max-w-4xl mx-auto flex flex-col justify-center">
+                  <Card className="bg-card border-accent w-full h-4/5 max-w-4xl mx-auto flex flex-col justify-center">
                     <CardHeader className="flex flex-col items-center text-center p-12">
-                      <feature.icon className="h-24 w-24 text-[#00406C] mb-8" />
-                      <CardTitle className="text-4xl mb-4 text-[#F2F2F2]">{feature.title}</CardTitle>
-                      <CardDescription className="text-[#B3B3B3] text-xl max-w-2xl">
+                      <feature.icon className="h-24 w-24 text-primary mb-8" />
+                      <CardTitle className="text-4xl mb-4 text-foreground">{feature.title}</CardTitle>
+                      <CardDescription className="text-muted-foreground text-xl max-w-2xl">
                         {feature.description}
                       </CardDescription>
                     </CardHeader>
@@ -132,9 +132,9 @@ export function HorizontalScrollFeatures() {
           {/* Footer with counter and navigation dots */}
           <div className="container px-4 md:px-6 mx-auto py-8">
             <div className="flex justify-between items-center">
-              <div className="text-[#F2F2F2] font-mono">
+              <div className="text-foreground font-mono">
                 <span className="font-bold">{activeFeature + 1}</span>
-                <span className="text-[#B3B3B3]"> / {features.length}</span>
+                <span className="text-muted-foreground"> / {features.length}</span>
               </div>
             </div>
             

@@ -76,7 +76,7 @@ export default function NotFound() {
   }
 
   return (
-    <div className="min-h-screen bg-[#00111C] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <motion.div
         className="max-w-3xl w-full text-center"
         variants={containerVariants}
@@ -97,32 +97,32 @@ export default function NotFound() {
         >
           <div className="relative">
             <motion.div
-              className="absolute -inset-4 rounded-full bg-[#00406C]/20 blur-xl"
+              className="absolute -inset-4 rounded-full bg-primary/20 blur-xl"
               variants={pulseVariants as Variants}
               initial="initial"
               animate="animate"
             ></motion.div>
-            <FileQuestion className="h-24 w-24 text-[#00406C]" />
+            <FileQuestion className="h-24 w-24 text-primary" />
           </div>
         </motion.div>
 
-        <motion.h1 className="text-4xl md:text-6xl font-bold text-[#F2F2F2] mb-4" variants={itemVariants}>
+        <motion.h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4" variants={itemVariants}>
           404 - Page Not Found
         </motion.h1>
 
-        <motion.p className="text-xl text-[#B3B3B3] mb-8" variants={itemVariants}>
+        <motion.p className="text-xl text-muted-foreground mb-8" variants={itemVariants}>
           The code path you're looking for doesn't exist or has been moved.
         </motion.p>
 
         <motion.div className="mb-12 mx-auto max-w-lg" variants={codeBlockVariants}>
-          <div className="bg-[#001523] border border-[#002945] rounded-lg p-4 text-left relative overflow-hidden">
-            <div className="flex items-center gap-2 mb-3 text-[#B3B3B3] text-sm">
+          <div className="bg-card border border-accent rounded-lg p-4 text-left relative overflow-hidden">
+            <div className="flex items-center gap-2 mb-3 text-muted-foreground text-sm">
               <span className="h-3 w-3 rounded-full bg-red-500"></span>
               <span className="h-3 w-3 rounded-full bg-yellow-500"></span>
               <span className="h-3 w-3 rounded-full bg-green-500"></span>
               <span className="ml-2">404-error.js</span>
             </div>
-            <pre className="text-sm text-[#F2F2F2] overflow-x-auto">
+            <pre className="text-sm text-foreground overflow-x-auto">
               <code>
                 {`// Error: Path not found
 function findPath(route) {
@@ -139,20 +139,20 @@ function findPath(route) {
 }`}
               </code>
             </pre>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-[#00406C]/10 blur-xl"></div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-primary/10 blur-xl"></div>
           </div>
         </motion.div>
 
         <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={itemVariants}>
           <Button
             onClick={() => router.back()}
-            className="bg-[#001A2C] border border-[#002945] hover:bg-[#002945] text-[#F2F2F2]"
+            className="bg-muted border border-accent hover:bg-background hover:text-foreground text-foreground cursor-pointer"
             size="lg"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Go Back
           </Button>
-          <Button asChild className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2]" size="lg">
+          <Button asChild className="bg-primary hover:bg-secondary text-white" size="lg">
             <Link href="/">
               <Home className="mr-2 h-4 w-4" />
               Return Home

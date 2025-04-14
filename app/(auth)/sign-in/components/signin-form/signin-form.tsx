@@ -32,7 +32,7 @@ const SignInForm = () => {
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
-        <Link href="/forget-password" className="text-sm text-[#00406C] hover:text-[#003A61] transition-colors">
+        <Link href="/forget-password" className="text-sm text-primary hover:text-secondary transition-colors">
           Forgot password?
         </Link>
 
@@ -43,12 +43,12 @@ const SignInForm = () => {
           className="w-full"
         >
           <Button
-            className="cursor-pointer w-full bg-[#00406C] text-[#F2F2F2] hover:bg-[#003A61] mt-2"
+            className="cursor-pointer w-full bg-primary text-foreground hover:bg-secondary mt-2"
             type="submit"
           >
             {formik.isSubmitting ? (
-              <Loader className="mr-3 h-6 w-6 animate-spin" />
-            ) : "Sign in"}
+              <Loader className=" mr-3 h-6 w-6 animate-spin text-white" />
+            ) : <span className="text-white">Sign in</span>}
 
           </Button>
         </motion.div>

@@ -28,7 +28,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#00111C] p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <motion.div
         className="w-full max-w-md"
         initial="hidden"
@@ -36,18 +36,17 @@ export default function LoginPage() {
         variants={containerVariants}
       >
         <Logo className="-mt-5"/>
-
-        <Card className="border-[#002945] bg-[#001523] shadow-lg">
+        <Card className="border-accent bg-card shadow-lg">
           <CardHeader className="space-y-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <CardTitle className="text-2xl font-bold text-[#F2F2F2]">
+              <CardTitle className="text-2xl font-bold text-foreground">
                 Login
               </CardTitle>
-              <CardDescription className="text-[#B3B3B3]">
+              <CardDescription className="text-muted-foreground">
                 Enter your credentials to access your account
               </CardDescription>
             </motion.div>
@@ -60,12 +59,12 @@ export default function LoginPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
-              className="text-center text-sm text-[#B3B3B3]"
+              className="text-center text-sm text-muted-foreground"
             >
               Don&apos;t have an account?{" "}
               <Link
                 href="sign-up"
-                className="text-[#00406C] hover:text-[#003A61] transition-colors font-medium"
+                className="text-primary hover:text-secondary transition-colors font-medium"
               >
                 Sign up
               </Link>

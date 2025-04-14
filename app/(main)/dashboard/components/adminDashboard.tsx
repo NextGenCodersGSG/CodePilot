@@ -39,7 +39,7 @@ interface DashboardProps {
   totalUsers: number;
 }
 
-const COLORS = ["#00406C", "#00A3E0", "#007B9E"];
+const COLORS = ["primary", "#00A3E0", "#007B9E"];
 
 export default function Dashboard({
   codeReviewsData,
@@ -136,9 +136,9 @@ export default function Dashboard({
         <meta property="og:url" content="/" />
         <meta property="og:type" content="website" />
       </Head>
-      <div className="min-h-screen bg-[#00111C] text-[#F2F2F2] relative">
+      <div className="min-h-screen bg-background text-foreground relative">
           <div className="flex-1">
-            <header className="sticky top-0 z-40 bg-[#001523]/95 backdrop-blur supports-[backdrop-filter]:bg-[#001523]/60 border-b border-[#002945]">
+            <header className="sticky top-0 z-40 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 border-b border-accent">
               <div className="flex h-16 items-center justify-between px-4 sm:px-6">
                 <h1 className="text-xl font-semibold lg:text-2xl">Admin Dashboard</h1>
                 <div className="flex items-center gap-4">
@@ -147,10 +147,10 @@ export default function Dashboard({
                       type="search"
                       aria-label="Search users"
                       placeholder="Search users..."
-                      className="w-full md:w-60 pl-9 bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3] focus:border-[#003A61] focus:ring-[#003A61]/30"
+                      className="w-full md:w-60 pl-9 bg-muted border-accent text-foreground placeholder:text-muted-foreground focus:border-secondary focus:ring-secondary/30"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)} />
-                    <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B3B3B3]" />
+                    <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   </div>
                   <AdminDropdown />
                 </div>
@@ -159,7 +159,7 @@ export default function Dashboard({
 
             {searchQuery && (
               <motion.div
-                className="fixed inset-0 flex items-center justify-center z-50 bg-black/35"
+                className="fixed inset-0 flex items-center justify-center z-50 bg-background/35"
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -170,17 +170,17 @@ export default function Dashboard({
                   className="flex items-center justify-center w-full"
                 >
                   <Card
-                    className="bg-[#001523] border-[#002945] w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+                    className="bg-card border-accent w-full max-w-2xl max-h-[80vh] overflow-y-auto"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <CardHeader className="flex flex-row items-center justify-between">
-                      <CardTitle className="text-lg font-semibold text-[#F2F2F2]">
+                      <CardTitle className="text-lg font-semibold text-foreground">
                         Search Results
                       </CardTitle>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="text-[#B3B3B3] hover:text-[#F2F2F2] hover:bg-[#001A2C]"
+                        className="text-muted-foreground hover:text-foreground hover:bg-muted"
                         onClick={handleClosePopup}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -191,8 +191,8 @@ export default function Dashboard({
                     <CardContent className="space-y-4">
                       {filteredUsers.length > 0 ? (
                         filteredUsers.map((user) => (
-                          <Card key={user._id} className="bg-[#001A2C] border-[#002945]">
-                            <CardContent className="pt-4 text-[#F2F2F2]">
+                          <Card key={user._id} className="bg-muted border-accent">
+                            <CardContent className="pt-4 text-foreground">
                               <p><strong>Name:</strong> {user.name}</p>
                               <p><strong>Email:</strong> {user.email}</p>
                               {user.role && <p><strong>Role:</strong> {user.role}</p>}
@@ -200,7 +200,7 @@ export default function Dashboard({
                           </Card>
                         ))
                       ) : (
-                        <p className="text-[#B3B3B3] text-center">No users found matching "{searchQuery}".</p>
+                        <p className="text-muted-foreground text-center">No users found matching "{searchQuery}".</p>
                       )}
                     </CardContent>
                   </Card>
@@ -211,12 +211,12 @@ export default function Dashboard({
             <main className="p-4 sm:p-6 space-y-6">
               <Tabs defaultValue="overview" value={selectedTab} onValueChange={setSelectedTab} className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <TabsList className="bg-[#001A2C]">
+                  <TabsList className="bg-muted">
                     {["overview", "users", "analytics"].map((tab) => (
                       <TabsTrigger
                         key={tab}
                         value={tab}
-                        className="data-[state=active]:bg-[#00406C] data-[state=active]:text-[#F2F2F2] cursor-pointer"
+                        className="data-[state=active]:bg-ring data-[state=active]:text-foreground cursor-pointer"
                       >
                         {tab[0].toUpperCase() + tab.slice(1)}
                       </TabsTrigger>
@@ -224,12 +224,12 @@ export default function Dashboard({
                   </TabsList>
 
                 {selectedTab === "users" ? (
-                  <Button onClick={handleExportCSV} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer ">
+                  <Button onClick={handleExportCSV} className="bg-ring hover:bg-secondary text-foreground cursor-pointer ">
                     <Download className="mr-2 h-4 w-4" />
                     Export CSV
                   </Button>
                 ) : selectedTab === "overview" ? (
-                  <Button onClick={AddDeveloper} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer ">
+                  <Button onClick={AddDeveloper} className="bg-ring hover:bg-secondary text-foreground cursor-pointer ">
                     Add Developer
                   </Button>
                 ) : null}
@@ -255,7 +255,7 @@ export default function Dashboard({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    <Card className="bg-[#001523] border-[#002945] lg:col-span-2">
+                    <Card className="bg-card border-accent lg:col-span-2">
                       <CardHeader>
                         <CardTitle>AI Code Reviews (Past Week)</CardTitle>
                       </CardHeader>
@@ -263,12 +263,12 @@ export default function Dashboard({
                         <div className="h-80">
                           <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={codeReviewsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
-                              <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke="accent" />
+                              <XAxis dataKey="name" stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <YAxis stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
                               <Tooltip
-                                contentStyle={{ backgroundColor: "#001A2C", borderColor: "#002945", color: "#F2F2F2" }}
-                                labelStyle={{ color: "#F2F2F2" }} />
+                                contentStyle={{ backgroundColor: "muted", borderColor: "accent", color: "foreground" }}
+                                labelStyle={{ color: "foreground" }} />
                               <Legend />
                               <Line type="monotone" dataKey="reviews" name="Code Reviews" stroke="#fff" activeDot={{ r: 8 }} strokeWidth={2} />
                             </LineChart>
@@ -277,7 +277,7 @@ export default function Dashboard({
                       </CardContent>
                     </Card>
 
-                    <Card className="bg-[#001523] border-[#002945]">
+                    <Card className="bg-card border-accent">
                       <CardHeader>
                         <CardTitle>User Roles Distribution</CardTitle>
                       </CardHeader>
@@ -300,9 +300,9 @@ export default function Dashboard({
                                 ))}
                               </Pie>
                               <Tooltip
-                                contentStyle={{ backgroundColor: "#002132", borderColor: "#00A3E0", color: "#F2F2F2", fontSize: "14px", borderRadius: "6px" }}
+                                contentStyle={{ backgroundColor: "#002132", borderColor: "#00A3E0", color: "foreground", fontSize: "14px", borderRadius: "6px" }}
                                 labelStyle={{ color: "#00A3E0" }}
-                                itemStyle={{ color: "#F2F2F2" }} />
+                                itemStyle={{ color: "foreground" }} />
                             </PieChart>
                           </ResponsiveContainer>
                         </div>
@@ -316,19 +316,19 @@ export default function Dashboard({
                 {/* Analytics Tab */}
                 <TabsContent value="analytics" className="space-y-6">
                   <motion.div className="grid grid-cols-1 gap-4 sm:grid-cols-2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <Card className="bg-[#001523] border-[#002945]">
+                    <Card className="bg-card border-accent">
                       <CardHeader>
                         <CardTitle>User Activity (Past Week)</CardTitle>
-                        <CardDescription className="text-[#B3B3B3]">Active users and new signups per day</CardDescription>
+                        <CardDescription className="text-muted-foreground">Active users and new signups per day</CardDescription>
                       </CardHeader>
                       <CardContent>
                         <div className="h-80">
                           <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={userActivityData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke="#002945" />
-                              <XAxis dataKey="name" stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <YAxis stroke="#B3B3B3" tick={{ fill: "#B3B3B3" }} />
-                              <Tooltip contentStyle={{ backgroundColor: "#001A2C", borderColor: "#002945", color: "#F2F2F2" }} labelStyle={{ color: "#F2F2F2" }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke="accent" />
+                              <XAxis dataKey="name" stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <YAxis stroke="muted-foreground" tick={{ fill: "muted-foreground" }} />
+                              <Tooltip contentStyle={{ backgroundColor: "muted", borderColor: "accent", color: "foreground" }} labelStyle={{ color: "foreground" }} />
                               <Legend />
                               <Bar dataKey="value" name="New Signups" fill="#ffffff" />
                             </BarChart>
@@ -338,27 +338,27 @@ export default function Dashboard({
                     </Card>
 
                   <UserMetrics />
-                  <Card className="bg-[#001523] border-[#002945] mt-5 lg:col-span-2">
+                  <Card className="bg-card border-accent mt-5 lg:col-span-2">
                     <CardHeader>
                       <CardTitle>Analytics Reports</CardTitle>
-                      <CardDescription className="text-[#B3B3B3]">Download detailed analytics reports</CardDescription>
+                      <CardDescription className="text-muted-foreground">Download detailed analytics reports</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                        <div className="p-4 rounded-lg border border-accent bg-muted flex flex-col">
                           <div className="flex items-start justify-between mb-4">
                             <div>
                               <h3 className="font-medium">Projects Report</h3>
-                              <p className="text-xs text-[#B3B3B3] mt-1">Detailed analysis of user code project</p>
+                              <p className="text-xs text-muted-foreground mt-1">Detailed analysis of user code project</p>
                             </div>
-                            <FileText className="h-5 w-5 text-[#00406C]" />
+                            <FileText className="h-5 w-5 text-ring" />
                           </div>
                           <div className="mt-auto pt-4">
                             <Button
                               onClick={handleExportProjectCSV}
                               variant="outline"
                               size="sm"
-                              className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                              className="w-full border-accent hover:bg-muted hover:text-foreground"
                             >
                               <Download className="mr-2 h-4 w-4" />
                               Download CSV
@@ -366,20 +366,20 @@ export default function Dashboard({
                           </div>
                         </div>
 
-                          <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                          <div className="p-4 rounded-lg border border-accent bg-muted flex flex-col">
                             <div className="flex items-start justify-between mb-4">
                               <div>
                                 <h3 className="font-medium">Zoom Meeting</h3>
-                                <p className="text-xs text-[#B3B3B3] mt-1">Insights on meeting attendance and engagement</p>
+                                <p className="text-xs text-muted-foreground mt-1">Insights on meeting attendance and engagement</p>
                               </div>
-                              <FileText className="h-5 w-5 text-[#00406C]" />
+                              <FileText className="h-5 w-5 text-ring" />
                             </div>
                             <div className="mt-auto pt-4">
                               <Button
                                 onClick={handleExportZoomMeetingCSV}
                                 variant="outline"
                                 size="sm"
-                                className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                                className="w-full border-accent hover:bg-muted hover:text-foreground"
                               >
                                 <Download className="mr-2 h-4 w-4" />
                                 Download CSV
@@ -387,13 +387,13 @@ export default function Dashboard({
                             </div>
                           </div>
 
-                          <div className="p-4 rounded-lg border border-[#002945] bg-[#001A2C] flex flex-col">
+                          <div className="p-4 rounded-lg border border-accent bg-muted flex flex-col">
                             <div className="flex items-start justify-between mb-4">
                               <div>
                                 <h3 className="font-medium">Code Review Analytics</h3>
-                                <p className="text-xs text-[#B3B3B3] mt-1">AI code review usage statistics</p>
+                                <p className="text-xs text-muted-foreground mt-1">AI code review usage statistics</p>
                               </div>
-                              <FileText className="h-5 w-5 text-[#00406C]" />
+                              <FileText className="h-5 w-5 text-ring" />
                             </div>
                             <div className="mt-auto pt-4">
                               <Button
@@ -401,7 +401,7 @@ export default function Dashboard({
 
                                 variant="outline"
                                 size="sm"
-                                className="w-full border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                                className="w-full border-accent hover:bg-muted hover:text-foreground"
                               >
                                 <Download className="mr-2 h-4 w-4" />
                                 Download CSV

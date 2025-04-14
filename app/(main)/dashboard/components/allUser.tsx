@@ -103,7 +103,7 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black z-40 min-h-screen"
+              className="fixed inset-0 bg-background z-40 min-h-screen"
               onClick={cancelDelete}
             />
             
@@ -113,17 +113,17 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
               animate={{ opacity: 1, scale: 1, y: 0}}
               exit={{ opacity: 0, scale: 0.95, y: -60 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#001523] border-[#002945] border rounded-lg shadow-xl w-full max-w-md p-6"
+              className="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-popover border-accent border rounded-lg shadow-xl w-full max-w-md p-6"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
                   <AlertTriangle className="h-6 w-6 text-red-500 mr-3" />
-                  <h3 className="text-lg font-medium text-[#F2F2F2]">Confirm Deletion</h3>
+                  <h3 className="text-lg font-medium text-foreground">Confirm Deletion</h3>
                 </div>
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 rounded-full hover:bg-[#001A2C]"
+                  className="h-8 w-8 rounded-full hover:bg-muted"
                   onClick={cancelDelete}
                 >
                   <X className="h-4 w-4" />
@@ -131,10 +131,10 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
               </div>
               
               <div className="py-4">
-                <p className="text-[#B3B3B3]">
-                  Are you sure you want to delete user <span className="font-semibold text-[#F2F2F2]">{deleteConfirmation.user?.name}</span>?
+                <p className="text-muted-foreground">
+                  Are you sure you want to delete user <span className="font-semibold text-foreground">{deleteConfirmation.user?.name}</span>?
                 </p>
-                <p className="text-[#B3B3B3] text-sm mt-2">
+                <p className="text-muted-foreground text-sm mt-2">
                   This action cannot be undone. All data associated with this user will be permanently removed.
                 </p>
               </div>
@@ -142,7 +142,7 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
               <div className="flex justify-end gap-3 mt-2">
                 <Button
                   variant="outline"
-                  className="border-[#002945] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                  className="border-accent hover:bg-sidebar-accent hover:text-foreground"
                   onClick={cancelDelete}
                   disabled={deleteConfirmation.isDeleting}
                 >
@@ -162,10 +162,10 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
         )}
       </AnimatePresence>
 
-      <Card className="bg-[#001523] border-[#002945]">
+      <Card className="bg-sidebar border-accent">
         <CardHeader>
           <CardTitle>User Management</CardTitle>
-          <CardDescription className="text-[#B3B3B3]">
+          <CardDescription className="text-muted-foreground">
             Manage user accounts.
           </CardDescription>
         </CardHeader>
@@ -180,14 +180,14 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
           />
 
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-[#001A2C] border-collapse">
+            <table className="min-w-full bg-sidebar-accent border-collapse">
               <thead>
-                <tr className="border-b border-[#002945]">
-                  <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Name</th>
-                  <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Email</th>
-                  <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Signup Date</th>
-                  <th className="px-4 py-3 text-left font-medium text-[#B3B3B3]">Last Active</th>
-                  <th className="px-4 py-3 text-right font-medium text-[#B3B3B3]">Actions</th>
+                <tr className="border-b border-accent">
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">Name</th>
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">Email</th>
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">Signup Date</th>
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">Last Active</th>
+                  <th className="px-4 py-3 text-right font-medium text-muted-foreground">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -195,11 +195,11 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
                   filteredUsers.map((user, index) => (
                     <tr
                       key={index}
-                      className="border-b border-[#002945] hover:bg-[#001A2C] transition-colors"
+                      className="border-b border-accent hover:bg-sidebar-accent transition-colors"
                     >
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="h-8 w-8 rounded-full bg-[#00406C] flex items-center justify-center">
+                          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
                             <span className="font-medium text-xs">
                               {user.name.split(" ").map((n) => n[0]).join("")}
                             </span>
@@ -209,11 +209,11 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[#B3B3B3]">{user.email}</td>
-                      <td className="px-4 py-3 text-[#B3B3B3]">
+                      <td className="px-4 py-3 text-muted-foreground">{user.email}</td>
+                      <td className="px-4 py-3 text-muted-foreground">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-4 py-3 text-[#B3B3B3]">
+                      <td className="px-4 py-3 text-muted-foreground">
                         {new Date(user.updatedAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -222,17 +222,17 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="text-[#B3B3B3] hover:bg-[#001A2C] hover:text-[#F2F2F2]"
+                              className="text-muted-foreground hover:bg-sidebar-accent hover:text-foreground"
                             >
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent
                             align="end"
-                            className="bg-[#001523] border-[#002945] text-[#F2F2F2]"
+                            className="bg-sidebar border-accent text-foreground"
                           >
                             <DropdownMenuItem
-                              className="hover:bg-[#001A2C] cursor-pointer text-red-500"
+                              className="hover:bg-sidebar-accent cursor-pointer text-red-500"
                               onClick={() => handleDeleteUser(user)}
                             >
                               <Trash2 className="mr-2 h-4 w-4" />
@@ -245,7 +245,7 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="text-center py-4 text-[#B3B3B3]">
+                    <td colSpan={5} className="text-center py-4 text-muted-foreground">
                       No users found.
                     </td>
                   </tr>

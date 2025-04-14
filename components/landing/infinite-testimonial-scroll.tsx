@@ -104,7 +104,7 @@ export function InfiniteTestimonialScroll() {
   }, [controls])
 
   return (
-    <div className="relative w-full h-[50vh] mt-15 bg-gradient-to-b from-[#00111C] to-[#001A2C]">
+    <div className="relative w-full h-[50vh] mt-15 bg-gradient-to-b from-background to-muted">
       {/* Left fade effect */}
       <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none" />
 
@@ -116,7 +116,7 @@ export function InfiniteTestimonialScroll() {
         <motion.div ref={scrollRef} className="flex gap-6 py-4" animate={controls}>
           {doubledTestimonials.map((testimonial, index) => (
             <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px]">
-              <Card className="h-full bg-[#001523] border-[#002945] hover:border-[#00406C] transition-colors duration-300">
+              <Card className="h-full bg-card border-accent hover:border-primary transition-colors duration-300">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4 mb-4">
                     <Image
@@ -124,14 +124,14 @@ export function InfiniteTestimonialScroll() {
                       width={60}
                       height={60}
                       alt={`${testimonial.name} avatar`}
-                      className="rounded-3xl bg-[#00406C]/20"
+                      className="rounded-3xl bg-primary/20"
                     />
                     <div>
-                      <h3 className="font-semibold text-[#F2F2F2]">{testimonial.name}</h3>
-                      <p className="text-sm text-[#B3B3B3]">{testimonial.role}</p>
+                      <h3 className="font-semibold text-foreground">{testimonial.name}</h3>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="text-[#B3B3B3] line-clamp-4">"{testimonial.content}"</p>
+                  <p className="text-muted-foreground line-clamp-4">"{testimonial.content}"</p>
                 </CardContent>
               </Card>
             </div>

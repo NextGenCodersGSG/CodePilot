@@ -116,22 +116,22 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
     <>
       {/* Desktop Table View (hidden on small screens) */}
       <motion.div
-        className="hidden md:block overflow-x-auto rounded-lg border border-[#002945]"
+        className="hidden md:block overflow-x-auto rounded-lg border border-accent"
         variants={tableContainerVariants}
         initial="hidden"
         animate="visible"
       >
         <table className="w-full">
-          <thead className="bg-[#001A2C] border-b border-[#002945]">
+          <thead className="bg-muted border-b border-accent">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Meeting</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Date & Time</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Duration</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-[#B3B3B3]">Status</th>
-              <th className="px-4 py-3 text-right text-sm font-medium text-[#B3B3B3]">Actions</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Meeting</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Date & Time</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Duration</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Status</th>
+              <th className="px-4 py-3 text-right text-sm font-medium text-muted-foreground">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-[#001523] divide-y divide-[#002945]">
+          <tbody className="bg-card divide-y divide-accent">
             <AnimatePresence>
               {meetings.map((meeting, index) => {
                 const scheduledDate = new Date(meeting.scheduledAt)
@@ -151,27 +151,27 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                     animate="visible"
                     exit="exit"
                     whileHover="hover"
-                    className="hover:bg-[#001A2C]/50"
+                    className="hover:bg-muted/50"
                   >
                     <td className="px-4 py-4">
                       <div>
-                        <p className="font-medium text-[#F2F2F2]">{meeting.title}</p>
-                        <p className="text-sm text-[#B3B3B3] line-clamp-1">{meeting.description}</p>
+                        <p className="font-medium text-foreground">{meeting.title}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-1">{meeting.description}</p>
                       </div>
                     </td>
                     <td className="px-4 py-4">
                       <div className="flex flex-col">
-                        <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
-                          <Calendar className="h-4 w-4 text-[#00406C]" />
+                        <div className="flex items-center gap-2 text-sm text-foreground">
+                          <Calendar className="h-4 w-4 text-primary" />
                           <span>{format(scheduledDate, "MMMM d, yyyy")}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-[#B3B3B3] mt-1">
-                          <Clock className="h-4 w-4 text-[#00406C]" />
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                          <Clock className="h-4 w-4 text-primary" />
                           <span>{format(scheduledDate, "h:mm a")}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-[#F2F2F2]">{meeting.duration} minutes</td>
+                    <td className="px-4 py-4 text-foreground">{meeting.duration} minutes</td>
                     <td className="px-4 py-4">
                       <Badge variant="outline" className={cn("border", statusDetails.color)}>
                         {statusDetails.label}
@@ -200,7 +200,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                           variant="outline"
                           size="sm"
                           disabled
-                          className="opacity-50 border-[#002945] text-[#B3B3B3]"
+                          className="opacity-50 border-accent text-muted-foreground"
                         >
                           {isPast ? "Past Meeting" : meeting.status}
                         </Button>
@@ -234,31 +234,31 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="bg-[#001523] border border-[#002945] rounded-lg overflow-hidden"
+                className="bg-card border border-accent rounded-lg overflow-hidden"
               >
-                <div className="p-4 border-b border-[#002945]">
+                <div className="p-4 border-b border-accent">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-[#F2F2F2]">{meeting.title}</h3>
+                    <h3 className="font-medium text-foreground">{meeting.title}</h3>
                     <Badge variant="outline" className={cn("border ml-2", statusDetails.color)}>
                       {statusDetails.label}
                     </Badge>
                   </div>
-                  <p className="text-sm text-[#B3B3B3] mb-3">{meeting.description}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{meeting.description}</p>
 
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
-                      <Calendar className="h-4 w-4 text-[#00406C]" />
+                    <div className="flex items-center gap-2 text-sm text-foreground">
+                      <Calendar className="h-4 w-4 text-primary" />
                       <span>{format(scheduledDate, "MMMM d, yyyy")}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-[#F2F2F2]">
-                      <Clock className="h-4 w-4 text-[#00406C]" />
+                    <div className="flex items-center gap-2 text-sm text-foreground">
+                      <Clock className="h-4 w-4 text-primary" />
                       <span>{format(scheduledDate, "h:mm a")}</span>
                     </div>
-                    <div className="text-sm text-[#F2F2F2]">Duration: {meeting.duration} minutes</div>
+                    <div className="text-sm text-foreground">Duration: {meeting.duration} minutes</div>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#001A2C] flex justify-end">
+                <div className="p-3 bg-muted flex justify-end">
                   {isActive && !isPast ? (
                     <Button
                       variant="outline"
@@ -277,7 +277,7 @@ export function MeetingsTable({ meetings, onCancel, cancellingId }: MeetingsTabl
                       )}
                     </Button>
                   ) : (
-                    <Button variant="outline" size="sm" disabled className="opacity-50 border-[#002945] text-[#B3B3B3]">
+                    <Button variant="outline" size="sm" disabled className="opacity-50 border-accent text-muted-foreground">
                       {isPast ? "Past Meeting" : meeting.status}
                     </Button>
                   )}
