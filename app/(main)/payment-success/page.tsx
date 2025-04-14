@@ -1,6 +1,6 @@
 import PaymentSuccessPage from '@/components/payment-success/PaymentSuccess';
 import Head from 'next/head'; // Import Head for adding metadata
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const page = () => {
   return (
@@ -23,10 +23,11 @@ const page = () => {
         <meta property="og:image" content="/CodePilotLogo.png" />
         <meta property="og:url" content="/" />
         <meta property="og:type" content="website" />
-
       </Head>
-
-      <PaymentSuccessPage />
+      
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentSuccessPage />
+      </Suspense>
     </>
   );
 }
