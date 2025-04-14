@@ -53,7 +53,6 @@ export default function SplineLoader() {
             scene="https://prod.spline.design/bwCJnoGoIoWUA1j2/scene.splinecode"
             className={`w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => {
-              console.log('Spline scene loaded')
               setIsLoaded(true)
             }}
             onError={(error) => console.error('Spline error:', error)}

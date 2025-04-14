@@ -22,8 +22,6 @@ const MeetingsPage = () => {
       try {
         setIsLoading(true)
         const userId = await getUserId()
-        console.log("userId: ", userId)
-
         const response = await fetch(`/api/meetings/all-meetings`)
 
         if (!response.ok) {
@@ -38,7 +36,6 @@ const MeetingsPage = () => {
           requestedAt: meeting.requestedAt ? new Date(meeting.requestedAt) : undefined,
         }))
 
-        console.log(processedMeetings)
         setMeetings(processedMeetings)
       } catch (error) {
         console.error("Error fetching meetings:", error)

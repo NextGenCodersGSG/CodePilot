@@ -19,7 +19,6 @@ class MeetingService {
         if(conflictMeetings.length){
             throw new Error("Developer Unavailable at this time");
         }
-        console.log(typeof data.scheduledAt);
         const user = await userRepo.findUserById(data.userId, Role.User);
         if(!user){
             throw new Error("User Not Found");
@@ -42,7 +41,6 @@ class MeetingService {
             throw new Error("Meeting Not Found");
         }
         const secretKey = await getZoomAccessToken();
-        console.log(`token is: ${secretKey}`);
         const meetingData = {
             topic: meeting.title,
             type: 2,

@@ -44,7 +44,6 @@ const UserManagementCard = ({ users: initialUsers }: UserManagementCardProps) =>
   }, [searchTerm, users]);
 
   const deleteUser = async (userId: string) => {
-    console.log("Deleting user with ID:", userId);
     const response = await fetch(`/api/delete-user`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },

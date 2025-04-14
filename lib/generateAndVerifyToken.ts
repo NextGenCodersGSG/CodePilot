@@ -17,14 +17,12 @@ export async function generateToken(
   payload: TokenPayload,
   expirationTime: string = "1d"
 ): Promise<string> {
-  console.log("payload", payload);
   const t = new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expirationTime);
 
   const token = await t.sign(encodedKey);
-  console.log("token func", token);
   return token;
 }
 

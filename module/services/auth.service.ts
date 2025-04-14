@@ -15,15 +15,10 @@ import countLogsService from "./countLogs.service";
 
 class AuthService {
   async signIn(data: ILogin) {
-    console.log("SignIn attempt with email:", data.email); // Log incoming email
-
     const user = await UserRepository.findUserByEmail(data.email);
     if (!user) {
-      console.log("User not found for email:", data.email);
       throw new Error("Invalid credentials");
     }
-
-    console.log("User found:", user.id, "Role:", user.role);
 
     const isMatch: boolean = await comparePassword(
       data.password,
@@ -31,14 +26,10 @@ class AuthService {
     );
 
     if (!isMatch) {
-      console.log("Password does not match for user:", user.id);
       throw new Error("Invalid credentials");
     }
 
-    console.log("Password matched, generating token...");
     const token = await createToken(user.id, user.name, user.email, user.role, user.plan);
-
-    console.log("Token generated:", token);
 
     return { token, user };
   }
@@ -104,19 +95,18 @@ class AuthService {
     return newUser;
   }
   async logout() {
-
     try {
       const authToken: string = (await cookies()).get("auth-token")?.value || "";
       if (!authToken) {
         throw new Error("No token found");
       }
-      const id: string  = (await verifyToken(authToken))?.id || "";
+      const id: string  = (await verifyToken(authToken))?.userId || "";
       if (!id) {
         throw new Error("Invalid token");
       }
       await countLogsService.deleteUserFromLogs(id);
       (await cookies()).delete("auth-token");
-      return "The user with email: ${email} has been logged out succefully";
+      return "The user with email: ${email} has been logged out successfully";
     } catch (error) {
       console.error("Error deleting token cookie:", error);
       throw new Error("Failed to logout");

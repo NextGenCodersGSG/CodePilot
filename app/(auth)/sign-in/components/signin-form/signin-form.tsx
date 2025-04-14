@@ -10,7 +10,6 @@ import Link from "next/link";
 
 const SignInForm = () => {
   const { formik } = useSignin();
-  console.log("SignInForm");
   return (
     <FormikProvider value={formik}>
       <Form className="space-y-4">
