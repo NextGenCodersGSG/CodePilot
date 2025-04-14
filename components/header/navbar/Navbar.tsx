@@ -136,7 +136,6 @@ export default function Navbar() {
       const response = fetch(`/api/auth/token`);
       const result = (await response).json();
       const token = (await result).token;
-      console.log(token);
       setUser(token);
       setIsLoading(false);
     };

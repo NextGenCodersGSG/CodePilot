@@ -10,9 +10,6 @@ class UserService {
     }
     
     async updateUserPlan(userId: string, plan: string) {
-        // Log for debugging
-        console.log("Received plan update request:", { userId, plan });
-        
         // Basic input validation
         if (!userId || typeof userId !== 'string') {
             throw new Error("Invalid user ID");

@@ -108,7 +108,6 @@ export default function BillingSection() {
       setToken(data.token);
 
       const user = await getUserData();
-      console.log(user);
       setUser(user);
     }
 
@@ -117,7 +116,6 @@ export default function BillingSection() {
 
   const handleCheckout = async (planId: PlanId) => {
     if (!token) {
-      console.log("user must be logged in to subscribe!");
       toast.warning("You must be logged in to subscribe!");
       return;
     }

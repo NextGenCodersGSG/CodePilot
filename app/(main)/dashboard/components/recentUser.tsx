@@ -47,7 +47,6 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
   }, [recentUsers]);
 
   const deleteUser = async (userId: string) => {
-    console.log("Deleting user with ID:", userId);
     const response = await fetch(`/api/delete-user`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },

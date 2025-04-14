@@ -39,8 +39,6 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        console.log("1 - Received code input");
-
         const prompt = `
         As a senior ${language} developer, analyze this code and provide:
         1. Performance Issues - Identify optimizations with specific solutions
@@ -110,8 +108,6 @@ export async function POST(req: NextRequest) {
             }),
         });
 
-        console.log("2 - Fetched response from OpenAI");
-
         if (!response.ok) {
             const errorData = await response.json();
             console.error("OpenAI API Error:", errorData);
@@ -120,13 +116,8 @@ export async function POST(req: NextRequest) {
                 { status: 502 }
             );
         }
-
-        console.log("3 - Reading response stream");
-        console.log(response);
         
         const responseData = await response.json();
-        console.log("4 - Parsing JSON content");
-
         const jsonResponse = responseData.choices[0]?.message?.content;
 
         if (!jsonResponse) {
@@ -137,7 +128,6 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Clean response from markdown code blocks
         const cleanedJson = jsonResponse
             .replace(/```json/g, '')
             .replace(/```/g, '')
@@ -145,7 +135,6 @@ export async function POST(req: NextRequest) {
 
         try {
             const parsedContent = JSON.parse(cleanedJson);
-            console.log("5 - Successfully parsed JSON content");
             return NextResponse.json(parsedContent, { status: 200 });
         } catch (parseError) {
             console.error("6 - Failed to parse JSON content. Raw response:", jsonResponse);

@@ -20,18 +20,15 @@ export class UserRepository {
     userId: string,
     plan: string
   ): Promise<IUserDocument | null> {
-    console.log(`Attempting to update user ${userId} with plan ${plan}`);
     const result = await userModel.findOneAndUpdate(
       { _id: userId },
       { $set: { plan: plan } },
       { new: true, runValidators: true }
     );
-    console.log("Update result:", result);
     return result;
   }
   
   async updateUserProfile(userId: string, updateData: Partial<IUserDocument>) {
-    console.log(`Updating user ${userId} with:`, updateData);
     return userModel.findByIdAndUpdate(
       userId,
       { $set: updateData },

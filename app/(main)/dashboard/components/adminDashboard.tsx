@@ -56,7 +56,6 @@ export default function Dashboard({
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleExportCSV = () => {
-    console.log("Exporting user data as CSV");
     // Create a temporary anchor element
     const link = document.createElement("a");
     // Set the href to the API endpoint that generates the CSV file
@@ -78,7 +77,6 @@ export default function Dashboard({
   };
 
   const handleExportProjectCSV = () => {
-    console.log("Exporting Project data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
     // Set the href to the API endpoint that generates the CSV file
@@ -91,7 +89,6 @@ export default function Dashboard({
   }
 
   const handleExportZoomMeetingCSV = () => {
-    console.log("Exporting meeting data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
     // Set the href to the API endpoint that generates the CSV file
@@ -103,7 +100,6 @@ export default function Dashboard({
   }
 
   const handleExportCodeReviewCSV = () => {
-    console.log("Exporting ExportCode data as CSV")
     // Create a temporary anchor element
     const link = document.createElement("a");
     // Set the href to the API endpoint that generates the CSV file

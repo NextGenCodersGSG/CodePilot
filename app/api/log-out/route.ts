@@ -7,6 +7,7 @@ export const POST = async() => {
         return NextResponse.json({message: logout}, {status: 200})
     }
     catch (error) {
+        
         if(error instanceof Error)
         return NextResponse.json({message: error.message}, {status: 500})
         else

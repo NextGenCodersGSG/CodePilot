@@ -63,7 +63,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch total AI reviews: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log("Total AI Reviews:", data.totalAIReviews);
       return data.totalAIReviews || 0;
     } catch (error) {
       console.error("Error fetching total AI reviews:", error);
@@ -79,7 +78,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch users: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log("Fetched Users:", data);
       return data || [];
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -95,7 +93,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch total projects: ${response.statusText}`);
       }
       const totalProjects = await projectModel.countDocuments();
-      console.log(totalProjects);
       return  totalProjects ;
     } catch (error) {
       console.error("Error fetching total projects:", error);
@@ -112,7 +109,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch recent users: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log("Recent Users:", data.recentUsers);
       return data.recentUsers || [];
     } catch (error) {
       console.error("Error fetching recent users:", error);
@@ -128,7 +124,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch user logs: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log("Fetched User Logs:", data);
       return data.activeUsers || 0;
     } catch (error) {
       console.error("Error fetching user logs:", error);
@@ -144,7 +139,6 @@ export const fetchAllData = async () => {
         throw new Error(`Failed to fetch total users: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log("Fetched Total Users:", data);
       return data.total || 0;
     } catch (error) {
       console.error("Error fetching total users:", error);

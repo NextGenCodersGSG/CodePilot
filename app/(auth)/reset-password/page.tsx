@@ -11,8 +11,6 @@ const page = () => {
     const searchParams = useSearchParams();
     const resetToken = searchParams.get('resetToken');
     const id = searchParams.get('id');
-    console.log(resetToken);
-    console.log(id);
     
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },

@@ -74,7 +74,6 @@ export default function Page() {
 
       const userId = user.token.userId as string;
       addUserSession(userId);
-      console.log(userId);
       
       return userId;
     } catch (error) {
@@ -136,7 +135,6 @@ export default function Page() {
       setPageLoading(true);
       const user = await getUserData();
       const displayName = user.name?.split(" ")[0];
-      console.log(user);
       setUserData(user as IUserToken);
       setUsername(displayName || "Unknown");
       setPageLoading(false);

@@ -9,7 +9,6 @@ export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json();
     const userId = body.userId;
-    console.log("userId is: ", userId);
     
     if (!userId) {
       return NextResponse.json(
@@ -31,13 +30,11 @@ export async function DELETE(request: NextRequest) {
   } catch (error: any) {
 
     if (error.message === 'Invalid user ID') {
-        console.log("from the endpoint", error);
           
       return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }
 
     if (error.message === 'User not found') {
-      console.log(error);
       
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

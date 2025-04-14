@@ -16,20 +16,13 @@ export default function PaymentSuccessPage() {
   
   useEffect(() => {
     const  changeUserPlan = async () => {
-      console.log(userId, plan);
-      const response = await fetch(`/api/users/update-plan`, {
+      await fetch(`/api/users/update-plan`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({userId: userId, plan: plan}),
       });
-      const result = (await response).json();
-      
-      const message = (await result).message;
-      console.log(message);
-      
-      console.log(userId, plan);
     }
     changeUserPlan()
   },[userId, plan]);
