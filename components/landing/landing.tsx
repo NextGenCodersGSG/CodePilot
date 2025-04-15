@@ -1,10 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Code, Zap, Shield, BarChart} from "lucide-react"
-import { useEffect, useRef } from "react"
-import { motion, useAnimation, type Variants } from "framer-motion"
+import { CheckCircle } from "lucide-react"
+import { motion } from "framer-motion"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect"
 import ThreeDImage from "@/components/3d-Image/ThreeDImage"
 import { BackgroundBeamsWithCollision } from "@/components/ui/collision-beams"
@@ -40,7 +38,7 @@ export default function LandingPage() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="mb-1"
                 >
-                  <Badge className="transition duration-200 cursor-default mb-2 bg-[#003356] text-foreground hover:bg-secondary">AI-Powered Code Review</Badge>
+                  <Badge className="transition duration-200 cursor-default mb-2 bg-primary text-white hover:bg-secondary">AI-Powered Code Review</Badge>
                 </motion.div>
                 <div>
                   <ContainerTextFlip words={["Write Better", "Write Smarter","Develop Faster"]} />
@@ -62,12 +60,12 @@ export default function LandingPage() {
                   transition={{ duration: 0.6,delay:0.2, ease: "easeInOut" }}
                 >
                   <Link href="/sign-in">
-                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-foreground">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-white">
                       Start for free
                     </Button>
                   </Link>
                   <Link href="/code-analysis/documentation">
-                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-accent bg-muted hover:bg-accent text-foreground">
+                    <Button size="lg" className=" cursor-pointer w-full sm:w-auto border-accent bg-muted hover:bg-accent hover:text-white text-foreground">
                       Learn more
                     </Button>
                   </Link>
@@ -96,8 +94,7 @@ export default function LandingPage() {
         </BackgroundBeamsWithCollision>
         {/* Features Section */}
         <HorizontalScrollFeatures/>
-
-        {/* Testimonials Section */}
+        {/* Testimonial Section */}
         <InfiniteTestimonialScroll/>
         {/* Pricing Section */}
         <BillingSection/>

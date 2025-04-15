@@ -77,7 +77,7 @@ export const BookMeetingForm: React.FC<BookMeetingFormProps> = ({
               <SelectTrigger className="bg-muted border-accent text-foreground">
                 <SelectValue placeholder="Choose a developer" />
               </SelectTrigger>
-              <SelectContent className="bg-muted border-accent text-foreground">
+              <SelectContent className="bg-background border-accent text-foreground">
                 {developers.map((developer) => (
                   <SelectItem key={developer.id} value={developer.id}>
                     {developer.name}
@@ -110,7 +110,7 @@ export const BookMeetingForm: React.FC<BookMeetingFormProps> = ({
                   {formik.values.date ? format(formik.values.date, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 bg-muted border-accent">
+              <PopoverContent className="w-auto p-0 bg-background border-accent">
                 <Calendar
                   mode="single"
                   selected={formik.values.date}
@@ -136,7 +136,7 @@ export const BookMeetingForm: React.FC<BookMeetingFormProps> = ({
               <SelectTrigger className="bg-muted border-accent text-foreground">
                 <SelectValue placeholder="Choose a time slot" />
               </SelectTrigger>
-              <SelectContent className="bg-muted border-accent text-foreground max-h-[300px]">
+              <SelectContent className="bg-background border-accent text-foreground max-h-[300px]">
                 {timeSlots.map((slot) => (
                   <SelectItem key={slot} value={slot}>
                     {slot}
@@ -162,7 +162,7 @@ export const BookMeetingForm: React.FC<BookMeetingFormProps> = ({
               <SelectTrigger className="bg-muted border-accent text-foreground">
                 <SelectValue placeholder="Select duration" />
               </SelectTrigger>
-              <SelectContent className="bg-muted border-accent text-foreground">
+              <SelectContent className="bg-background border-accent text-foreground">
                 {durationOptions.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}

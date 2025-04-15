@@ -94,7 +94,9 @@ export function NavUser({
               </Link>
             </DropdownMenuGroup>
             <DropdownMenuGroup>
-              <ModeToggle/>
+              <div className="w-full" >
+                <ModeToggle/>
+              </div>
             </DropdownMenuGroup>
             <DropdownMenuGroup>
               <Link href="/code-analysis/user-profile">
