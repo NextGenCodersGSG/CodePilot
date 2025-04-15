@@ -126,7 +126,9 @@ We welcome contributions with open arms! Whether it’s fixing a bug, proposing 
   - 📧 HadiIrshaid8722@gmail.com
 
 - **Moumen Al Yazouri**  
-  
+  - [LinkedIn](https://www.linkedin.com/in/moamen-al-yazouri-80742433a/)  
+  - [GitHub](https://github.com/Moamen-Yazouri)  
+  - 📧 moaamenalyazouri@gmail.com
 
 - **Hajar Ihab**
 
