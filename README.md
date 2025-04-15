@@ -138,7 +138,7 @@ We welcome contributions with open arms! Whether it’s fixing a bug, proposing 
 - **Lara Samara**
     - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Linked-in-alt.svg/640px-Linked-in-alt.svg.png" width="20" height="20"> [LinkedIn](https://www.linkedin.com/in/lara-samara/)  
   - <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="20" height="20"> [GitHub](https://github.com/LaraSamara)  
-  - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Email_new.svg/640px-Email_new.svg.png" width="20" height="20"> [](mailto:larasamara2002@gmail.com)
+  - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Email_new.svg/640px-Email_new.svg.png" width="20" height="20"> [larasamara2002@gmail.com](mailto:larasamara2002@gmail.com)
 
 - **Alaa Abu Madi**
 
