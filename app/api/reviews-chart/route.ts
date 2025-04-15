@@ -8,9 +8,9 @@ export const GET = async () => {
     try {
         const reviewData: IChartData[] = await ChartsService.getReviewsData();
         if(!reviewData || reviewData.length === 0) {
-            return NextResponse.json({reviews: []}, {status: 400});
+            return NextResponse.json({codeReviewsData: []}, {status: 400});
         }
-        return NextResponse.json({reviews: reviewData}, {status: 200});
+        return NextResponse.json({codeReviewsData: reviewData}, {status: 200});
     }
     catch(error) {
         if (error instanceof Error) {

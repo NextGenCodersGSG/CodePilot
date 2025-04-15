@@ -38,14 +38,14 @@ export function StatusLegend() {
 
   return (
     <div className="flex flex-wrap gap-3 items-center">
-      <span className="text-sm font-medium mr-1 text-[#F2F2F2]">Status:</span>
+      <span className="text-sm font-medium mr-1 text-foreground">Status:</span>
       {statuses.map((item) => (
         <div key={item.status} className="flex items-center gap-1.5">
           <Badge variant="outline" className={cn("flex items-center gap-1 px-2 py-1 border", item.color)}>
             {item.icon}
             {item.status}
           </Badge>
-          <span className="text-xs text-[#B3B3B3]">{item.description}</span>
+          <span className="text-xs text-muted-foreground">{item.description}</span>
         </div>
       ))}
     </div>

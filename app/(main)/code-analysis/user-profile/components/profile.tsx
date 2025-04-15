@@ -34,6 +34,9 @@ import { PasswordChangeForm } from "./password-change-form";
 import { PlanCard } from "./plan-card";
 import { IUserData } from "./types";
 import { toast } from "sonner";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import { useSidebar } from "@/providers/SidebarContext";
+import { IUserToken } from "@/@types";
 
 const mockUser = {
   email: "user@example.com",
@@ -42,7 +45,6 @@ const mockUser = {
   avatar: "/profile.jpg"
 };
 
-// Plan data
 const plans = [
   {
     id: "starter",
@@ -55,8 +57,8 @@ const plans = [
       "Error detection",
       "Community support"
     ],
-    color: "bg-[#001A2C]",
-    borderColor: "border-[#002945]",
+    color: "bg-muted",
+    borderColor: "border-accent",
     recommended: false
   },
   {
@@ -72,8 +74,8 @@ const plans = [
       "Performance insights",
       "Email support"
     ],
-    color: "bg-[#001523]",
-    borderColor: "border-[#00406C]",
+    color: "bg-card",
+    borderColor: "border-primary",
     recommended: true
   },
   {
@@ -89,24 +91,53 @@ const plans = [
       "API access",
       "Priority support"
     ],
-    color: "bg-[#001A2C]",
-    borderColor: "border-[#002945]",
+    color: "bg-muted",
+    borderColor: "border-accent",
     recommended: false
   }
 ];
 
-export default function ProfilePage(userData: IUserData ) {
+export default function ProfilePage() {
   const [user, setUser] = useState(mockUser);
+  const { setUserData, userData } = useSidebar();
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameValue, setNameValue] = useState(userData.name);
   const [activeTab, setActiveTab] = useState("account");
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+ 
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
+    setIsSaving(true);
     if (nameValue.trim()) {
-      setUser({ ...user, name: nameValue });
-      setIsEditingName(false);
-      toast.success("Password changed successfully", { duration: 2000 });
+      try {
+        const response = await fetch("/api/users/update-name", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            userId: userData.userId,
+            newName: nameValue
+          }),
+        });
+  
+        const data = await response.json();
+        if (!response.ok) {
+          toast.error(data.error || "Update failed", { duration: 2000 });
+        } else {
+          setUser(prevUser => ({
+            ...prevUser,
+            name: data.user.name
+          }));
+          setUserData((prev: IUserToken) => ({...prev, name: data.user.name}));
+          setNameValue(data.user.name); 
+          setIsSaving(false);
+          setIsEditingName(false);
+          toast.success("Username updated successfully", { duration: 2000 });
+        }
+  
+      } catch (error) {
+        toast.error("Network error occurred", { duration: 2000 });
+      }
     }
   };
 
@@ -116,9 +147,9 @@ export default function ProfilePage(userData: IUserData ) {
   };
 
   const getVisiblePlans = () => {
-    if (user.plan === "starter") {
+    if (userData.plan === "starter") {
       return plans.filter((plan) => plan.id === "pro" || plan.id === "team");
-    } else if (user.plan === "pro") {
+    } else if (userData.plan === "pro") {
       return plans.filter((plan) => plan.id === "team");
     }
     return [];
@@ -148,7 +179,7 @@ export default function ProfilePage(userData: IUserData ) {
   };
 
   return (
-    <div className="min-h-screen bg-[#00111C] text-[#F2F2F2] px-8">
+    <div className="min-h-screen bg-background text-foreground px-8">
       <main className="container py-8">
         <motion.div
           className="grid gap-8 md:grid-cols-[1fr_3fr]"
@@ -158,7 +189,7 @@ export default function ProfilePage(userData: IUserData ) {
         >
           {/* Sidebar */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <Card className="bg-[#001523] border-[#002945]">
+            <Card className="bg-card border-accent">
               <CardContent className="p-6">
                 <div className="flex flex-col items-center text-center">
                   <motion.div
@@ -166,55 +197,55 @@ export default function ProfilePage(userData: IUserData ) {
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   >
-                    <Avatar className="h-24 w-24 border-2 border-[#00406C]">
+                    <Avatar className="h-24 w-24 border-2 border-primary">
                       <AvatarImage src={user.avatar} alt={userData.name} />
-                      <AvatarFallback className="text-2xl bg-[#00406C] text-[#F2F2F2]">
+                      <AvatarFallback className="text-2xl bg-primary text-foreground">
                         {userData.name
                           .split(" ")
                           .map((n) => n[0])
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="absolute -bottom-2 -right-2 rounded-full bg-[#00406C] p-1.5 text-[#F2F2F2] shadow-lg">
+                    <div className="absolute -bottom-2 -right-2 rounded-full bg-primary p-1.5 text-foreground shadow-lg">
                       <User className="h-4 w-4" />
                     </div>
                   </motion.div>
 
                   <h2 className="text-xl font-bold mb-1">{userData.name}</h2>
-                  <p className="text-sm text-[#B3B3B3] mb-3">{userData.email}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{userData.email}</p>
 
-                    <Badge className="bg-[#00406C] hover:bg-[#003A61] mb-4">
-                      {user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}{" "}
+                    <Badge className="bg-primary hover:bg-secondary mb-4">
+                      {userData?.plan?.charAt(0).toUpperCase() + userData?.plan?.slice(1)} {" "}
                       Plan
                     </Badge>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-[#001523] border-[#002945]">
+            <Card className="bg-card border-accent">
               <CardContent className="p-0">
                 <nav className="flex flex-col">
                   <button
                     onClick={() => setActiveTab("account")}
-                    className={`cursor-pointer flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-[#001A2C] ${
+                    className={`cursor-pointer flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-muted ${
                       activeTab === "account"
-                        ? "bg-[#001A2C] border-l-2 border-[#00406C]"
+                        ? "bg-muted border-l-2 border-primary"
                         : ""
                     }`}
                   >
-                    <User className="h-5 w-5 text-[#00406C]" />
+                    <User className="h-5 w-5 text-primary" />
                     <span>Account Settings</span>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("billing")}
-                    className={`cursor-pointer flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-[#001A2C] ${
+                    className={`cursor-pointer flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-muted ${
                       activeTab === "billing"
-                        ? "bg-[#001A2C] border-l-2 border-[#00406C]"
+                        ? "bg-muted border-l-2 border-primary"
                         : ""
                     }`}
                   >
-                    <CreditCard className="h-5 w-5 text-[#00406C]" />
+                    <CreditCard className="h-5 w-5 text-primary" />
                     <span>Billing & Plans</span>
                   </button>
                 </nav>
@@ -231,10 +262,10 @@ export default function ProfilePage(userData: IUserData ) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-[#001523] border-[#002945]">
+                <Card className="bg-card border-accent">
                   <CardHeader>
                     <CardTitle className="text-2xl">Account Settings</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
+                    <CardDescription className="text-muted-foreground">
                       Manage your account information and security settings
                     </CardDescription>
                   </CardHeader>
@@ -247,20 +278,20 @@ export default function ProfilePage(userData: IUserData ) {
 
                       <div className="space-y-4">
                         <div>
-                          <label className="text-sm font-medium text-[#B3B3B3] mb-1.5 block">
+                          <label className="text-sm font-medium text-muted-foreground mb-1.5 block">
                             Email Address
                           </label>
                           <Input
                             value={userData.email}
                             disabled
-                            className="bg-[#001A2C] border-[#002945] text-[#B3B3B3]"
+                            className="bg-muted border-accent text-muted-foreground"
                           />
-                          <p className="text-xs text-[#B3B3B3] mt-1.5">
+                          <p className="text-xs text-muted-foreground mt-1.5">
                             Your email address cannot be changed
                           </p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-[#B3B3B3] mb-1.5 block">
+                          <label className="text-sm font-medium text-muted-foreground mb-1.5 block">
                             Full Name
                           </label>
                           <div className="flex gap-2">
@@ -269,20 +300,26 @@ export default function ProfilePage(userData: IUserData ) {
                                 <Input
                                   value={nameValue}
                                   onChange={(e) => setNameValue(e.target.value)}
-                                  className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]"
+                                  className="bg-muted border-accent text-foreground"
                                 />
                                 <Button
                                   size="icon"
                                   onClick={handleSaveName}
-                                  className="bg-[#00406C] hover:bg-[#003A61] cursor-pointer"
+                                  className="bg-primary hover:bg-secondary cursor-pointer"
                                 >
-                                  <Save className="h-4 w-4" />
+                                  {
+                                    isSaving
+                                    ? 
+                                    <LoadingSpinner/> 
+                                    :
+                                    <Save className="h-4 w-4" />
+                                  }
                                 </Button>
                                 <Button
                                   size="icon"
                                   variant="outline"
                                   onClick={handleCancelEdit}
-                                  className="border-[#002945] hover:bg-[#001A2C] cursor-pointer"
+                                  className="border-accent hover:bg-muted cursor-pointer"
                                 >
                                   <X className="h-4 w-4" />
                                 </Button>
@@ -292,13 +329,13 @@ export default function ProfilePage(userData: IUserData ) {
                                 <Input
                                   value={userData.name}
                                   disabled
-                                  className="bg-[#001A2C] border-[#002945] text-[#F2F2F2]"
+                                  className="bg-muted border-accent text-foreground"
                                 />
                                 <Button
                                   size="icon"
                                   variant="outline"
                                   onClick={() => setIsEditingName(true)}
-                                  className="border-[#002945] hover:bg-[#001A2C] cursor-pointer"
+                                  className="border-accent hover:bg-muted cursor-pointer"
                                 >
                                   <Edit className="h-4 w-4" />
                                 </Button>
@@ -309,7 +346,7 @@ export default function ProfilePage(userData: IUserData ) {
                       </div>
                     </div>
 
-                    <Separator className="bg-[#002945]" />
+                    <Separator className="bg-accent" />
 
                     <div className="space-y-4">
                       <h3 className="text-lg font-medium">Security</h3>
@@ -318,7 +355,7 @@ export default function ProfilePage(userData: IUserData ) {
                         <Button
                           variant="outline"
                           onClick={() => setShowPasswordDialog(true)}
-                          className="border-[#002945] hover:bg-[#001A2C] cursor-pointer"
+                          className="border-accent hover:bg-muted cursor-pointer"
                         >
                           <Lock className="h-4 w-4 mr-2" />
                           Change Password
@@ -337,10 +374,10 @@ export default function ProfilePage(userData: IUserData ) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-[#001523] border-[#002945] mb-6">
+                <Card className="bg-card border-accent mb-6">
                   <CardHeader>
                     <CardTitle className="text-2xl">Billing & Plans</CardTitle>
-                    <CardDescription className="text-[#B3B3B3]">
+                    <CardDescription className="text-muted-foreground">
                       Manage your subscription and billing information
                     </CardDescription>
                   </CardHeader>
@@ -349,33 +386,33 @@ export default function ProfilePage(userData: IUserData ) {
                     <div className="space-y-4">
                       <h3 className="text-lg font-medium">Current Plan</h3>
 
-                      <div className="bg-[#001A2C] border border-[#002945] rounded-lg p-4">
+                      <div className="bg-muted border border-accent rounded-lg p-4">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                           <div>
                             <div className="flex items-center gap-2">
-                              <Badge className="bg-[#00406C] hover:bg-[#003A61]">
-                                {user.plan.charAt(0).toUpperCase() +
-                                  user.plan.slice(1)}
+                              <Badge className="bg-primary hover:bg-secondary">
+                                {userData.plan.charAt(0).toUpperCase() +
+                                  userData.plan.slice(1)}
                               </Badge>
-                              <span className="text-sm text-[#B3B3B3]">
-                                {user.plan === "starter"
+                              <span className="text-sm text-muted-foreground">
+                                {userData.plan === "starter"
                                   ? "$0/month"
-                                  : user.plan === "pro"
+                                  : userData.plan === "pro"
                                   ? "$20/month"
                                   : "$50/month"}
                               </span>
                             </div>
                             <p className="text-sm mt-2">
-                              {user.plan === "starter"
+                              {userData.plan === "starter"
                                 ? "Basic features for individual developers"
-                                : user.plan === "pro"
+                                : userData.plan === "pro"
                                 ? "Advanced features for professional developers"
                                 : "Collaboration features for development teams"}
                             </p>
                           </div>
 
-                          {user.plan === "team" && (
-                            <div className="flex items-center gap-2 bg-[#003356]/30 text-[#F2F2F2] px-3 py-1.5 rounded-md">
+                          {userData.plan === "team" && (
+                            <div className="flex items-center gap-2 bg-[#003356]/30 text-foreground px-3 py-1.5 rounded-md">
                               <CheckCircle className="h-4 w-4 text-green-500" />
                               <span className="text-sm">
                                 You are on our highest tier plan
@@ -387,14 +424,14 @@ export default function ProfilePage(userData: IUserData ) {
                     </div>
 
                     {/* Upgrade options */}
-                    {(user.plan === "starter" || user.plan === "pro") && (
+                    {(userData.plan === "starter" || userData.plan === "pro") && (
                       <div className="space-y-4">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
                           <h3 className="text-lg font-medium">
                             Upgrade Options
                           </h3>
-                          {user.plan === "pro" && (
-                            <p className="text-sm text-[#B3B3B3]">
+                          {userData.plan === "pro" && (
+                            <p className="text-sm text-muted-foreground">
                               The Team plan is well-suited for team
                               collaboration
                             </p>
@@ -406,7 +443,7 @@ export default function ProfilePage(userData: IUserData ) {
                             <PlanCard
                               key={plan.id}
                               plan={plan}
-                              currentPlan={user.plan}
+                              currentPlan={userData.plan}
                             />
                           ))}
                         </div>
@@ -416,57 +453,30 @@ export default function ProfilePage(userData: IUserData ) {
                 </Card>
 
                 {/* Billing History */}
-                <Card className="bg-[#001523] border-[#002945]">
+                <Card className="bg-card border-accent">
                   <CardHeader>
                     <CardTitle>Billing History</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {user.plan === "starter" ? (
+                    {userData.plan === "starter" ? (
                       <div className="text-center py-6">
-                        <p className="text-[#B3B3B3]">
+                        <p className="text-muted-foreground">
                           No billing history available on the Starter plan
                         </p>
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        <div className="bg-[#001A2C] border border-[#002945] rounded-lg p-4 flex justify-between items-center">
+                        <div className="bg-muted border border-accent rounded-lg p-4 flex justify-between items-center">
                           <div>
                             <p className="font-medium">
-                              {user.plan.charAt(0).toUpperCase() +
-                                user.plan.slice(1)}{" "}
+                              {userData.plan.charAt(0).toUpperCase() +
+                                userData.plan.slice(1)}{" "}
                               Plan - Monthly
-                            </p>
-                            <p className="text-sm text-[#B3B3B3]">
-                              Apr 1, 2023
                             </p>
                           </div>
                           <div className="text-right">
                             <p className="font-medium">
-                              {user.plan === "pro" ? "$29.00" : "$99.00"}
-                            </p>
-                            <Badge
-                              variant="outline"
-                              className="border-green-500 text-green-500"
-                            >
-                              Paid
-                            </Badge>
-                          </div>
-                        </div>
-
-                        <div className="bg-[#001A2C] border border-[#002945] rounded-lg p-4 flex justify-between items-center">
-                          <div>
-                            <p className="font-medium">
-                              {user.plan.charAt(0).toUpperCase() +
-                                user.plan.slice(1)}{" "}
-                              Plan - Monthly
-                            </p>
-                            <p className="text-sm text-[#B3B3B3]">
-                              Mar 1, 2023
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-medium">
-                              {user.plan === "pro" ? "$29.00" : "$99.00"}
+                              {userData.plan === "pro" ? "$20.00" : "$50.00"}
                             </p>
                             <Badge
                               variant="outline"
@@ -488,10 +498,10 @@ export default function ProfilePage(userData: IUserData ) {
 
       {/* Password Change Dialog */}
       <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
-        <DialogContent className="bg-[#001523] border-[#002945] text-[#F2F2F2] ">
+        <DialogContent className="bg-card border-accent text-foreground ">
           <DialogHeader>
             <DialogTitle>Change Password</DialogTitle>
-            <DialogDescription className="text-[#B3B3B3]">
+            <DialogDescription className="text-muted-foreground">
               Enter your current password and a new password below.
             </DialogDescription>
           </DialogHeader>
@@ -502,6 +512,7 @@ export default function ProfilePage(userData: IUserData ) {
               toast.success("Password changed successfully", { duration: 2000 });
             }}
             onCancel={() => setShowPasswordDialog(false)}
+            userId={userData.userId}
           />
         </DialogContent>
       </Dialog>

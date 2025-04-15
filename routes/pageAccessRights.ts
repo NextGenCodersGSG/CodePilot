@@ -14,6 +14,12 @@ const routeAccess = new Map<PageAccessName, PageAccessRight>([
       roles: [Role.Admin],
     },
   ],
+  [
+    "/add-developers",
+    {
+      roles: [Role.Admin],
+    },
+  ],
 ]);
 
 export default routeAccess;

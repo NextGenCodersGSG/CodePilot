@@ -25,7 +25,6 @@ class EmailService {
       };
 
       await this.transporter.sendMail(mailOptions);
-      console.log(`Email sent successfully to ${userEmail}`);
     } catch (error) {
       console.error("Error sending email:", error);
       throw new Error("Failed to send email");

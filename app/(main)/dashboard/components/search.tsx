@@ -1,4 +1,3 @@
-import { IUser } from '@/@types';
 import { IUserDocument } from '@/DB/models/user.model';
 import { useState, useEffect } from 'react';
 
@@ -23,31 +22,31 @@ const UserSearch: React.FC<UserSearchProps> = ({ users }) => {
             <input
                 type="text"
                 placeholder="Search by name or email"
-                className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3] p-2 rounded mb-4"
+                className="bg-muted border-accent text-foreground placeholder:text-muted-foreground p-2 rounded mb-4"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            <table className="min-w-full bg-[#001A2C] border border-[#002945]">
+            <table className="min-w-full bg-muted border border-accent">
                 <thead>
-                    <tr className="bg-[#002945] text-[#F2F2F2]">
-                        <th className="border border-[#002945] px-4 py-2">ID</th>
-                        <th className="border border-[#002945] px-4 py-2">Name</th>
-                        <th className="border border-[#002945] px-4 py-2">Email</th>
+                    <tr className="bg-accent text-foreground">
+                        <th className="border border-accent px-4 py-2">ID</th>
+                        <th className="border border-accent px-4 py-2">Name</th>
+                        <th className="border border-accent px-4 py-2">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredUsers.length > 0 ? (
                         filteredUsers.map(user => (
-                            <tr key={user.id} className="text-[#F2F2F2]">
-                                <td className="border border-[#002945] px-4 py-2">{user.id}</td>
-                                <td className="border border-[#002945] px-4 py-2">{user.name}</td>
-                                <td className="border border-[#002945] px-4 py-2">{user.email}</td>
+                            <tr key={user.id} className="text-foreground">
+                                <td className="border border-accent px-4 py-2">{user.id}</td>
+                                <td className="border border-accent px-4 py-2">{user.name}</td>
+                                <td className="border border-accent px-4 py-2">{user.email}</td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={3} className="border border-[#002945] px-4 py-2 text-center text-[#B3B3B3]">
+                            <td colSpan={3} className="border border-accent px-4 py-2 text-center text-muted-foreground">
                                 No users found
                             </td>
                         </tr>

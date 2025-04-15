@@ -29,7 +29,7 @@ const TextField: React.FC<TextFieldProps> = ({
   return (
     <div>
       {label && (
-        <Label htmlFor={name} className="my-2 text-[#F2F2F2]">
+        <Label htmlFor={name} className="my-2 text-foreground">
           {label}
         </Label>
       )}
@@ -39,7 +39,7 @@ const TextField: React.FC<TextFieldProps> = ({
           {...field}
           {...rest}
           type={isPassword ? (showPassword ? "text" : "password") : rest.type}
-          className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3] focus:border-[#003A61] focus:ring-[#003A61]/30"
+          className="bg-muted border-accent text-foreground placeholder:text-muted-foreground focus:border-secondary focus:ring-secondary/30"
         />
         {isPassword && (
           <div>
@@ -47,7 +47,7 @@ const TextField: React.FC<TextFieldProps> = ({
               type="button"
               variant="ghost"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 text-[#B3B3B3] hover:text-[#F2F2F2] hover:bg-transparent"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-transparent"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (

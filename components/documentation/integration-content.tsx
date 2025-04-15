@@ -305,8 +305,8 @@ export default function CodeReviewPage() {
         transition={{ duration: 0.5 }}
         className="mb-10"
       >
-        <h1 id="integration" className="text-4xl font-bold mb-4">Integration Guide</h1>
-        <p className="text-lg text-muted-foreground">
+        <h1 id="integration" className="text-foreground text-4xl font-bold mb-4">Integration Guide</h1>
+        <p className="text-foreground text-lg">
           This guide will walk you through integrating CodePilot into your Next.js application. You'll learn how to set
           up the necessary API routes and frontend components to create a fully functional code review system.
         </p>
@@ -318,22 +318,22 @@ export default function CodeReviewPage() {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="mb-12"
       >
-        <h2 id="nextjs-setup" className="text-2xl font-semibold mb-4">Next.js Implementation Details</h2>
-        <p className="mb-6">
+        <h2 id="nextjs-setup" className="text-foreground text-2xl font-semibold mb-4">Next.js Implementation Details</h2>
+        <p className="text-foreground mb-6">
           CodePilot is designed to work seamlessly with Next.js applications, particularly those using the App Router.
           Here's how to set up the necessary components:
         </p>
 
-        <h3 className="text-xl font-medium mb-3">1. Install Required Packages</h3>
-        <p className="mb-4">
+        <h3 className="text-foreground text-xl font-medium mb-3">1. Install Required Packages</h3>
+        <p className="text-foreground mb-4">
           First, install the CodePilot packages and the Vercel AI SDK, which we'll use for interacting with the OpenAI
           API:
         </p>
 
         <CodeBlock code={nextjsSetupCode} language="bash" />
 
-        <h3 className="text-xl font-medium mt-8 mb-3">2. Set Up Environment Variables</h3>
-        <p className="mb-4">
+        <h3 className="text-foreground text-xl font-medium mt-8 mb-3">2. Set Up Environment Variables</h3>
+        <p className="text-foreground mb-4">
           Create or update your <code className="px-1.5 py-0.5 bg-muted rounded text-sm">.env.local</code> file to include your OpenAI API key:
         </p>
 
@@ -344,7 +344,7 @@ export default function CodeReviewPage() {
             <AlertTriangle className="h-5 w-5 flex-shrink-0 text-yellow-500 mt-0.5" />
             <div>
               <h4 className="font-medium mb-1">Security Warning</h4>
-              <p className="text-sm">
+              <p className="text-foreground text-sm">
                 Never commit your API keys to version control. Make sure <code className="px-1 py-0.5 bg-muted rounded text-xs">.env.local</code> is included in your{" "}
                 <code className="px-1 py-0.5 bg-muted rounded text-xs">.gitignore</code> file.
               </p>
@@ -360,14 +360,14 @@ export default function CodeReviewPage() {
         className="mb-12"
       >
         <h2 id="api-configuration" className="text-2xl font-semibold mb-4">API Route Configuration</h2>
-        <p className="mb-4">Next, you'll need to create API routes to handle code review requests. We'll create two routes:</p>
-        <ol className="list-decimal ml-6 mb-6 space-y-1">
+        <p className="text-foreground mb-4">Next, you'll need to create API routes to handle code review requests. We'll create two routes:</p>
+        <ol className="text-foreground list-decimal ml-6 mb-6 space-y-1">
           <li>A standard route for regular requests</li>
           <li>A streaming route for real-time analysis feedback</li>
-        </ol>
+        </ol> 
 
-        <h3 className="text-xl font-medium mb-3">Standard API Route</h3>
-        <p className="mb-4">
+        <h3 className="text-foreground text-xl font-medium mb-3">Standard API Route</h3>
+        <p className="text-foreground mb-4">
           Create a new file at <code className="px-1.5 py-0.5 bg-muted rounded text-sm">app/api/code-review/route.ts</code> with the following content:
         </p>
 
@@ -378,10 +378,11 @@ export default function CodeReviewPage() {
           language="typescript"
           filename="app/api/code-review/route.ts"
           defaultExpanded={true}
+          
         />
 
-        <h3 className="text-xl font-medium mt-8 mb-3">Streaming API Route (Optional)</h3>
-        <p className="mb-4">
+        <h3 className="text-foreground text-xl font-medium mt-8 mb-3">Streaming API Route (Optional)</h3>
+        <p className="text-foreground mb-4">
           For a better user experience, you can create a streaming API route that returns results in real-time as
           they're generated:
         </p>
@@ -395,8 +396,8 @@ export default function CodeReviewPage() {
         />
 
         <div className="mt-6 p-4 border border-blue-200 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-900 rounded-lg">
-          <h4 className="font-medium mb-2">API Route Considerations</h4>
-          <p className="text-sm">
+          <h4 className="text-foreground font-medium mb-2">API Route Considerations</h4>
+          <p className="text-foreground text-sm">
             The streaming route provides a better user experience for longer code analyses, as users see results
             incrementally instead of waiting for the entire analysis to complete. However, it requires more complex
             frontend handling.
@@ -410,8 +411,8 @@ export default function CodeReviewPage() {
         transition={{ duration: 0.5, delay: 0.3 }}
         className="mb-12"
       >
-        <h2 id="openai-implementation" className="text-2xl font-semibold mb-4">OpenAI API Implementation</h2>
-        <p className="mb-6">
+        <h2 id="text-foreground openai-implementation" className="text-2xl font-semibold mb-4">OpenAI API Implementation</h2>
+        <p className="text-foreground mb-6">
           The code examples above use the{" "}
           <TooltipTerm
             term="AI SDK"
@@ -422,28 +423,28 @@ export default function CodeReviewPage() {
           to interact with OpenAI's models. Here's a breakdown of how the implementation works:
         </p>
 
-        <h3 className="text-xl font-medium mb-3">Key Components</h3>
+        <h3 className="text-foreground text-xl font-medium mb-3">Key Components</h3>
         <ol className="list-decimal ml-6 mb-6 space-y-2">
           <li>
-            <span className="font-medium">Prompt Engineering</span> - We create a detailed prompt that instructs the AI model to analyze the
+            <span className="text-foreground font-medium">Prompt Engineering</span> - We create a detailed prompt that instructs the AI model to analyze the
             code for specific issues and provide structured feedback.
           </li>
           <li>
-            <span className="font-medium">Model Selection</span> - We use GPT-4o for its advanced code understanding capabilities, but you
+            <span className="text-foreground font-medium">Model Selection</span> - We use GPT-4o for its advanced code understanding capabilities, but you
             can also use GPT-3.5-Turbo for faster (though less detailed) analysis.
           </li>
           <li>
-            <span className="font-medium">Parameter Tuning</span> - We set a lower temperature (0.3) to get more focused and consistent
+            <span className="text-foreground font-medium">Parameter Tuning</span> - We set a lower temperature (0.3) to get more focused and consistent
             results, and adjust the maximum tokens based on expected response length.
           </li>
           <li>
-            <span className="font-medium">Response Processing</span> - For more advanced implementations, you can parse the AI's response to
+            <span className="text-foreground font-medium">Response Processing</span> - For more advanced implementations, you can parse the AI's response to
             extract structured data about different issue categories.
           </li>
         </ol>
 
-        <h3 className="text-xl font-medium mb-3">Frontend Implementation</h3>
-        <p className="mb-4">
+        <h3 className="text-foreground text-xl font-medium mb-3">Frontend Implementation</h3>
+        <p className="text-foreground mb-4">
           Now, let's create a React component that allows users to submit code for analysis and displays the results:
         </p>
 
@@ -456,8 +457,8 @@ export default function CodeReviewPage() {
         />
 
         <div className="mt-6 p-4 border border-green-200 bg-green-50 dark:bg-green-950/20 dark:border-green-900 rounded-lg">
-          <h4 className="font-medium mb-2">Integration Tip</h4>
-          <p className="text-sm">
+          <h4 className="text-foreground font-medium mb-2">Integration Tip</h4>
+          <p className="text-foreground text-sm">
             For a production application, consider implementing more robust error handling, rate limiting, and user
             authentication to protect your API routes from abuse.
           </p>
@@ -470,8 +471,8 @@ export default function CodeReviewPage() {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="mb-12"
       >
-        <h3 className="text-xl font-medium mb-3">Using the Component</h3>
-        <p className="mb-4">To use the CodeAnalyzer component in your application, simply import and include it in any page:</p>
+        <h3 className="text-foreground text-xl font-medium mb-3">Using the Component</h3>
+        <p className="text-foreground mb-4">To use the CodeAnalyzer component in your application, simply import and include it in any page:</p>
 
         <CodeBlock
           code={usageCode}
@@ -480,8 +481,8 @@ export default function CodeReviewPage() {
         />
 
         <div className="mt-6 p-4 border border-blue-200 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-900 rounded-lg">
-          <h4 className="font-medium mb-2">Component Customization</h4>
-          <p className="text-sm">
+          <h4 className="text-foreground font-medium mb-2">Component Customization</h4>
+          <p className="text-foreground text-sm">
             The CodeAnalyzer component can be customized to fit your application's needs. You can modify the UI, add
             additional features like saving analysis results, or integrate it with your existing code editor.
           </p>
@@ -494,8 +495,8 @@ export default function CodeReviewPage() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="mt-12 p-6 border rounded-lg bg-accent/50"
       >
-        <h3 className="text-xl font-semibold mb-4">Next Steps</h3>
-        <p>Now that you've integrated CodePilot into your Next.js application, you can:</p>
+        <h3 className="text-foreground text-xl font-semibold mb-4">Next Steps</h3>
+        <p className="text-foreground">Now that you've integrated CodePilot into your Next.js application, you can:</p>
         <ul className="mt-4 space-y-3 pl-1">
           <li>
             <a href="/advanced-usage" className="flex items-center gap-2 text-primary hover:underline">

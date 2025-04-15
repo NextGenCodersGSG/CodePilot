@@ -33,6 +33,7 @@ import {
 import { toast } from "sonner"
 import { redirect } from "next/navigation"
 import Link from "next/link"
+import { ModeToggle } from "../Theme/ModeToggle"
 
 export function NavUser({
   user,
@@ -91,6 +92,11 @@ export function NavUser({
                 Upgrade to Pro
               </DropdownMenuItem>
               </Link>
+            </DropdownMenuGroup>
+            <DropdownMenuGroup>
+              <div className="w-full" >
+                <ModeToggle/>
+              </div>
             </DropdownMenuGroup>
             <DropdownMenuGroup>
               <Link href="/code-analysis/user-profile">

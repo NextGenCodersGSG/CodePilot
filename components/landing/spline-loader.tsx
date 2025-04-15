@@ -46,12 +46,12 @@ export default function SplineLoader() {
   }, [])
 
   return (
-    <div id="spline-container" className="w-full h-full">
+    <div id="spline-container" className="w-full h-full bg-background">
       {isVisible && (
         <Suspense fallback={<SplineLoading />}>
           <Spline
             scene="https://prod.spline.design/bwCJnoGoIoWUA1j2/scene.splinecode"
-            className={`w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full transition-opacity duration-500 bg-muted to-accent ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => {
               console.log('Spline scene loaded')
               setIsLoaded(true)

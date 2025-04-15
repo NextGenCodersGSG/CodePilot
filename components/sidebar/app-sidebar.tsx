@@ -80,12 +80,12 @@ export const data = {
       icon: BrainCircuit,
       items: [
         {
-          title: "Genesis",
-          url: "#"
+          title: "Our Model",
+          url: "https://platform.openai.com/docs/models/gpt-4-turbo"
         },
         {
-          title: "Explorer",
-          url: "#"
+          title: "OpenAI Docs",
+          url: "https://platform.openai.com/docs/quickstart?api-mode=responses"
         }
       ]
     },

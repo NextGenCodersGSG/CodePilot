@@ -6,6 +6,7 @@ export interface IUserDocument extends Document, IUser {
   verifyToken: string;
   verifyTokenExpire: Date;
   getVerificationToken(): string;
+  plan: 'starter' | 'pro' | 'team';
   createdAt: Date;
   updatedAt: Date;
   _id: string; // Change to string type for client-side
@@ -18,7 +19,12 @@ const UserSchema = new Schema<IUserDocument>(
     role: { type: String, enum: Object.values(Role), required: true },
     password: { type: String, required: true },
     verifyToken: { type: String },
-
+    plan: { 
+        type: String,
+        enum: ['starter', 'pro', 'team'],
+        default: "starter",
+        select: true
+      },
     verifyTokenExpire: { type: Date },
   },
   { timestamps: true }

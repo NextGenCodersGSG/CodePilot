@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import Logo from "@/components/logo/Logo"
+import LoadingSpinner from "@/components/spinner/LoadingSpinner"
 
 export default function Error({
   error,
@@ -119,7 +120,7 @@ export default function Error({
   }
 
   return (
-    <div className="min-h-screen bg-[#00111C] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <motion.div className="max-w-3xl w-full" variants={containerVariants} initial="hidden" animate="visible">
         <div className="text-center mb-8">
           <motion.div
@@ -139,16 +140,16 @@ export default function Error({
             </div>
           </motion.div>
 
-          <motion.h1 className="text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-4" variants={itemVariants}>
+          <motion.h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4" variants={itemVariants}>
             Something Went Wrong
           </motion.h1>
 
-          <motion.p className="text-xl text-[#B3B3B3] mb-4" variants={itemVariants}>
+          <motion.p className="text-xl text-muted-foreground mb-4" variants={itemVariants}>
             We've encountered an unexpected error
           </motion.p>
 
           <motion.div
-            className="inline-block bg-[#001523] border border-[#002945] rounded-md px-4 py-2 text-[#B3B3B3] mb-8"
+            className="inline-block bg-card border border-accent rounded-md px-4 py-2 text-muted-foreground mb-8"
             variants={errorCodeVariants}
           >
             <code className="text-sm font-mono">
@@ -159,13 +160,13 @@ export default function Error({
           <motion.div className="flex flex-col sm:flex-row gap-4 justify-center mb-12" variants={itemVariants}>
             <Button
               onClick={() => reset()}
-              className="bg-[#001A2C] border border-[#002945] hover:bg-[#002945] text-[#F2F2F2] cursor-pointer"
+              className="bg-muted border border-accent hover:bg-background text-foreground cursor-pointer"
               size="lg"
             >
               <RefreshCw className="mr-2 h-4 w-4" />
               Try Again
             </Button>
-            <Button asChild className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer" size="lg">
+            <Button asChild className="bg-primary hover:bg-secondary text-white cursor-pointer" size="lg">
               <Link href="/" className="cursor-pointer" >
                 <Home className="mr-2 h-4 w-4" />
                 Return Home
@@ -175,23 +176,23 @@ export default function Error({
         </div>
 
         <motion.div
-          className="bg-[#001523] border border-[#002945] rounded-lg p-6 relative overflow-hidden"
+          className="bg-card border border-accent rounded-lg p-6 relative overflow-hidden"
           variants={itemVariants}
         >
-          <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[#00406C]/10 blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-[#00406C]/10 blur-3xl"></div>
+          <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
+          <div className="absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl"></div>
 
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <h2 className="text-2xl font-bold text-[#F2F2F2] mb-4">Report This Issue</h2>
-                <p className="text-[#B3B3B3] mb-6">
+                <h2 className="text-2xl font-bold text-foreground mb-4">Report This Issue</h2>
+                <p className="text-muted-foreground mb-6">
                   Help us improve by sending details about this error to our development team.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-[#F2F2F2]">
+                    <Label htmlFor="email" className="text-foreground">
                       Your Email
                     </Label>
                     <Input
@@ -201,12 +202,12 @@ export default function Error({
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your.email@example.com"
                       required
-                      className="bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3] focus:border-[#003A61] focus:ring-[#003A61]/30"
+                      className="bg-muted border-accent text-foreground placeholder:text-muted-foreground focus:border-secondary focus:ring-secondary/30"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="feedback" className="text-[#F2F2F2]">
+                    <Label htmlFor="feedback" className="text-foreground">
                       What happened?
                     </Label>
                     <Textarea
@@ -215,29 +216,27 @@ export default function Error({
                       onChange={(e) => setFeedback(e.target.value)}
                       placeholder="Please describe what you were doing when the error occurred..."
                       required
-                      className="min-h-[120px] bg-[#001A2C] border-[#002945] text-[#F2F2F2] placeholder:text-[#B3B3B3] focus:border-[#003A61] focus:ring-[#003A61]/30"
+                      className="min-h-[120px] bg-muted border-accent text-foreground placeholder:text-muted-foreground focus:border-secondary focus:ring-secondary/30"
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer"
+                    className="w-full bg-primary hover:bg-secondary text-foreground cursor-pointer"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                          className="mr-2 h-4 w-4 border-2 border-[#F2F2F2] border-t-transparent rounded-full"
-                        />
-                        Sending...
+                        <motion.div>
+                          <LoadingSpinner className="h-4 w-4 text-white mr-3" />
+                          <span className="text-white">Sending...</span>
+                        </motion.div>
                       </>
                     ) : (
-                      <>
+                      <span className="text-white flex gap-1">
                         <Send className="mr-2 h-4 w-4" />
                         Send Report
-                      </>
+                      </span>
                     )}
                   </Button>
                 </form>
@@ -258,12 +257,12 @@ export default function Error({
                 >
                   <CheckCircle className="h-16 w-16 text-green-500" />
                 </motion.div>
-                <h2 className="text-2xl font-bold text-[#F2F2F2] mb-4">Thank You!</h2>
-                <p className="text-[#B3B3B3] mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">Thank You!</h2>
+                <p className="text-muted-foreground mb-8">
                   Your report has been sent to our development team. We'll work on fixing this issue as soon as
                   possible.
                 </p>
-                <Button onClick={() => router.push("/")} className="bg-[#00406C] hover:bg-[#003A61] text-[#F2F2F2] cursor-pointer">
+                <Button onClick={() => router.push("/")} className="bg-primary hover:bg-secondary text-white cursor-pointer">
                   <Home className="mr-2 h-4 w-4" />
                   Return to Home
                 </Button>

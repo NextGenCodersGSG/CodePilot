@@ -32,12 +32,12 @@ export function ExpandableCode({
         aria-expanded={isExpanded}
       >
         <div>
-          <h3 className="text-base font-semibold">{title}</h3>
-          {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
+          <h3 className="text-background font-semibold">{title}</h3>
+          {description && <p className="mt-1 text-sm text-muted">{description}</p>}
         </div>
         {isExpanded ? 
-          <ChevronUp className="h-5 w-5 text-muted-foreground transition-transform" /> : 
-          <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform" />
+          <ChevronUp className="h-5 w-5 text-muted transition-transform" /> : 
+          <ChevronDown className="h-5 w-5 text-muted transition-transform" />
         }
       </button>
       <AnimatePresence initial={false}>

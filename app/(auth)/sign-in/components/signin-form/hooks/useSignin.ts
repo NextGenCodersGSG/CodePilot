@@ -33,7 +33,7 @@ const useSignin = () => {
       }
 
       resetForm();
-      toast.success("Signin successful");
+      toast.success("Signin successful", {duration: 1000});
       localStorage.setItem("auth-token", data.token);
       const role: string = data.role;
 

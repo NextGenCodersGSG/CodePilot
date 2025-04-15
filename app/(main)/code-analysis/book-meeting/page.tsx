@@ -72,10 +72,10 @@ const BookMeetingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#00111C] py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-background py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div
-        className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#00406C]/10 blur-3xl"
+        className="absolute top-20 right-20 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -88,7 +88,7 @@ const BookMeetingPage = () => {
       />
 
       <motion.div
-        className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-[#00406C]/10 blur-3xl"
+        className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl"
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.2, 0.4, 0.2],
@@ -102,12 +102,12 @@ const BookMeetingPage = () => {
       />
 
       {/* Floating icons */}
-      <motion.div className="absolute top-1/4 right-1/4 text-[#00406C]/20" variants={floatingBubbles} animate="animate">
+      <motion.div className="absolute top-1/4 right-1/4 text-primary/20" variants={floatingBubbles} animate="animate">
         <Video size={80} />
       </motion.div>
 
       <motion.div
-        className="absolute bottom-1/3 left-1/4 text-[#00406C]/20"
+        className="absolute bottom-1/3 left-1/4 text-primary/20"
         variants={floatingBubbles}
         animate="animate"
         transition={{ delay: 1 }}
@@ -120,7 +120,7 @@ const BookMeetingPage = () => {
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center">
             <motion.h1
-              className="text-4xl md:text-5xl font-bold text-[#F2F2F2] mb-4"
+              className="text-4xl md:text-5xl font-bold text-foreground mb-4"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -128,7 +128,7 @@ const BookMeetingPage = () => {
               Book a Developer Consultation
             </motion.h1>
             <motion.p
-              className="text-xl text-[#B3B3B3] max-w-2xl mx-auto"
+              className="text-xl text-muted-foreground max-w-2xl mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -150,52 +150,52 @@ const BookMeetingPage = () => {
           {/* Meeting Process Steps */}
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <motion.div
-              className="bg-[#001523] border border-[#002945] rounded-lg p-5 relative overflow-hidden"
+              className="bg-card border border-accent rounded-lg p-5 relative overflow-hidden"
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
-              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-[#00406C]/5 blur-xl"></div>
+              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-primary/5 blur-xl"></div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-[#00406C]/20 p-2 rounded-full">
-                  <CalendarIcon className="h-5 w-5 text-[#00406C]" />
+                <div className="bg-primary/20 p-2 rounded-full">
+                  <CalendarIcon className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="font-medium text-[#F2F2F2]">1. Schedule</h3>
+                <h3 className="font-medium text-foreground">1. Schedule</h3>
               </div>
-              <p className="text-sm text-[#B3B3B3]">Book a time that works for you with your preferred developer.</p>
+              <p className="text-sm text-muted-foreground">Book a time that works for you with your preferred developer.</p>
             </motion.div>
 
             <motion.div
-              className="bg-[#001523] border border-[#002945] rounded-lg p-5 relative overflow-hidden"
+              className="bg-card border border-accent rounded-lg p-5 relative overflow-hidden"
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
-              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-[#00406C]/5 blur-xl"></div>
+              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-primary/5 blur-xl"></div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-[#00406C]/20 p-2 rounded-full">
-                  <CheckCircle2 className="h-5 w-5 text-[#00406C]" />
+                <div className="bg-primary/20 p-2 rounded-full">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="font-medium text-[#F2F2F2]">2. Confirm</h3>
+                <h3 className="font-medium text-foreground">2. Confirm</h3>
               </div>
-              <p className="text-sm text-[#B3B3B3]">Receive confirmation and a Zoom link via email once approved.</p>
+              <p className="text-sm text-muted-foreground">Receive confirmation and a Zoom link via email once approved.</p>
             </motion.div>
 
             <motion.div
-              className="bg-[#001523] border border-[#002945] rounded-lg p-5 relative overflow-hidden"
+              className="bg-card border border-accent rounded-lg p-5 relative overflow-hidden"
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
-              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-[#00406C]/5 blur-xl"></div>
+              <div className="absolute -top-10 -right-10 h-24 w-24 rounded-full bg-primary/5 blur-xl"></div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-[#00406C]/20 p-2 rounded-full">
-                  <Video className="h-5 w-5 text-[#00406C]" />
+                <div className="bg-primary/20 p-2 rounded-full">
+                  <Video className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="font-medium text-[#F2F2F2]">3. Connect</h3>
+                <h3 className="font-medium text-foreground">3. Connect</h3>
               </div>
-              <p className="text-sm text-[#B3B3B3]">
+              <p className="text-sm text-muted-foreground">
                 Join the Zoom meeting at the scheduled time to discuss your project.
               </p>
             </motion.div>
           </motion.div>
 
           {/* Additional Info */}
-          <motion.div variants={itemVariants} className="text-center text-[#B3B3B3] text-sm">
+          <motion.div variants={itemVariants} className="text-center text-muted-foreground text-sm">
             <p>All meetings are conducted via Zoom and require approval from the selected developer.</p>
             <p>You'll receive a confirmation email with the Zoom link once your request is approved.</p>
           </motion.div>

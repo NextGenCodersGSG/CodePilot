@@ -11,7 +11,7 @@ interface ShinyTextProps {
 const ShinyText: React.FC<ShinyTextProps> = ({ text, disabled = false, speed = 5, className = '' }) => {
     return (
         <div
-            className={`${styles.shinyText} ${!disabled ? styles.animateShine : ''} ${className}`}
+            className={`${styles.shinyText} ${!disabled ? styles.animateShine : ''} ${className} `}
             style={{ animationDuration: `${speed}s` }}
         >
             {text}

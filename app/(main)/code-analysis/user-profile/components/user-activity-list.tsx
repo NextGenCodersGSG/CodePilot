@@ -12,7 +12,7 @@ const activityData = [
     title: "Code Review Completed",
     description: "Authentication service review completed with 3 issues found",
     timestamp: "2 hours ago",
-    icon: <FileCode className="h-5 w-5 text-[#00406C]" />,
+    icon: <FileCode className="h-5 w-5 text-primary" />,
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const activityData = [
     title: "Code Review Completed",
     description: "API endpoints review completed with no issues found",
     timestamp: "3 days ago",
-    icon: <FileCode className="h-5 w-5 text-[#00406C]" />,
+    icon: <FileCode className="h-5 w-5 text-primary" />,
   },
   {
     id: 5,
@@ -45,7 +45,7 @@ const activityData = [
     title: "New Login",
     description: "New login from Chrome on Windows",
     timestamp: "4 days ago",
-    icon: <Clock className="h-5 w-5 text-[#B3B3B3]" />,
+    icon: <Clock className="h-5 w-5 text-muted-foreground" />,
   },
 ]
 
@@ -54,7 +54,7 @@ export function UserActivityList() {
     <div className="space-y-4">
       {activityData.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-[#B3B3B3]">No recent activity</p>
+          <p className="text-muted-foreground">No recent activity</p>
         </div>
       ) : (
         <div>
@@ -64,16 +64,16 @@ export function UserActivityList() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-[#001A2C] border border-[#002945] rounded-lg p-4 mb-4 last:mb-0"
+              className="bg-muted border border-accent rounded-lg p-4 mb-4 last:mb-0"
             >
               <div className="flex items-start gap-4">
-                <div className="bg-[#001523] p-2 rounded-full">{activity.icon}</div>
+                <div className="bg-card p-2 rounded-full">{activity.icon}</div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-medium">{activity.title}</h4>
-                    <span className="text-xs text-[#B3B3B3]">{activity.timestamp}</span>
+                    <span className="text-xs text-muted-foreground">{activity.timestamp}</span>
                   </div>
-                  <p className="text-sm text-[#B3B3B3]">{activity.description}</p>
+                  <p className="text-sm text-muted-foreground">{activity.description}</p>
 
                   {activity.severity && (
                     <div className="mt-2">

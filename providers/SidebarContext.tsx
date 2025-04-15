@@ -1,19 +1,18 @@
 "use client";
-import { createContext, useContext, ReactNode, useCallback, useState, useEffect } from "react";
-import { IProject } from "@/@types";
+import { createContext, useContext, ReactNode, useCallback, useState, useEffect, Dispatch, SetStateAction } from "react";
+import { IProject, IUserToken } from "@/@types";
 import { usePersistentDbState } from "@/hooks/usePersistentDbState";
 import { getUserId } from "@/app/(main)/code-analysis/utils/getUserId";
 import { usePersistentState } from "@/hooks/usePersistentState";
 
-interface IUserData {
-  name: string;
-  email: string;
-  avatar?: string;
-}
-
-const initialUserData: IUserData = {
-  name: "",
+const initialUserData: IUserToken = {
   email: "",
+  exp: 0,
+  iat: 0,
+  name: "",
+  plan: "",
+  userId: "",
+  userRole: "",
   avatar: "/profile.jpg"
 };
 
@@ -23,8 +22,8 @@ const SidebarContext = createContext<{
   loading: boolean;
   error: Error | null;
   addUserSession: (uId: string) => void;
-  setUserData: (user: IUserData) => void;
-  userData: IUserData;
+  setUserData:  Dispatch<SetStateAction<IUserToken>>;
+  userData: IUserToken;
 }>({
   sidebarProjects: [],
   addProject: () => {},
@@ -37,7 +36,9 @@ const SidebarContext = createContext<{
 
 export const SidebarDataProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState<string>("");
-  const [userData, setUserData] = usePersistentState<IUserData>("userData",initialUserData);
+  const [userData, setUserData] = usePersistentState<IUserToken>("userData",initialUserData);
+
+  
   const fetchProjects = useCallback(async (): Promise<IProject[]> => {
     setUserId(await getUserId() || "");
 
