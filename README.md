@@ -131,6 +131,9 @@ We welcome contributions with open arms! Whether it’s fixing a bug, proposing 
 - **Hajar Ihab**
 
 - **Lara Samara**
+  - [LinkedIn](https://www.linkedin.com/in/lara-samara/)  
+  - [GitHub](https://github.com/LaraSamara)  
+  - 📧 larasamara2002@gmail.com
 
 - **Alaa Abu Madi**
 
