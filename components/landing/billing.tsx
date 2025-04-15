@@ -159,7 +159,7 @@ export default function BillingSection() {
   return (
     <section
       id="pricing"
-      className="py-20 bg-gradient-to-b from-muted via-muted/95 to-foreground"
+      className="py-20 bg-gradient-to-b from-muted via-muted/50 to-accent"
     >
       <div className="container px-4 md:px-6 mx-auto">
         <motion.div

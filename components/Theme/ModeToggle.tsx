@@ -12,26 +12,34 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function ModeToggle() {
+interface IModeToggleProps {
+  hideText?: boolean;
+}
+
+export function ModeToggle({hideText = false}: IModeToggleProps) {
   const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="w-full p-2">
-        <Button variant="ghost" size="icon" className="flex justify-start">
+      <DropdownMenuTrigger asChild className={`w-full ${hideText? "-mx-4 rounded-2xl" : ""} px-2 `}>
+        <Button variant="ghost" size="icon" className="flex justify-start cursor-pointer">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="">Theme</span>
+          {
+            hideText? null : (
+              <span className="">Theme</span>
+            )
+          }
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

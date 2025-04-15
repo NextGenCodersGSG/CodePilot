@@ -97,7 +97,7 @@ export function HorizontalScrollFeatures() {
         />
       ))}
       
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-gradient-to-b from-accent via-background to-background">
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-gradient-to-b from-accent via-accent/95 to-background">
         <div className="w-full h-full flex flex-col">
           {/* Full-screen horizontal scrolling features */}
           <div className="flex-1 overflow-hidden w-full">

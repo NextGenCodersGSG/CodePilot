@@ -6,10 +6,10 @@ import Link from 'next/link'
 
 const CTASection = () => {
   return (
-    <section id="get-started" className="py-20">
+    <section id="get-started" className="py-20 bg-gradient-to-b from-accent via-accent/85 to-muted">
     <div className="container px-4 md:px-6 mx-auto">
       <motion.div
-        className=" rounded-lg bg-muted p-8 md:p-12 lg:p-16 relative overflow-hidden border border-accent"
+        className=" rounded-lg bg-gradient-to-b from-accent to-background p-8 md:p-12 lg:p-16 relative overflow-hidden border border-accent"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
