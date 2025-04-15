@@ -141,5 +141,7 @@ We welcome contributions with open arms! Whether it’s fixing a bug, proposing 
   - 📧 larasamara2002@gmail.com
 
 - **Alaa Abu Madi**
-
+  - [LinkedIn](https://www.linkedin.com/in/alaa-abu-madi/)  
+  - [GitHub](https://github.com/Alaa-Madi)  
+  - 📧 abumadialaa@gmail.com
 - **Mohammed Al Hnajouri**
