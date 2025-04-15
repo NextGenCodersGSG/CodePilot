@@ -47,7 +47,7 @@ CodePilot leverages advanced AI to analyze your code and provide feedback in rea
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/codepilot.git
+git clone https://github.com/NextGenCodersGSG/CodePilot.git
 cd codepilot
 ```
 
