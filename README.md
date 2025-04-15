@@ -108,7 +108,9 @@ npm run dev
 
 ## 🎥 Demo
 
-🔧 Demo video coming soon! Stay tuned...
+Check the life Demo [Here](https://code-pilot-puce.vercel.app/)
+**or**
+Watch a video tour for CodePilot [Here](https://www.youtube.com/watch?v=E-h0Fg7J7_U)
 
 ## 🛡 License
 
