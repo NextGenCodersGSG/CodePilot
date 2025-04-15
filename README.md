@@ -141,5 +141,8 @@ We welcome contributions with open arms! Whether it’s fixing a bug, proposing 
   - <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Email_new.svg/640px-Email_new.svg.png" width="20" height="20"> [larasamara2002@gmail.com](mailto:larasamara2002@gmail.com)
 
 - **Alaa Abu Madi**
-
+  - [LinkedIn](https://www.linkedin.com/in/alaa-abu-madi/)  
+  - [GitHub](https://github.com/Alaa-Madi)  
+  - 📧 abumadialaa@gmail.com
+    
 - **Mohammed Al Hnajouri**
