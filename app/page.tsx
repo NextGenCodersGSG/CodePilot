@@ -31,23 +31,20 @@ const Page = () => {
       </Head>
       
       <LandingPage />
-      <section className='relative hidden xl:block min-h-[700px] overflow-hidden bg-background'>
-        {/* Background elements */}
+      {/* <section className='relative hidden xl:block min-h-[700px] overflow-hidden bg-background'>
         <div className="absolute inset-0 bg-[radial-gradient(#0000_2px,primary30_1px)] bg-[size:20px_20px] opacity-40" />
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
-        {/* Spline wrapper with Suspense */}
         <Suspense fallback={<LoadingOverlay />}>
           <div className="relative z-0">
             <SplineLoader />
           </div>
         </Suspense>
 
-        {/* Client components */}
         <LeftContent />
         <RightContent />
         <BadgeCover />
-      </section>
+      </section> */}
       <Footer />
     </div>
   );
