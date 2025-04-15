@@ -10,7 +10,10 @@ export default function SplineLoader() {
           <Spline
             scene="https://prod.spline.design/bwCJnoGoIoWUA1j2/scene.splinecode"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2c70880cef0aef55d1f3a55a9705cbb20e0bbee7
             className={`w-full h-full transition-opacity duration-500 bg-muted to-accent ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => {
               console.log('Spline scene loaded')
