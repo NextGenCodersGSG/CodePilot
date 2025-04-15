@@ -21,7 +21,7 @@ export function ModeToggle({hideText = false}: IModeToggleProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className={`w-full ${hideText? "-mx-4 rounded-2xl" : ""} px-2 `}>
+      <DropdownMenuTrigger asChild className={`w-full ${hideText? "-mx-4 rounded-2xl min-w-8" : ""} px-2 `}>
         <Button variant="ghost" size="icon" className="flex justify-start cursor-pointer">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
