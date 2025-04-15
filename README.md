@@ -112,7 +112,7 @@ npm run dev
 
 ## 🛡 License
 
-This project is licensed under the MIT License. Feel free to use, share, and modify it!
+This project is licensed under the [MIT License](LICENSE). Feel free to use, share, and modify it!
 
 ## 🤝 Contribution
 
