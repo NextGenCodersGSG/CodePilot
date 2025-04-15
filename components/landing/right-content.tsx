@@ -64,7 +64,7 @@ export default function RightContent() {
       {features.map((feature, index) => (
         <motion.div
           key={index}
-          className="mb-8 bg-muted/50 p-4 rounded-lg border-r-4 border-lighted backdrop-blur-sm hover:bg-muted transition-all duration-300 hover:shadow-lg hover:shadow-lighted/20"
+          className="mb-8 text-foreground bg-card p-4 rounded-lg border-r-4 border-lighted backdrop-blur-sm hover:bg-muted/50 transition-all duration-300 hover:shadow-lg hover:shadow-lighted/20"
           variants={itemVariants}
           custom={index}
           whileHover={{

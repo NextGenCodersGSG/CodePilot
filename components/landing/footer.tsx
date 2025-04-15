@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="border-t border-accent py-12 bg-gradient-to-b dark: from-foreground/95 dark:to-accent z-20">
+    <footer className="border-t border-accent py-12 bg-gradient-to-b from-muted/95 to-accent z-20">
     <div className="container mx-auto px-6 md:px-8">
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         <div>

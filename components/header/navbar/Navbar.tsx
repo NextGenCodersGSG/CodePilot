@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { ModeToggle } from "@/components/Theme/ModeToggle";
 
 const transition = {
   type: "spring",
@@ -80,7 +81,7 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative min-w-[99%] rounded-3xl border backdrop-blur-sm bg-[radial-gradient(#0000_2px,secondary30_1px)] bg-[length:4px_4px] bg-repeat border-muted shadow-input flex justify-center items-center space-x-10 px-6 py-4"
+      className="relative min-w-[99%] rounded-3xl border backdrop-blur-sm bg-[radial-gradient(#0000_2px,secondary30_1px)] bg-[length:4px_4px] bg-repeat border-primary shadow-input flex justify-center items-center space-x-10 px-6 py-4"
     >
       {children}
     </nav>
@@ -187,7 +188,7 @@ export default function Navbar() {
             />
           </MenuItem>
         </div>
-
+        
         {
           isLoading ? (
             <Button 
@@ -200,8 +201,12 @@ export default function Navbar() {
           </Button>
           ) : (
             user? (
+              <>
+              <div className="">
+                  <ModeToggle hideText/>
+              </div>
               <Button 
-                className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]"
+                className="transition duration-100 text-white px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]"
                 onClick={async () =>  {
                   const response = await fetch(`/api/log-out`, {
                     method: "POST",
@@ -213,21 +218,28 @@ export default function Navbar() {
                     }),
                   });
                   if(response.ok) {
-                    toast.success("Logging out...", {duration: 600});
+                    toast.success("Logging out...", {duration: 1000});
                     setUser(null);
                     setTimeout(()=> {
                       redirect("sign-in");
                     },500)
                   }
                 }}
-              >
+                >
                 Logout
-              </Button>) : (        
+              </Button>
+                </>
+              ) : ( 
+                <>
+                <div className="">
+                  <ModeToggle hideText/>
+                </div>
                 <Link href="/sign-in">
-                  <Button className="transition duration-100 text-foreground px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]">
+                  <Button className="transition duration-100 text-white px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]">
                     Login
                   </Button>
                 </Link>
+                </>       
             )
           )
         }
