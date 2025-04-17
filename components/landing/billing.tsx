@@ -223,7 +223,7 @@ export default function BillingSection() {
                   variant="outline"
                   onClick={() => handleCheckout("starter")}
                   disabled={isLoading.starter}
-                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-foreground"
+                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-white"
                 >
                   {isLoading.starter ? <LoadingSpinner /> : "Get started"}
                 </Button>
@@ -279,7 +279,7 @@ export default function BillingSection() {
                 <Button
                   onClick={() => handleCheckout("pro")}
                   disabled={isLoading.pro}
-                  className="cursor-pointer w-full bg-primary hover:bg-secondary text-foreground"
+                  className="cursor-pointer w-full bg-primary hover:bg-secondary text-white"
                 >
                   {isLoading.starter ? <LoadingSpinner /> : "Get started"}
                 </Button>
@@ -332,7 +332,7 @@ export default function BillingSection() {
               <CardFooter className="mt-auto">
                 <Button
                   variant="outline"
-                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-foreground"
+                  className="cursor-pointer w-full border-accent hover:bg-accent hover:text-white"
                   onClick={() => handleCheckout("team")}
                   disabled={isLoading.team}
                 >

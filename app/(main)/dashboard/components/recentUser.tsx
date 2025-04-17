@@ -198,7 +198,7 @@ const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
                   >
                     <td>
                       <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                        <span className="font-medium text-xs">
+                        <span className="font-medium text-xs text-white">
                           {user.name.split(" ").map((n) => n[0]).join("")}
                         </span>
                       </div>

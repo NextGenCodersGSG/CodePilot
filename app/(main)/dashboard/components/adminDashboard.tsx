@@ -22,10 +22,11 @@ import TotalUsers from './totalUsers';
 import AdminDropdown from "./adminLogOut";
 import { IUserDocument } from '@/DB/models/user.model';
 import { ICountLogs } from '@/DB/models/count-logs.model';
-import { IChartData, IUser } from "@/@types";
+import { IChartData } from "@/@types";
 import Head from "next/head";
 import UserMetrics from "./userMetrics";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { ToggleSwitch } from "@/components/Theme/ToggleSwitch";
 
 interface DashboardProps {
   codeReviewsData: IChartData[];
@@ -138,6 +139,7 @@ export default function Dashboard({
               <div className="flex h-16 items-center justify-between px-4 sm:px-6">
                 <h1 className="text-xl font-semibold lg:text-2xl">Admin Dashboard</h1>
                 <div className="flex items-center gap-4">
+                  <ToggleSwitch/>
                   <div className="relative">
                     <Input
                       type="search"
@@ -212,7 +214,7 @@ export default function Dashboard({
                       <TabsTrigger
                         key={tab}
                         value={tab}
-                        className="data-[state=active]:bg-ring data-[state=active]:text-foreground cursor-pointer"
+                        className="data-[state=active]:bg-ring data-[state=active]:text-white cursor-pointer"
                       >
                         {tab[0].toUpperCase() + tab.slice(1)}
                       </TabsTrigger>
@@ -220,12 +222,12 @@ export default function Dashboard({
                   </TabsList>
 
                 {selectedTab === "users" ? (
-                  <Button onClick={handleExportCSV} className="bg-ring hover:bg-secondary text-foreground cursor-pointer ">
+                  <Button onClick={handleExportCSV} className="bg-ring hover:bg-secondary text-white cursor-pointer ">
                     <Download className="mr-2 h-4 w-4" />
                     Export CSV
                   </Button>
                 ) : selectedTab === "overview" ? (
-                  <Button onClick={AddDeveloper} className="bg-ring hover:bg-secondary text-foreground cursor-pointer ">
+                  <Button onClick={AddDeveloper} className="bg-ring hover:bg-secondary text-white cursor-pointer ">
                     Add Developer
                   </Button>
                 ) : null}

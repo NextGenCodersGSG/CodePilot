@@ -1,11 +1,11 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
-import { motion, useScroll, useTransform, useAnimationControls } from "framer-motion"
-import { Code, Zap, Shield, BarChart, Sparkles, Database, Lock, Cpu, Feather } from "lucide-react"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Code, Zap, Shield, BarChart, Feather } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { useMediaQuery } from "usehooks-ts"
 
-// Feature data with icons, titles, and descriptions
 const features = [
   {
     icon: Feather,
@@ -32,114 +32,69 @@ const features = [
     title: "Performance Insights",
     description: "Get suggestions to optimize your code for better performance and efficiency.",
   },
-  {
-    icon: Sparkles,
-    title: "AI Suggestions",
-    description: "Receive intelligent code suggestions based on best practices and your coding style.",
-  },
-  {
-    icon: Database,
-    title: "Database Optimization",
-    description: "Analyze and optimize your database queries for better performance.",
-  },
-  {
-    icon: Cpu,
-    title: "Resource Usage",
-    description: "Monitor and optimize CPU and memory usage in your applications.",
-  },
 ]
 
 export function HorizontalScrollFeatures() {
-  // Reference to the container element
   const targetRef = useRef<HTMLDivElement>(null)
-  const [activeFeature, setActiveFeature] = useState(0)
-  const controls = useAnimationControls()
-  const numFeatures = features.length
+  const isMobile = useMediaQuery("(max-width: 768px)")
 
-  // Get scroll progress within the target element
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   })
 
-  // Create snap effect
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
-      // Calculate which feature should be active based on scroll position
-      const rawIndex = latest * numFeatures
-      const nearestIndex = Math.round(rawIndex)
-      const clampedIndex = Math.max(0, Math.min(nearestIndex, numFeatures - 1))
-      
-      // Set active feature for visual highlighting
-      setActiveFeature(clampedIndex)
-      
-      // Animate to the correct position
-      controls.start({
-        x: `-${clampedIndex * 100}%`,
-        transition: { type: "spring", stiffness: 200, damping: 30 }
-      })
-    })
-    
-    return () => unsubscribe()
-  }, [scrollYProgress, controls, numFeatures])
+  const x = useTransform(scrollYProgress, [0, 1], ["40%", `-${(features.length - 1) * 10}%`])
+
+  if (isMobile) {
+    // Mobile fallback: stacked cards
+    return (
+      <div className="space-y-6 px-4 py-10">
+        {features.map((feature, index) => (
+          <Card key={index} className="bg-card border-accent">
+            <CardHeader className="flex flex-col items-center text-center p-8">
+              <feature.icon className="h-16 w-16 text-primary mb-6" />
+              <CardTitle className="text-2xl mb-2 text-foreground">{feature.title}</CardTitle>
+              <CardDescription className="text-muted-foreground text-base">
+                {feature.description}
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
+      </div>
+    )
+  }
 
   return (
-    <div
-      ref={targetRef}
-      className="relative h-[400vh]"
-    >
-      {/* Create section dividers for each feature */}
-      {Array.from({ length: numFeatures }).map((_, index) => (
-        <div 
+    <div ref={targetRef} className="relative h-[400vh]">
+      {/* Fake vertical scroll sections */}
+      {Array.from({ length: features.length }).map((_, index) => (
+        <div
           key={`section-${index}`}
-          className="absolute h-[50vh]" 
-          style={{ top: `${(index * 400) / numFeatures}vh` }}
+          className="absolute h-[50vh] w-full"
+          style={{ top: `${(index * 400) / features.length}vh` }}
         />
       ))}
-      
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-gradient-to-b from-accent via-accent/95 to-background">
-        <div className="w-full h-full flex flex-col">
-          {/* Full-screen horizontal scrolling features */}
-          <div className="flex-1 overflow-hidden w-full">
-            <motion.div 
-              className="flex w-full h-full "
-              animate={controls}
-            >
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="w-full flex-shrink-0 flex items-center justify-center px-4 mt-auto"
-                  animate={{
-                    opacity: activeFeature === index ? 1 : 0.3,
-                    scale: activeFeature === index ? 1 : 0.85
-                  }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <Card className="bg-card border-accent w-full h-4/5 max-w-4xl mx-auto flex flex-col justify-center">
-                    <CardHeader className="flex flex-col items-center text-center p-12">
-                      <feature.icon className="h-24 w-24 text-primary mb-8" />
-                      <CardTitle className="text-4xl mb-4 text-foreground">{feature.title}</CardTitle>
-                      <CardDescription className="text-muted-foreground text-xl max-w-2xl">
-                        {feature.description}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
 
-          {/* Footer with counter and navigation dots */}
-          <div className="container px-4 md:px-6 mx-auto py-8">
-            <div className="flex justify-between items-center">
-              <div className="text-foreground font-mono">
-                <span className="font-bold">{activeFeature + 1}</span>
-                <span className="text-muted-foreground"> / {features.length}</span>
-              </div>
-            </div>
-            
-          </div>
-        </div>
+      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent via-accent/95 to-background">
+        <motion.div
+          style={{ x }}
+          className="flex w-[800vw] h-full items-center px-8 gap-8"
+        >
+          {features.map((feature, index) => (
+            <Card
+              key={index}
+              className="min-w-[80vw] max-w-4xl h-4/5 flex flex-col justify-center bg-card border-accent"
+            >
+              <CardHeader className="flex flex-col items-center text-center p-12">
+                <feature.icon className="h-24 w-24 text-primary mb-8" />
+                <CardTitle className="text-4xl mb-4 text-foreground">{feature.title}</CardTitle>
+                <CardDescription className="text-muted-foreground text-xl max-w-2xl">
+                  {feature.description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </motion.div>
       </div>
     </div>
   )

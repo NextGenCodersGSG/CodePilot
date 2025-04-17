@@ -25,7 +25,7 @@ const CTASection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/sign-in">
-                <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-foreground">
+                <Button size="lg" className="cursor-pointer w-full sm:w-auto bg-primary hover:bg-secondary text-white">
                   Start your free trial
                 </Button>
               </Link>
@@ -33,7 +33,7 @@ const CTASection = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="cursor-pointer w-full sm:w-auto border-accent bg-accent hover:bg-muted hover:text-foreground"
+                  className="cursor-pointer w-full sm:w-auto border-accent text-white bg-accent hover:bg-muted hover:text-foreground"
                 >
                   Schedule a demo
                 </Button>

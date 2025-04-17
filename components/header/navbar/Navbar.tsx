@@ -13,6 +13,7 @@ import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { ModeToggle } from "@/components/Theme/ModeToggle";
+import { ToggleSwitch } from "@/components/Theme/ToggleSwitch";
 
 const transition = {
   type: "spring",
@@ -203,7 +204,7 @@ export default function Navbar() {
             user? (
               <>
               <div className="">
-                  <ModeToggle hideText/>
+                  <ToggleSwitch/>
               </div>
               <Button 
                 className="transition duration-100 text-white px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]"
@@ -231,8 +232,8 @@ export default function Navbar() {
                 </>
               ) : ( 
                 <>
-                <div className="">
-                  <ModeToggle hideText/>
+                <div className="mr-5 ml-0">
+                  <ToggleSwitch/>
                 </div>
                 <Link href="/sign-in">
                   <Button className="transition duration-100 text-white px-4 py-2 rounded-2xl hover:bg-secondary cursor-pointer w-[80px]">

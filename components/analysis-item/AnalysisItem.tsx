@@ -3,34 +3,33 @@ import React from 'react'
 interface Props {
     index: number;
     issue: string;
-    severity:string;
+    severity: string;
     solution: string;
     category: string;
 }
 
-const AnalysisItem = ({index,issue,severity,solution,category}:Props) => {
+const AnalysisItem = ({index, issue, severity, solution, category}: Props) => {
   return (
-  <div
-    key={`cat-${category}-${index}`}
-    className="group relative p-4 rounded-2xl bg-gradient-to-br mb-3 from-gray-800/30 to-gray-900/50 hover:bg-gray-800/40 transition-all duration-300 last:mb-0"
-  >
     <div
-      className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl rounded-tr-xl text-xs font-mono ${severity == "low"? "bg-blue-500/80" : severity == "medium" ? "bg-yellow-500/80" : "bg-red-500/80"}`}
+      key={`cat-${category}-${index}`}
+      className="group relative p-4 rounded-2xl bg-card mb-3 hover:bg-muted transition-all duration-300 last:mb-0"
     >
-      {severity}
-    </div>
-    <div className="pr-12">
-      <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-        {issue}
-      </h3>
-      <div className="pl-3 border-l-2 border-gray-600/50 group-hover:border-purple-400/50 transition-colors">
-        <p className="text-gray-300 font-mono">
-          {solution}
-        </p>
+      <div
+        className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl rounded-tr-xl text-xs ${severity === "low" ? "bg-chart-2 text-card-foreground" : severity === "medium" ? "bg-chart-4 text-card-foreground" : "bg-destructive text-destructive-foreground"}`}
+      >
+        {severity}
+      </div>
+      <div className="pr-12">
+        <h3 className="text-lg font-semibold mb-2 text-primary">
+          {issue}
+        </h3>
+        <div className="pl-3 border-l-2 border-muted group-hover:border-primary transition-colors">
+          <p className="text-muted">
+            {solution}
+          </p>
+        </div>
       </div>
     </div>
-    <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-30 transition-opacity" />
-  </div>
   )
 }
 

@@ -195,7 +195,10 @@ export default function Page() {
             transition={{ duration: 0.5, ease: "easeIn" }}
             className="relative"
           >
-            <AnalysisResults analysis={analysis} />
+            <div>
+              <div className="text-red-500">{code}</div>
+              <AnalysisResults analysis={analysis} code={code} />
+            </div>
             <motion.div
               layout
               initial={{ opacity: 0, scale: 0.9 }}

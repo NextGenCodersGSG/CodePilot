@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { CheckCircle, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { redirect } from "next/navigation"
 
 interface PlanCardProps {
   plan: {
@@ -62,9 +63,10 @@ export function PlanCard({ plan, currentPlan }: PlanCardProps) {
         <CardFooter>
           <Button
             className={`cursor-pointer ${plan.recommended
-              ? "w-full bg-primary hover:bg-secondary text-foreground"
+              ? "w-full bg-primary hover:bg-secondary text-white"
               : "w-full border-accent hover:bg-muted hover:text-foreground"}`}
             variant={plan.recommended ? "default" : "outline"}
+            onClick={()=> redirect("/#pricing")}
           >
             {isCurrentPlan ? "Current Plan" : "Upgrade"}
             {!isCurrentPlan && <ChevronRight className="ml-2 h-4 w-4" />}

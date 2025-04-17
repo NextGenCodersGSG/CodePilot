@@ -124,7 +124,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-12 pt-8 border-t border-accent text-center text-sm text-muted-foreground">
+      <div className="mt-12 pt-8 border-t border-accent text-center text-sm text-foreground">
         <p>&copy; {new Date().getFullYear()} CodePilot. All rights reserved.</p>
       </div>
     </div>
