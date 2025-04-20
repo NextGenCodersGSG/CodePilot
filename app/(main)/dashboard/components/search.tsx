@@ -1,3 +1,4 @@
+"use client"
 import { IUserDocument } from '@/DB/models/user.model';
 import { useState, useEffect } from 'react';
 
