@@ -3,7 +3,6 @@ import AuthService from "@/module/services/auth.service";
 import { ILogin } from "@/@types/index";
 import { connection } from "@/DB/connection";
 import CountLogs from "@/DB/models/count-logs.model"; // Importing CountLogs model
-import mongoose from "mongoose"; // Import mongoose for type checks
 
 export async function POST(req: NextRequest) {
     await connection(); // Make sure to establish the database connection

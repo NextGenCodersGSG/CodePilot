@@ -12,9 +12,9 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { IAnalysis,  IProject, IUserToken } from "@/@types";
+import { IAnalysis, IProject, IUserToken } from "@/@types";
 import { motion } from "framer-motion";
-import {  MoveUp } from "lucide-react";
+import { MoveUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AnalysisResults from "@/components/analysis-results/AnalysisResults";
 import { useSidebar } from "@/providers/SidebarContext";
@@ -42,7 +42,7 @@ export default function Page() {
   const [isEmpty, setIsEmpty] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSent, setIsSent] = useState(false);
-  const {addProject, addUserSession, setUserData} = useSidebar();
+  const { addProject, addUserSession, setUserData } = useSidebar();
 
   const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -54,17 +54,17 @@ export default function Page() {
   const autoResizeTextarea = () => {
     const textarea = areaRef.current;
     if (textarea) {
-      textarea.style.height = "auto"; 
+      textarea.style.height = "auto";
       textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
     }
   };
 
   const resetTextareaHeight = () => {
     const textarea = areaRef.current;
-    if(textarea){
-      textarea.style.height = "fit-content"; 
-    } 
-  }
+    if (textarea) {
+      textarea.style.height = "fit-content";
+    }
+  };
 
   //TODO: This should be used from the utils/getUserId.ts but it doesn't work for some reason.
   const getUserId = async () => {
@@ -74,12 +74,12 @@ export default function Page() {
 
       const userId = user.token.userId as string;
       addUserSession(userId);
-      
+
       return userId;
     } catch (error) {
       console.error("Error fetching user ID:", error);
     }
-  }
+  };
 
   const analyzeCode = async () => {
     try {
@@ -99,11 +99,11 @@ export default function Page() {
         throw new Error(errorData.error || "Analysis failed");
       }
 
-      const data : IAnalysis = await response.json();
+      const data: IAnalysis = await response.json();
       setAnalysis(data);
 
-      const newProject : IProject = {
-        userId: await getUserId() || "",
+      const newProject: IProject = {
+        userId: (await getUserId()) || "",
         name: data.title || "Untitled Project",
         url: `/code-analysis/${data.slug}`,
         title: data.title || "Untitled Project",
@@ -112,10 +112,9 @@ export default function Page() {
         security_issues: data.security_issues,
         bugs: data.bugs,
         description: data.description,
-        overall_suggestions: data.overall_suggestions,
-      }
+        overall_suggestions: data.overall_suggestions
+      };
       addProject(newProject);
-      
     } catch (error) {
       console.error("Error analyzing code:", error);
       setError(
@@ -131,48 +130,55 @@ export default function Page() {
   };
 
   useEffect(() => {
-    const  loadUserId = async () => {
+    const loadUserId = async () => {
       setPageLoading(true);
       const user = await getUserData();
       const displayName = user.name?.split(" ")[0];
       setUserData(user as IUserToken);
       setUsername(displayName || "Unknown");
       setPageLoading(false);
-    } 
-    
-    loadUserId();
-  }, []);
+    };
 
-  if(pageLoading){
+    loadUserId();
+  }, [setUserData]);
+
+  if (pageLoading) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
-        <LoadingSpinner className="h-10 w-10"/>
+        <LoadingSpinner className="h-10 w-10" />
       </div>
-    )
+    );
   }
   const greeting = getGreeting();
 
   return (
+    <>
+      <Head>
+        <title>Code Analysis - Enhance Your Code Quality</title>
+        <meta
+          name="description"
+          content="Analyze your code to identify performance issues, security vulnerabilities, and bugs. Get comprehensive analysis and insights."
+        />
+        <meta
+          name="keywords"
+          content="code analysis, software development, programming, performance issues, security analysis"
+        />
+        <meta name="NextGenCoders" content="codepilot" />
 
-    <><Head>
-      <title>Code Analysis - Enhance Your Code Quality</title>
-      <meta
-        name="description"
-        content="Analyze your code to identify performance issues, security vulnerabilities, and bugs. Get comprehensive analysis and insights." />
-      <meta name="keywords" content="code analysis, software development, programming, performance issues, security analysis" />
-      <meta name="NextGenCoders" content="codepilot" />
-
-      {/* Open Graph Meta Tags for social media sharing */}
-      <meta property="og:title" content="Code Analysis - Enhance Your Code Quality" />
-      <meta
-        property="og:description"
-        content="Use our tool to analyze your code, uncover performance issues, and improve your software quality." />
-      <meta property="og:image" content="/CodePilotLogo.png" /> 
-      <meta property="og:url" content="/" />
-      <meta property="og:type" content="website" />
-
-    </Head>
-    <section className={`px-4 py-8 ${isSent ? "mt-auto" : "my-auto"}`}>
+        {/* Open Graph Meta Tags for social media sharing */}
+        <meta
+          property="og:title"
+          content="Code Analysis - Enhance Your Code Quality"
+        />
+        <meta
+          property="og:description"
+          content="Use our tool to analyze your code, uncover performance issues, and improve your software quality."
+        />
+        <meta property="og:image" content="/CodePilotLogo.png" />
+        <meta property="og:url" content="/" />
+        <meta property="og:type" content="website" />
+      </Head>
+      <section className={`px-4 py-8 ${isSent ? "mt-auto" : "my-auto"}`}>
         <div className="mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, x: -70 }}
@@ -203,7 +209,11 @@ export default function Page() {
               layout
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "keyframes", duration: 0.4, ease: "easeInOut" }}
+              transition={{
+                type: "keyframes",
+                duration: 0.4,
+                ease: "easeInOut"
+              }}
               className="border-2 border-input shadow-accent/40 shadow-2xl bg-sidebar max-w-4xl mx-auto p-4 rounded-4xl transition duration-200 hover:shadow-accent/70 sticky bottom-2 w-full mt-5"
             >
               <textarea
@@ -212,7 +222,8 @@ export default function Page() {
                 placeholder="What's on your mind?"
                 autoFocus
                 value={code}
-                ref={areaRef} />
+                ref={areaRef}
+              />
               <div className="flex justify-between mt-4">
                 <Select value={language} onValueChange={handleSelectedLanguage}>
                   <SelectTrigger className="w-[180px] rounded-xl bg-input cursor-pointer">
@@ -222,14 +233,22 @@ export default function Page() {
                     <SelectGroup className="cursor-pointer">
                       <SelectLabel>Languages</SelectLabel>
                       {selectElement.map((item, index) => (
-                        <SelectItem key={`select-element-${index}`} className="cursor-pointer" value={item}>{item}</SelectItem>
+                        <SelectItem
+                          key={`select-element-${index}`}
+                          className="cursor-pointer"
+                          value={item}
+                        >
+                          {item}
+                        </SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Button
                   disabled={isEmpty || loading}
-                  className={`rounded-full w-12 h-12 ${isEmpty ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                  className={`rounded-full w-12 h-12 ${
+                    isEmpty ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+                  }`}
                   onClick={analyzeCode}
                 >
                   {loading ? (
@@ -252,8 +271,8 @@ export default function Page() {
               Error: {error}
             </motion.div>
           )}
-
         </div>
-      </section></>
+      </section>
+    </>
   );
 }

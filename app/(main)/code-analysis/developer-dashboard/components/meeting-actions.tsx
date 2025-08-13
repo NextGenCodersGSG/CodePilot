@@ -10,7 +10,7 @@ import Link from "next/link"
 interface MeetingActionsProps {
   meetingId: string
   status: Status
-  onStatusChange: (meetingId: string, newStatus: Status, updatedData?: any) => void
+  onStatusChange: (meetingId: string, newStatus: Status, updatedData?: unknown) => void
   startUrl?: string
 }
 

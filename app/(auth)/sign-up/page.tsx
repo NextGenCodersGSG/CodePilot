@@ -1,15 +1,13 @@
 "use client";
 
-import { Code } from "lucide-react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import Link from "next/link";
 import SignUpForm from "./components/signup-form";
@@ -23,9 +21,9 @@ export default function SignupPage() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
-      },
-    },
+        ease: "easeOut"
+      }
+    }
   };
 
   return (
@@ -36,7 +34,7 @@ export default function SignupPage() {
         animate="visible"
         variants={containerVariants}
       >
-        <Logo className="-mt-5"/>
+        <Logo className="-mt-5" />
 
         <Card className="border-accent bg-popover shadow-lg">
           <CardHeader className="space-y-1">
@@ -62,8 +60,7 @@ export default function SignupPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
               className="w-full"
-            >
-            </motion.div>
+            ></motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

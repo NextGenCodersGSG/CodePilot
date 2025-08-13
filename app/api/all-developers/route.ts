@@ -3,9 +3,7 @@
 import { NextResponse } from 'next/server';
 import { connection } from '@/DB/connection';
 import userService from '@/module/services/user.service';
-import { NextApiRequest } from 'next';
 
-// Handle GET and POST requests
 export async function GET() {
   try {
     await connection();

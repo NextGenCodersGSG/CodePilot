@@ -17,7 +17,7 @@ const BookMeetingPage = () => {
         const response = await fetch("/api/all-developers")
         const data = await response.json()
 
-        const filteredDevelopers = data.map((dev: any) => ({
+        const filteredDevelopers = data.map((dev: { name: string; _id: string }) => ({
           name: dev.name,
           id: dev._id,
         }))
@@ -197,7 +197,7 @@ const BookMeetingPage = () => {
           {/* Additional Info */}
           <motion.div variants={itemVariants} className="text-center text-muted-foreground text-sm">
             <p>All meetings are conducted via Zoom and require approval from the selected developer.</p>
-            <p>You'll receive a confirmation email with the Zoom link once your request is approved.</p>
+            <p>You&apos;ll receive a confirmation email with the Zoom link once your request is approved.</p>
           </motion.div>
         </motion.div>
       </div>

@@ -1,85 +1,104 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { getUserId } from "../utils/getUserId"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Calendar, Clock, Loader2, LayoutGrid, LayoutList, AlertCircle } from "lucide-react"
-import { format } from "date-fns"
-import { cn } from "@/lib/utils"
-import { MeetingsTable } from "@/components/scheduled-meetings/meetings-table"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Status } from "@/@types"
-import { motion, AnimatePresence } from "framer-motion"
+import { useEffect, useState } from "react";
+import { getUserId } from "../utils/getUserId";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter
+} from "@/components/ui/card";
+import {
+  Calendar,
+  Clock,
+  Loader2,
+  LayoutGrid,
+  LayoutList,
+  AlertCircle
+} from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { MeetingsTable } from "@/components/scheduled-meetings/meetings-table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Status } from "@/@types";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Meeting {
-  id: string
-  description: string
-  duration: number
-  scheduledAt: string
-  status: Status
-  title: string
+  id: string;
+  description: string;
+  duration: number;
+  scheduledAt: string;
+  status: Status;
+  title: string;
 }
 
 const ScheduledMeetingsPage = () => {
-  const [meetings, setMeetings] = useState<Meeting[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [cancellingId, setCancellingId] = useState<string | null>(null)
-  const [viewMode, setViewMode] = useState<"cards" | "table">("cards")
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
 
   useEffect(() => {
     const fetchUserMeetings = async () => {
       try {
-        setIsLoading(true)
-        const userId = await getUserId()
+        setIsLoading(true);
+        const userId = await getUserId();
 
-        const response = await fetch(`/api/all-user-meetings?userId=${userId}`)
+        const response = await fetch(`/api/all-user-meetings?userId=${userId}`);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch meetings")
+          throw new Error("Failed to fetch meetings");
         }
 
-        const data = await response.json()
+        const data = await response.json();
 
-        setMeetings(data)
+        setMeetings(data);
       } catch (err) {
-        console.error("Error fetching meetings:", err)
-        setError("Failed to load your scheduled meetings. Please try again later.")
+        console.error("Error fetching meetings:", err);
+        setError(
+          "Failed to load your scheduled meetings. Please try again later."
+        );
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchUserMeetings()
-  }, [])
+    fetchUserMeetings();
+  }, []);
 
   const handleCancelMeeting = async (meetingId: string) => {
     try {
-      setCancellingId(meetingId)
+      setCancellingId(meetingId);
       const response = await fetch(`/api/meetings/cancel-meeting`, {
         method: "POST",
         body: JSON.stringify({ meetingId }),
         headers: {
-          "Content-Type": "application/json",
-        },
-      })
+          "Content-Type": "application/json"
+        }
+      });
 
       if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.message || "Failed to cancel meeting")
+        const data = await response.json();
+        throw new Error(data.message || "Failed to cancel meeting");
       }
 
       setMeetings(
-        meetings.map((meeting) => (meeting.id === meetingId ? { ...meeting, status: Status.CANCELED } : meeting)),
-      )
+        meetings.map((meeting) =>
+          meeting.id === meetingId
+            ? { ...meeting, status: Status.CANCELED }
+            : meeting
+        )
+      );
     } catch (err) {
-      console.error("Error cancelling meeting:", err)
+      console.error("Error cancelling meeting:", err);
     } finally {
-      setCancellingId(null)
+      setCancellingId(null);
     }
-  }
+  };
 
   // Animation variants
   const containerVariants = {
@@ -88,17 +107,17 @@ const ScheduledMeetingsPage = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
+        delayChildren: 0.1
+      }
     },
     exit: {
       opacity: 0,
       transition: {
         staggerChildren: 0.05,
-        staggerDirection: -1,
-      },
-    },
-  }
+        staggerDirection: -1
+      }
+    }
+  };
 
   const tableVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -107,18 +126,18 @@ const ScheduledMeetingsPage = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut",
-      },
+        ease: "easeOut"
+      }
     },
     exit: {
       opacity: 0,
       y: -20,
       transition: {
         duration: 0.3,
-        ease: "easeIn",
-      },
-    },
-  }
+        ease: "easeIn"
+      }
+    }
+  };
 
   if (isLoading) {
     return (
@@ -129,9 +148,11 @@ const ScheduledMeetingsPage = () => {
         exit={{ opacity: 0 }}
       >
         <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-        <p className="text-lg text-muted-foreground">Loading your scheduled meetings...</p>
+        <p className="text-lg text-muted-foreground">
+          Loading your scheduled meetings...
+        </p>
       </motion.div>
-    )
+    );
   }
 
   if (error) {
@@ -153,7 +174,7 @@ const ScheduledMeetingsPage = () => {
           Try Again
         </Button>
       </motion.div>
-    )
+    );
   }
 
   if (meetings.length === 0) {
@@ -195,13 +216,13 @@ const ScheduledMeetingsPage = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                You don't have any meetings scheduled at the moment.
+                You don&apos;t have any meetings scheduled at the moment.
               </motion.p>
             </CardContent>
           </Card>
         </motion.div>
       </motion.div>
-    )
+    );
   }
 
   return (
@@ -224,7 +245,9 @@ const ScheduledMeetingsPage = () => {
               value="cards"
               className={cn(
                 "flex items-center gap-2 text-muted-foreground cursor-pointer",
-                viewMode === "cards" ? "bg-primary text-foreground" : "hover:text-foreground",
+                viewMode === "cards"
+                  ? "bg-primary text-foreground"
+                  : "hover:text-foreground"
               )}
             >
               <LayoutGrid className="h-4 w-4" />
@@ -234,7 +257,9 @@ const ScheduledMeetingsPage = () => {
               value="table"
               className={cn(
                 "flex items-center gap-2 text-muted-foreground cursor-pointer",
-                viewMode === "table" ? "bg-primary text-foreground" : "hover:text-foreground",
+                viewMode === "table"
+                  ? "bg-primary text-foreground"
+                  : "hover:text-foreground"
               )}
             >
               <LayoutList className="h-4 w-4" />
@@ -265,60 +290,77 @@ const ScheduledMeetingsPage = () => {
             ))}
           </motion.div>
         ) : (
-          <motion.div key="table-view" variants={tableVariants} initial="hidden" animate="visible" exit="exit">
-            <MeetingsTable meetings={meetings} onCancel={handleCancelMeeting} cancellingId={cancellingId} />
+          <motion.div
+            key="table-view"
+            variants={tableVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <MeetingsTable
+              meetings={meetings}
+              onCancel={handleCancelMeeting}
+              cancellingId={cancellingId}
+            />
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
 interface MeetingCardProps {
-  meeting: Meeting
-  onCancel: (id: string) => void
-  isCancelling: boolean
-  index: number
+  meeting: Meeting;
+  onCancel: (id: string) => void;
+  isCancelling: boolean;
+  index: number;
 }
 
-const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProps) => {
-  const scheduledDate = new Date(meeting.scheduledAt)
-  const isPast = scheduledDate < new Date()
+const MeetingCard = ({
+  meeting,
+  onCancel,
+  isCancelling,
+  index
+}: MeetingCardProps) => {
+  const scheduledDate = new Date(meeting.scheduledAt);
+  const isPast = scheduledDate < new Date();
   const isActive =
-    meeting.status !== Status.CANCELED && meeting.status !== Status.REJECTED && meeting.status !== Status.APPROVED
+    meeting.status !== Status.CANCELED &&
+    meeting.status !== Status.REJECTED &&
+    meeting.status !== Status.APPROVED;
 
   const getStatusDetails = (status: Meeting["status"]) => {
     switch (status) {
       case Status.PENDING:
         return {
           label: "Awaiting Confirmation",
-          color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-        }
+          color: "bg-amber-500/20 text-amber-400 border-amber-500/30"
+        };
       case Status.APPROVED:
         return {
           label: "Confirmed",
-          color: "bg-green-500/20 text-green-400 border-green-500/30",
-        }
+          color: "bg-green-500/20 text-green-400 border-green-500/30"
+        };
 
       case Status.REJECTED:
         return {
           label: "Declined",
-          color: "bg-red-500/20 text-red-400 border-red-500/30",
-        }
+          color: "bg-red-500/20 text-red-400 border-red-500/30"
+        };
       case Status.CANCELED:
         return {
           label: "Cancelled",
-          color: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-        }
+          color: "bg-gray-500/20 text-gray-400 border-gray-500/30"
+        };
       default:
         return {
           label: status,
-          color: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-        }
+          color: "bg-gray-500/20 text-gray-400 border-gray-500/30"
+        };
     }
-  }
+  };
 
-  const statusDetails = getStatusDetails(meeting.status)
+  const statusDetails = getStatusDetails(meeting.status);
 
   // Card animation variants
   const cardVariants = {
@@ -329,40 +371,51 @@ const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProp
       transition: {
         duration: 0.4,
         ease: "easeOut",
-        delay: index * 0.1,
-      },
+        delay: index * 0.1
+      }
     },
     exit: {
       opacity: 0,
       y: -20,
       transition: {
         duration: 0.3,
-        ease: "easeIn",
-      },
+        ease: "easeIn"
+      }
     },
     hover: {
       y: -5,
-      boxShadow: "0 10px 15px -3px rgba(0, 64, 108, 0.1), 0 4px 6px -2px rgba(0, 64, 108, 0.05)",
+      boxShadow:
+        "0 10px 15px -3px rgba(0, 64, 108, 0.1), 0 4px 6px -2px rgba(0, 64, 108, 0.05)",
       transition: {
-        duration: 0.2,
-      },
-    },
-  }
+        duration: 0.2
+      }
+    }
+  };
 
   return (
     <motion.div variants={cardVariants} whileHover="hover" layout>
       <Card className="bg-card border-accent overflow-hidden relative h-full">
         {/* Status badge positioned at top right */}
-        <Badge variant="outline" className={cn("absolute top-2 right-2 border z-10", statusDetails.color)}>
+        <Badge
+          variant="outline"
+          className={cn(
+            "absolute top-2 right-2 border z-10",
+            statusDetails.color
+          )}
+        >
           {statusDetails.label}
         </Badge>
         <CardHeader className="pb-1 pt-3 px-4 border-b border-accent">
-          <CardTitle className="text-2xl text-foreground">{meeting.title}</CardTitle>
+          <CardTitle className="text-2xl text-foreground">
+            {meeting.title}
+          </CardTitle>
         </CardHeader>
 
         <CardContent className="pt-3 pb-2 px-4">
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground line-clamp-2">{meeting.description}</p>
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {meeting.description}
+            </p>
 
             <div className="flex flex-col space-y-2">
               <div className="flex items-center gap-2 text-sm text-foreground">
@@ -397,14 +450,18 @@ const MeetingCard = ({ meeting, onCancel, isCancelling, index }: MeetingCardProp
               )}
             </Button>
           ) : (
-            <Button variant="outline" disabled className="w-full opacity-50 border-accent text-muted-foreground">
+            <Button
+              variant="outline"
+              disabled
+              className="w-full opacity-50 border-accent text-muted-foreground"
+            >
               {isPast ? "Past Meeting" : meeting.status}
             </Button>
           )}
         </CardFooter>
       </Card>
     </motion.div>
-  )
-}
+  );
+};
 
-export default ScheduledMeetingsPage
+export default ScheduledMeetingsPage;

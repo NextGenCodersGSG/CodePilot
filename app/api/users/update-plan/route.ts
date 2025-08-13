@@ -37,8 +37,11 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error updating user plan:", error.message);
+  } catch (error: unknown) {
+    console.error(
+      "Error updating user plan:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
     return NextResponse.json(
       { error: "Failed to update user plan" },
       { status: 500 }

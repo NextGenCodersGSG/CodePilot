@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { motion, Variants } from "framer-motion"
-import { Code, Home, ArrowLeft, FileQuestion } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Logo from "@/components/logo/Logo"
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { motion, Variants } from "framer-motion";
+import { Home, ArrowLeft, FileQuestion } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Logo from "@/components/logo/Logo";
 
 export default function NotFound() {
-  const router = useRouter()
+  const router = useRouter();
 
   // Animation variants
   const containerVariants = {
@@ -17,10 +17,10 @@ export default function NotFound() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  }
+        delayChildren: 0.3
+      }
+    }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -28,25 +28,12 @@ export default function NotFound() {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
-        damping: 12,
-      },
-    },
-  }
-
-  const codeBlockVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        delay: 0.2,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  }
+        damping: 12
+      }
+    }
+  };
 
   const floatingVariants = {
     initial: { y: 0 },
@@ -56,10 +43,10 @@ export default function NotFound() {
         duration: 3,
         repeat: Number.POSITIVE_INFINITY,
         repeatType: "loop",
-        ease: "easeInOut",
-      },
-    },
-  }
+        ease: "easeInOut"
+      }
+    }
+  };
 
   const pulseVariants = {
     initial: { opacity: 0.7, scale: 1 },
@@ -70,10 +57,10 @@ export default function NotFound() {
         duration: 2,
         repeat: Number.POSITIVE_INFINITY,
         repeatType: "loop",
-        ease: "easeInOut",
-      },
-    },
-  }
+        ease: "easeInOut"
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
@@ -106,15 +93,22 @@ export default function NotFound() {
           </div>
         </motion.div>
 
-        <motion.h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4" variants={itemVariants}>
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold text-foreground mb-4"
+          variants={itemVariants}
+        >
           404 - Page Not Found
         </motion.h1>
 
-        <motion.p className="text-xl text-muted-foreground mb-8" variants={itemVariants}>
-          The code path you're looking for doesn't exist or has been moved.
+        <motion.p
+          className="text-xl text-muted-foreground mb-8"
+          variants={itemVariants}
+        >
+          The code path you&apos;re looking for doesn&apos;t exist or has been
+          moved.
         </motion.p>
 
-        <motion.div className="mb-12 mx-auto max-w-lg" variants={codeBlockVariants}>
+        <motion.div className="mb-12 mx-auto max-w-lg">
           <div className="bg-card border border-accent rounded-lg p-4 text-left relative overflow-hidden">
             <div className="flex items-center gap-2 mb-3 text-muted-foreground text-sm">
               <span className="h-3 w-3 rounded-full bg-red-500"></span>
@@ -143,7 +137,10 @@ function findPath(route) {
           </div>
         </motion.div>
 
-        <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={itemVariants}>
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+          variants={itemVariants}
+        >
           <Button
             onClick={() => router.back()}
             className="bg-muted border border-accent hover:bg-background hover:text-foreground text-foreground cursor-pointer"
@@ -152,7 +149,11 @@ function findPath(route) {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Go Back
           </Button>
-          <Button asChild className="bg-primary hover:bg-secondary text-white" size="lg">
+          <Button
+            asChild
+            className="bg-primary hover:bg-secondary text-white"
+            size="lg"
+          >
             <Link href="/">
               <Home className="mr-2 h-4 w-4" />
               Return Home
@@ -160,9 +161,8 @@ function findPath(route) {
           </Button>
         </motion.div>
 
-        <Logo/>
+        <Logo />
       </motion.div>
     </div>
-  )
+  );
 }
-

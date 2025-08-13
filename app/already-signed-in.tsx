@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { CheckCircle, Home, FileCode, Code } from "lucide-react"
+import { CheckCircle, Home, FileCode } from "lucide-react"
 import { useState, useEffect } from "react"
 import Logo from "@/components/logo/Logo"
 
@@ -24,7 +24,7 @@ export default function AlreadySignedIn() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 12 },
+      transition: { type: "spring" as const, stiffness: 100, damping: 12 },
     },
   }
 
@@ -61,7 +61,7 @@ export default function AlreadySignedIn() {
       transition: {
         duration: 20,
         repeat: Number.POSITIVE_INFINITY,
-        ease: "linear",
+        ease: ["linear"],
       },
     },
   }
@@ -137,7 +137,7 @@ export default function AlreadySignedIn() {
 
         <motion.div variants={itemVariants}>
           <p className="text-muted-foreground max-w-md mb-8">
-            You are already signed in to your account. You don't need to sign in again.
+            You are already signed in to your account. You don&apos;t need to sign in again.
           </p>
         </motion.div>
 

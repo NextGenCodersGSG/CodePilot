@@ -1,7 +1,6 @@
 import userModel, { IUserDocument } from "@/DB/models/user.model";
 import { Role } from "@/@types/index";
 import { comparePassword, hashPassword } from "@/lib/hashAndCompare";
-import { ObjectId } from 'mongodb';
 
 export class UserRepository {
   async findUserById(id: string, role: Role): Promise<IUserDocument | null> {

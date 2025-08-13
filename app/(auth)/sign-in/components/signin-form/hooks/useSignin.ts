@@ -14,39 +14,39 @@ const useSignin = () => {
     setSubmitting: (isSubmitting: boolean) => void
   ) => {
     try {
-      const response = await fetch(
-        `/api/auth/sign-in`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
-      
+      const response = await fetch(`/api/auth/sign-in`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values)
+      });
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         toast.error(`${data.error}`);
         return;
       }
 
       resetForm();
-      toast.success("Signin successful", {duration: 1000});
+      toast.success("Signin successful", { duration: 1000 });
       localStorage.setItem("auth-token", data.token);
       const role: string = data.role;
 
       setTimeout(() => {
-        if(role === 'admin') {
+        if (role === "admin") {
           redirect("/dashboard");
-        }
-        else {
+        } else {
           redirect("/code-analysis");
         }
       }, 500);
-    } catch (error: any) {
-      toast.error(`Signin error: ${error.message}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(`Signin error: ${error.message}`);
+      } else {
+        toast.error(`Signin error: ${String(error)}`);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -58,7 +58,7 @@ const useSignin = () => {
       handleSignin(values, resetForm, setSubmitting);
     },
     validationSchema,
-    validateOnMount: true,
+    validateOnMount: true
   });
 
   return { formik };

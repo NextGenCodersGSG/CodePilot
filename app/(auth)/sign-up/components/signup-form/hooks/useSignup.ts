@@ -35,8 +35,12 @@ const useSignup = () => {
                 redirect("/sign-in")
             }, 1000)
         }
-        catch(error: any) {
-            toast.error(`sign-up Error: ${error.message}`)
+        catch(error: unknown) {
+            if (error instanceof Error) {
+                toast.error(`sign-up Error: ${error.message}`)
+            } else {
+                toast.error(`sign-up Error: ${String(error)}`)
+            }
         }
         finally {
             setSubmitting(false);

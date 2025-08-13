@@ -183,6 +183,19 @@
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, 
+              fill 0.3s ease, 
+              stroke 0.3s ease,
+              --background 0.3s ease,
+              --foreground 0.3s ease,
+              --card 0.3s ease,
+              --popover 0.3s ease,
+              --primary 0.3s ease,
+              --secondary 0.3s ease,
+              --muted 0.3s ease,
+              --accent 0.3s ease,
+              --destructive 0.3s ease;
 }
 
 body {

@@ -27,25 +27,36 @@ export async function DELETE(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
 
-    if (error.message === 'Invalid user ID') {
-          
-      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    if (typeof error === 'object' && error !== null && 'message' in error) {
+      const errorMessage = (error as { message: string }).message;
+
+      if (errorMessage === 'Invalid user ID') {
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+      }
+
+      if (errorMessage === 'User not found') {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      }
+
+      console.error('Deletion error:', error);
+      return NextResponse.json(
+        { 
+          error: 'Internal Server Error',
+          details: errorMessage || 'Unknown error'
+        },
+        { status: 500 }
+      );
+    } else {
+      console.error('Deletion error:', error);
+      return NextResponse.json(
+        { 
+          error: 'Internal Server Error',
+          details: 'Unknown error'
+        },
+        { status: 500 }
+      );
     }
-
-    if (error.message === 'User not found') {
-      
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    console.error('Deletion error:', error);
-    return NextResponse.json(
-      { 
-        error: 'Internal Server Error',
-        details: error.message || 'Unknown error'
-      },
-      { status: 500 }
-    );
   }
 }

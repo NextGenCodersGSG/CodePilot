@@ -32,7 +32,7 @@ export function MeetingsTable({
   const handleStatusChange = async (
     meetingId: string,
     newStatus: Status,
-    updatedData?: any
+    updatedData?: Partial<IMeeting>
   ) => {
     if (newStatus === Status.APPROVED && !updatedData?.zoom) {
       try {
@@ -57,6 +57,7 @@ export function MeetingsTable({
 
             Object.entries(updatedData).forEach(([key, value]) => {
               if (key !== "id" && key !== "zoom") {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (updatedMeeting as Record<string, any>)[key] = value;
               }
             });
@@ -85,7 +86,9 @@ export function MeetingsTable({
             <TableHead className="text-foreground font-medium">
               Duration
             </TableHead>
-            <TableHead className="text-foreground font-medium">Status</TableHead>
+            <TableHead className="text-foreground font-medium">
+              Status
+            </TableHead>
             <TableHead className="text-foreground font-medium">
               Actions
             </TableHead>

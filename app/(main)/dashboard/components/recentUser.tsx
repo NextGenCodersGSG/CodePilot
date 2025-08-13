@@ -3,13 +3,7 @@ import { ICountLogs } from '@/DB/models/count-logs.model';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Trash2, AlertTriangle, X } from 'lucide-react';
+import {  AlertTriangle, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -24,7 +18,6 @@ interface ActiveUserDisplayProps {
 }
 
 const ActiveUserDisplay = ({ recentUsers }: ActiveUserDisplayProps) => {
-  const [_, setSelectedTab] = useState("overview");
   const [deleteConfirmation, setDeleteConfirmation] = useState<{
     isOpen: boolean;
     user: { 

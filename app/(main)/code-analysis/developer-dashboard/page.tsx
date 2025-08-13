@@ -6,7 +6,6 @@ import { MeetingsTable } from "./components/meetings-table"
 import { EmptyState } from "./components/empty-state"
 import type { IMeeting } from "@/@types"
 import { Loader2, Calendar } from "lucide-react"
-import { getUserId } from "../utils/getUserId"
 
 interface MeetingsResponse {
   meetings: IMeeting[]
@@ -21,7 +20,6 @@ const MeetingsPage = () => {
     const fetchDeveloperMeetings = async () => {
       try {
         setIsLoading(true)
-        const userId = await getUserId()
         const response = await fetch(`/api/meetings/all-meetings`)
 
         if (!response.ok) {

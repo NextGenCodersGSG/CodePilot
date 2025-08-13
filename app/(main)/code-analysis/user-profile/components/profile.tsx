@@ -9,7 +9,7 @@ import {
   Edit,
   Save,
   X,
-  Lock,
+  Lock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +32,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { PasswordChangeForm } from "./password-change-form";
 import { PlanCard } from "./plan-card";
-import { IUserData } from "./types";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useSidebar } from "@/providers/SidebarContext";
@@ -41,7 +40,7 @@ import { IUserToken } from "@/@types";
 const mockUser = {
   email: "user@example.com",
   name: "Alex Johnson",
-  plan: "starter", 
+  plan: "starter",
   avatar: "/profile.jpg"
 };
 
@@ -105,7 +104,6 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("account");
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
- 
 
   const handleSaveName = async () => {
     setIsSaving(true);
@@ -114,28 +112,30 @@ export default function ProfilePage() {
         const response = await fetch("/api/users/update-name", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             userId: userData.userId,
             newName: nameValue
-          }),
+          })
         });
-  
+
         const data = await response.json();
         if (!response.ok) {
           toast.error(data.error || "Update failed", { duration: 2000 });
         } else {
-          setUser(prevUser => ({
+          setUser((prevUser) => ({
             ...prevUser,
             name: data.user.name
           }));
-          setUserData((prev: IUserToken) => ({...prev, name: data.user.name}));
-          setNameValue(data.user.name); 
+          setUserData((prev: IUserToken) => ({
+            ...prev,
+            name: data.user.name
+          }));
+          setNameValue(data.user.name);
           setIsSaving(false);
           setIsEditingName(false);
           toast.success("Username updated successfully", { duration: 2000 });
         }
-  
-      } catch (error) {
+      } catch {
         toast.error("Network error occurred", { duration: 2000 });
       }
     }
@@ -171,7 +171,7 @@ export default function ProfilePage() {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 15
       }
@@ -212,12 +212,15 @@ export default function ProfilePage() {
                   </motion.div>
 
                   <h2 className="text-xl font-bold mb-1">{userData.name}</h2>
-                  <p className="text-sm text-muted-foreground mb-3">{userData.email}</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {userData.email}
+                  </p>
 
-                    <Badge className="bg-primary hover:bg-secondary mb-4">
-                      {userData?.plan?.charAt(0).toUpperCase() + userData?.plan?.slice(1)} {" "}
-                      Plan
-                    </Badge>
+                  <Badge className="bg-primary hover:bg-secondary mb-4">
+                    {userData?.plan?.charAt(0).toUpperCase() +
+                      userData?.plan?.slice(1)}{" "}
+                    Plan
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -307,13 +310,11 @@ export default function ProfilePage() {
                                   onClick={handleSaveName}
                                   className="bg-primary hover:bg-secondary cursor-pointer"
                                 >
-                                  {
-                                    isSaving
-                                    ? 
-                                    <LoadingSpinner/> 
-                                    :
+                                  {isSaving ? (
+                                    <LoadingSpinner />
+                                  ) : (
                                     <Save className="h-4 w-4" />
-                                  }
+                                  )}
                                 </Button>
                                 <Button
                                   size="icon"
@@ -424,7 +425,8 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Upgrade options */}
-                    {(userData.plan === "starter" || userData.plan === "pro") && (
+                    {(userData.plan === "starter" ||
+                      userData.plan === "pro") && (
                       <div className="space-y-4">
                         <div className="flex flex-col">
                           <h3 className="text-lg font-medium">
@@ -509,7 +511,9 @@ export default function ProfilePage() {
           <PasswordChangeForm
             onSuccess={() => {
               setShowPasswordDialog(false);
-              toast.success("Password changed successfully", { duration: 2000 });
+              toast.success("Password changed successfully", {
+                duration: 2000
+              });
             }}
             onCancel={() => setShowPasswordDialog(false)}
             userId={userData.userId}
